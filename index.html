@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>Eyana Ge'ez Fidel Kids Learning Hub</title>
+    <!-- PWA Manifest Integration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#800080">
+    <style>
+        :root {
+            --primary: #800080;
+            --secondary: #4ECDC4;
+            --accent: #FFD700;
+            --background: #F7FFF7;
+            --text: #2F3E46;
+            --card-bg: #FFFFFF;
+            --shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+            --border-radius: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), #FF8E8E);
+            padding: 20px 15px;
+            border-radius: var(--border-radius);
+            color: white;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header p { font-size: 0.95rem; opacity: 0.9; }
+
+        .theme-selector-container {
+            text-align: center;
+            margin-top: -5px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+        }
+
+        .theme-btn {
+            border: 2px solid #E2E8F0;
+            background: none;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--card-bg);
+            border: 3px solid transparent;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            color: var(--text);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active { 
+            background: var(--primary); 
+            color: white; 
+        }
+
+        .view-panel {
+            display: none;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .view-panel.active { display: block; }
+
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 60vh;
+            overflow-y: auto;
+            overflow-x: auto;
+            padding-right: 5px;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .series-row {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(70px, 1fr));
+            gap: 10px;
+            align-items: center;
+            background: #F8FAFC;
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #E2E8F0;
+            min-width: 540px;
+        }
+
+        .labialized-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+            gap: 12px;
+            background: #F8FAFC;
+            padding: 12px;
+            border-radius: 15px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .sentences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
+            max-height: 50vh;
+            overflow-y: auto;
+            padding-right: 5px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .sentence-card {
+            background: #F8FAFC;
+            border: 2px solid #E2E8F0;
+            border-radius: 18px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sentence-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+            background: #F0FDF4;
+        }
+
+        .pic-representation {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: white;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .sentence-amharic {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #1A252C;
+            margin-bottom: 4px;
+        }
+
+        .sentence-english { font-size: 0.8rem; color: #627D98; }
+
+        .memory-grid { 
+            display: grid; 
+            gap: 12px; 
+            margin: 15px auto; 
+            width: 100%; 
+            max-width: 600px;
+        }
+
+        .memory-card { aspect-ratio: 1; perspective: 1000px; cursor: pointer; }
+
+        .memory-card-inner {
+            position: relative;
+            width: 100%; height: 100%;
+            text-align: center;
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+            box-shadow: var(--shadow);
+            border-radius: 15px;
+        }
+
+        .memory-card.flipped .memory-card-inner { transform: rotateY(180deg); }
+
+        .memory-card-front, .memory-card-back {
+            position: absolute;
+            width: 100%; height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            border: 2px solid #E2E8F0;
+        }
+
+        .memory-card-front {
+            background: linear-gradient(135deg, var(--primary), #FFA8A8);
+            color: white; font-size: 1.8rem; font-weight: bold;
+        }
+
+        .memory-card-back { background: #FFFFFF; color: var(--text); transform: rotateY(180deg); }
+
+        .fidel-card {
+            background: var(--card-bg);
+            border: 2px solid #E2E8F0;
+            border-radius: 14px;
+            min-height: 85px;
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .fidel-card:hover { transform: scale(1.03); background: #EBF8FF; border-color: var(--secondary); }
+
+        .fidel-card.reading-active {
+            background-color: var(--accent) !important;
+            border-color: var(--primary) !important;
+            transform: scale(1.04);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .fidel-card .char { font-size: 48px; font-weight: bold; color: #1A252C; line-height: 1.1; }
+
+        .fidel-card .sound { font-size: 0.8rem; color: #627D98; margin-top: 2px; font-weight: bold; }
+
+        .detail-display {
+            background: linear-gradient(135deg, #E0F7FA, #B2EBF2);
+            padding: 12px; border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; gap: 20px;
+            margin-top: 10px;
+        }
+
+        .detail-main { font-size: 4rem; font-weight: bold; color: #006064; }
+
+        .detail-info h3 { font-size: 1.4rem; color: #006064; }
+
+        .trace-workspace { display: flex; flex-direction: column; align-items: center; gap: 15px; width: 100%; }
+
+        .trace-picker-container { width: 100%; background: #F8FAFC; padding: 12px; border-radius: 15px; border: 1px solid #E2E8F0; }
+
+        .trace-picker-label { font-weight: bold; font-size: 0.9rem; margin-bottom: 8px; text-align: center; }
+
+        .trace-grid-select { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; width: 100%; -webkit-overflow-scrolling: touch; }
+
+        .trace-select-item {
+            background: white; border: 2px solid #E2E8F0; padding: 6px 12px;
+            font-size: 36px; font-weight: bold; border-radius: 12px; cursor: pointer;
+            min-width: 65px; text-align: center; line-height: 1.1;
+        }
+
+        .story-select-item {
+            background: white; border: 2px solid #E2E8F0; padding: 8px 14px;
+            font-size: 1rem; font-weight: bold; border-radius: 12px; cursor: pointer;
+            white-space: nowrap; text-align: center;
+        }
+
+        .story-select-item.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .trace-select-item.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .canvas-area-block {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 12px; background: #FFF; padding: 15px; border-radius: 20px;
+            border: 1px solid #E2E8F0;
+            width: 100%;
+            max-width: 340px;
+        }
+
+        #traceCanvas { background: #FFFFFF; border: 4px dashed var(--secondary); border-radius: 15px; touch-action: none; max-width: 100%; height: auto; }
+
+        .color-palette-tray { display: flex; gap: 8px; align-items: center; justify-content: center; background: #F1F5F9; padding: 6px 14px; border-radius: 50px; flex-wrap: wrap; }
+
+        .color-swatch-circle { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.15); }
+
+        .color-swatch-circle.active { transform: scale(1.18); border-color: #2F3E46; }
+
+        .trace-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; width: 100%; }
+
+        .clear-btn, .audio-trace-btn, .next-trace-btn { color: white; border: none; padding: 8px 16px; font-size: 0.9rem; font-weight: bold; border-radius: 50px; cursor: pointer; flex: 1; min-width: 90px; text-align: center; transition: var(--transition); }
+
+        .clear-btn { background: var(--primary); }
+        .audio-trace-btn { background: var(--secondary); }
+        .next-trace-btn { background: var(--primary); }
+
+        .quiz-container { text-align: center; display: flex; flex-direction: column; gap: 15px; }
+
+        .score-board { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: bold; background: #F0F4F8; padding: 10px 18px; border-radius: 50px; }
+
+        .target-fidel { font-size: 4.5rem; font-weight: bold; color: var(--primary); margin: 5px 0; cursor: pointer; }
+
+        .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+        .option-btn { background: #F0F4F8; border: 3px solid #D9E2EC; padding: 14px; font-size: 1.15rem; font-weight: bold; border-radius: 15px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+        .option-label-badge { font-size: 0.85rem; background: var(--primary); color: white; padding: 2px 6px; border-radius: 6px; margin-bottom: 6px; font-weight: 800; }
+
+        .comp-setup-card { background: #F8FAFC; border: 2px dashed #CBD5E1; border-radius: var(--border-radius); padding: 20px; max-width: 500px; margin: 0 auto; width: 100%; }
+
+        .comp-input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; text-align: left; }
+
+        .comp-input-group label { font-weight: bold; color: var(--text); font-size: 0.9rem; }
+
+        .comp-input-field { padding: 8px 12px; font-size: 0.95rem; border: 2px solid #E2E8F0; border-radius: 10px; outline: none; width: 100%; }
+
+        .comp-scoreboard-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+
+        .comp-player-score-pill { background: white; border: 2px solid #E2E8F0; padding: 6px 14px; border-radius: 50px; font-weight: bold; display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+
+        .comp-player-score-pill.active-turn { border-color: var(--primary); background: #FFF5F5; transform: scale(1.03); }
+
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 999; display: none; }
+
+        .msg-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border-radius: var(--border-radius); padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); z-index: 1000; text-align: center; display: none; width: 90%; max-width: 380px; }
+
+        .msg-box h4 { font-size: 1.5rem; margin-bottom: 8px; }
+        .msg-box p { font-size: 1rem; color: #627D98; margin-bottom: 15px; }
+        .msg-box button { background: var(--primary); color: white; border: none; padding: 8px 20px; font-size: 1rem; font-weight: bold; border-radius: 50px; cursor: pointer; }
+
+        .export-instructions { display: flex; flex-direction: column; gap: 15px; }
+
+        .export-section { background: #F1F5F9; border-left: 5px solid var(--secondary); padding: 12px; border-radius: 8px; }
+
+        .code-block-container { background: #1E293B; color: #F8FAFC; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 0.8rem; overflow-x: auto; margin-top: 6px; text-align: left; }
+
+        @media (min-width: 768px) {
+            body { padding: 25px; }
+            header { padding: 25px 20px; }
+            header h1 { font-size: 2.3rem; }
+            header p { font-size: 1rem; }
+            .canvas-area-block { max-width: 440px; padding: 25px; }
+            #traceCanvas { width: 360px; height: 360px; }
+            .target-fidel { font-size: 5.5rem; }
+            .option-btn { padding: 18px; font-size: 1.3rem; }
+            .view-panel { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>ኤያና የግዕዝ ፊደል ገበታ • Eyana Ge'ez Hub</h1>
+        <p>Learn letters, numbers, read short sentences, trace shapes, and play traditional games!</p>
+        <p style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px; font-weight: bold;">Share your comment: tomulukonjo@gmail.com</p>
+    </header>
+
+    <div class="theme-selector-container">
+        <span style="font-weight: bold; font-size: 0.9rem; color: var(--text);">🎨 App Theme:</span>
+        <button class="theme-btn active" id="theme-sunny" onclick="switchAppTheme('sunny')">Eyana's Fav 👧🏽</button>
+        <button class="theme-btn" id="theme-forest" onclick="switchAppTheme('forest')">Forest 🌳</button>
+        <button class="theme-btn" id="theme-space" onclick="switchAppTheme('space')">Space 🚀</button>
+        <button class="theme-btn" id="theme-ocean" onclick="switchAppTheme('ocean')">Ocean 🌊</button>
+    </div>
+
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('explore')">ሀ ሁ መቁጠሪያ</button>
+        <button class="tab-btn" onclick="switchTab('abugida')">አ ቡ ጊ ዳ</button>
+        <button class="tab-btn" onclick="switchTab('labialized')">ሏ ሟ ሯ ሷ</button>
+        <button class="tab-btn" onclick="switchTab('numbers')">የግዕዝ ቁጥሮች</button>
+        <button class="tab-btn" onclick="switchTab('geezwords')">ግዕዝ ተማሩ</button>
+        <button class="tab-btn" onclick="switchTab('sentences')">Short Sentences</button>
+        <button class="tab-btn" onclick="switchTab('memory')">Memory Cards</button>
+        <button class="tab-btn" onclick="switchTab('trace')">Tracing Room</button>
+        <button class="tab-btn" onclick="switchTab('quiz')">Single Quiz</button>
+        <button class="tab-btn" onclick="switchTab('competition')">Kids Competition</button>
+        <button class="tab-btn" onclick="switchTab('videos')">Short Stories</button>
+       <!-- <button class="tab-btn" onclick="switchTab('export')">Distribute App 📦</button>-->
+    </div>
+
+    <div id="explore-panel" class="view-panel active">
+        <div style="background: #F1F5F9; border: 1px solid #E2E8F0; padding: 12px; border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+            <span style="font-weight: bold; font-size: 0.95rem; color: var(--text);">🔊 Auto Reader Mode:</span>
+            <button id="btn-toggle-autoread" class="audio-trace-btn" style="background-color: var(--secondary); margin: 0; padding: 6px 16px; flex: none; width: auto;" onclick="toggleAutoRead()">Start Auto Read ▶️</button>
+            <div style="display: flex; align-items: center; gap: 6px; background: white; padding: 4px 12px; border-radius: 50px; border: 1px solid #E2E8F0;">
+                <button class="theme-btn" style="padding: 2px 8px; margin: 0;" onclick="adjustAutoReadSpeed(500)">Slower 🐌</button>
+                <span style="font-weight: bold; font-size: 0.9rem; color: var(--primary); min-width: 40px; text-align: center;" id="lbl-autoread-speed">2.0s</span>
+                <button class="theme-btn" style="padding: 2px 8px; margin: 0;" onclick="adjustAutoReadSpeed(-500)">Faster ⚡</button>
+            </div>
+        </div>
+        <div class="chart-container" id="chart-standard-series"></div>
+        <div class="detail-display">
+            <div class="detail-main" id="lbl-fidel">ሀ</div>
+            <div class="detail-info">
+                <h3 id="lbl-sound">HA</h3>
+            </div>
+        </div>
+    </div>
+
+    <div id="abugida-panel" class="view-panel">
+        <div style="text-align: center; margin-bottom: 12px;">
+            <h3 style="color: var(--primary); font-size: 1.25rem; margin-bottom: 4px;">የአቡጊዳ ቅደም ተከተል • Complete Abugida Matrix 🔄</h3>
+            <p style="color: #627D98; font-size: 0.85rem;">Explore the traditional phonetic vowel cross-shifting sequence chart containing all 34 rows!</p>
+        </div>
+        <div class="chart-container" id="chart-abugida-series"></div>
+        <div class="detail-display" style="background: linear-gradient(135deg, #FFE0B2, #FFCC80);">
+            <div class="detail-main" id="lbl-abugida-char" style="color: #E65100;">አ</div>
+            <div class="detail-info">
+                <h3 id="lbl-abugida-sound" style="color: #E65100;">A</h3>
+            </div>
+        </div>
+    </div>
+
+    <div id="labialized-panel" class="view-panel">
+        <div class="labialized-row" id="chart-labialized-series"></div>
+        <div class="detail-display" style="margin-top: 20px; background: linear-gradient(135deg, #E8F5E9, #C8E6C9);">
+            <div class="detail-main" id="lbl-fidel-lab" style="color: #2E7D32;">ሏ</div>
+            <div class="detail-info">
+                <h3 id="lbl-sound-lab" style="color: #2E7D32;">LWA</h3>
+            </div>
+        </div>
+    </div>
+
+    <div id="numbers-panel" class="view-panel">
+        <div class="labialized-row" id="chart-numbers-grid"></div>
+        <div class="detail-display" style="margin-top: 20px; background: linear-gradient(135deg, #FFF9C4, #FFF59D);">
+            <div class="detail-main" id="lbl-num-char" style="color: #F57F17;">፩</div>
+            <div class="detail-info">
+                <h3 id="lbl-num-meaning" style="color: #F57F17;">1 - ONE</h3>
+            </div>
+        </div>
+    </div>
+
+    <div id="geezwords-panel" class="view-panel">
+        <div style="text-align: center; margin-bottom: 15px;">
+            <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">ግዕዝ ተማሩ • Learn Ge'ez Vocabulary 📚</h3>
+            <p style="color: #627D98; font-size: 0.85rem;">Explore classical Ge'ez vocabulary words featuring standard Amharic definitions and accurate English translations!</p>
+        </div>
+        <div class="sentences-grid" id="chart-geezwords-container"></div>
+        <div class="detail-display" style="margin-top: 15px; background: linear-gradient(135deg, #FDF2E9, #F5CBA7);">
+            <div class="detail-info" style="text-align: center; width: 100%;">
+                <h3 id="lbl-geez-active-word" style="color: #A04000; font-size: 1.8rem; margin-bottom: 4px;">ሐሊብ</h3>
+                <p id="lbl-geez-active-translation" style="color: #BA4A00; font-weight: bold; font-size: 1.1rem;">አማርኛ: ወተት | English: "Milk"</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="sentences-panel" class="view-panel">
+        <div style="background: #F1F5F9; border: 1px solid #E2E8F0; padding: 12px; border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;">
+            <span style="font-weight: bold; font-size: 0.95rem; color: var(--text);">🗣️ Sentence Speech Speed:</span>
+            <button class="theme-btn" id="btn-sent-slow" onclick="setSentenceReadingSpeed(0.75)">Slow 🐌</button>
+            <button class="theme-btn active" id="btn-sent-normal" onclick="setSentenceReadingSpeed(1.0)">Normal 🚶</button>
+            <button class="theme-btn" id="btn-sent-fast" onclick="setSentenceReadingSpeed(1.35)">Fast ⚡</button>
+            <span style="border-left: 2px solid #CBD5E1; height: 20px; margin: 0 5px;"></span>
+            <button id="btn-sent-autoplay" class="audio-trace-btn" style="background-color: var(--secondary); margin: 0; padding: 6px 16px; flex: none; width: auto;" onclick="toggleSentenceAutoPlay()">Auto Play Sentences ▶️</button>
+        </div>
+        <div class="sentences-grid" id="chart-sentences-container"></div>
+        <div class="detail-display" style="margin-top: 15px; background: linear-gradient(135deg, #EAE8FF, #D2CFFF);">
+            <div class="detail-info" style="text-align: center; width: 100%;">
+                <h3 id="lbl-sent-active-amharic" style="color: #4C1D95; font-size: 1.3rem; margin-bottom: 4px;">ኳስ መጫወት እወዳለሁ።</h3>
+                <p id="lbl-sent-active-english" style="color: #5B21B6; font-weight: bold; font-size: 0.9rem;">"I love playing ball."</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="memory-panel" class="view-panel">
+        <div style="text-align: center; margin-bottom: 10px;">
+            <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">Fidel Memory Match-up Game 🧠</h3>
+            <p style="color: #627D98; font-size: 0.85rem; margin-bottom: 12px;">Flip cards over to look for matching pairs of letters and listen to their sounds!</p>
+            <div style="margin-bottom: 15px; display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;">
+                <button class="theme-btn active" id="btn-size-12" onclick="setMemoryGameMatrixSize(6, 4)">Easy (12 Cards) 🟢</button>
+                <button class="theme-btn" id="btn-size-16" onclick="setMemoryGameMatrixSize(8, 4)">Medium (16 Cards) 🟡</button>
+                <button class="theme-btn" id="btn-size-24" onclick="setMemoryGameMatrixSize(12, 6)">Hard (24 Cards) 🟠</button>
+                <button class="theme-btn" id="btn-size-36" onclick="setMemoryGameMatrixSize(18, 6)">Expert (36 Cards) 🔴</button>
+            </div>
+            <button class="audio-trace-btn" style="background-color: var(--primary); flex: none; width: auto; padding: 8px 24px;" onclick="initMemoryGame()">Mix & Shuffle Cards 🔄</button>
+        </div>
+        <div class="memory-grid" id="memory-game-grid"></div>
+    </div>
+
+    <div id="trace-panel" class="view-panel">
+        <div class="trace-workspace">
+            <div class="trace-picker-container">
+                <div class="trace-picker-label">🌟 Tap any character below to change your tracing practice board:</div>
+                <div class="trace-grid-select" id="trace-character-picker"></div>
+            </div>
+            <div class="canvas-area-block">
+                <div class="color-palette-tray">
+                    <span style="font-size:0.8rem; font-weight:bold; color:var(--text); margin-right:2px;">✏️ Pen Color:</span>
+                    <div class="color-swatch-circle active" style="background-color: #2F3E46;" onclick="setTracingMarkerColor('#2F3E46', this)"></div>
+                    <div class="color-swatch-circle" style="background-color: #EF4444;" onclick="setTracingMarkerColor('#EF4444', this)"></div>
+                    <div class="color-swatch-circle" style="background-color: #3B82F6;" onclick="setTracingMarkerColor('#3B82F6', this)"></div>
+                    <div class="color-swatch-circle" style="background-color: #10B981;" onclick="setTracingMarkerColor('#10B981', this)"></div>
+                    <div class="color-swatch-circle" style="background-color: #F59E0B;" onclick="setTracingMarkerColor('#F59E0B', this)"></div>
+                    <div class="color-swatch-circle" style="background-color: #8B5CF6;" onclick="setTracingMarkerColor('#8B5CF6', this)"></div>
+                    <div class="color-swatch-circle" style="background-color: #EC4899;" onclick="setTracingMarkerColor('#EC4899', this)"></div>
+                </div>
+                <canvas id="traceCanvas" width="280" height="280"></canvas>
+                <div class="trace-controls">
+                    <button class="clear-btn" onclick="clearTraceCanvas()">Clear Board ✨</button>
+                    <button class="audio-trace-btn" onclick="playCurrentTraceAudio()">Listen Sound 🔊</button>
+                    <button class="next-trace-btn" onclick="goToNextTracingFidel()">Next Character ➡️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-panel" class="view-panel">
+        <div class="quiz-container">
+            <div class="score-board">
+                <span>⭐ Streak: <span id="lbl-streak">0</span></span>
+                <span>Score: <span id="lbl-score">0</span></span>
+            </div>
+            <div style="font-size:1.15rem; font-weight: bold;">Listen to the sound and choose the matching Fidel:</div>
+            <div class="target-fidel" id="quiz-target" onclick="repeatQuizSound()">🔊</div>
+            <div>
+                <button class="audio-trace-btn" style="background-color: var(--secondary); margin: 0 auto 10px auto; padding: 6px 18px; font-size: 0.9rem; flex: none; width: auto;" onclick="repeatQuizSound()">Repeat Sound 🔊</button>
+            </div>
+            <div class="options-grid" id="quiz-options"></div>
+        </div>
+    </div>
+
+    <div id="competition-panel" class="view-panel">
+        <div class="quiz-container">
+            <div id="comp-setup-view">
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">Multiplayer Kids Competition 🏆</h3>
+                    <p style="color: #627D98; font-size: 0.85rem;">Equally distribute random listening audio questions between 2 or more children!</p>
+                </div>
+                <div class="comp-setup-card">
+                    <div class="comp-input-group">
+                        <label for="comp-kids-count">Select Number of Kids playing:</label>
+                        <select id="comp-kids-count" class="comp-input-field" onchange="generateCompetitionNameInputs()">
+                            <option value="2" selected>2 Players</option>
+                            <option value="3">3 Players</option>
+                            <option value="4">4 Players</option>
+                            <option value="5">5 Players</option>
+                            <option value="6">6 Players</option>
+                        </select>
+                    </div>
+                    <div class="comp-input-group">
+                        <label for="comp-turns-per-kid">Questions per Child:</label>
+                        <select id="comp-turns-per-kid" class="comp-input-field" onchange="calculateBalancedTotalQuestions()">
+                            <option value="3">3 Questions Each</option>
+                            <option value="5" selected>5 Questions Each</option>
+                            <option value="10">10 Questions Each</option>
+                        </select>
+                    </div>
+                    <div style="background: #EDF2F7; padding: 10px; border-radius: 10px; font-weight: bold; margin-bottom: 12px; color: var(--primary); text-align: center; font-size: 0.9rem;">
+                        🔢 Total Distributed Match Round Questions: <span id="lbl-comp-total-calc">10</span>
+                    </div>
+                    <div id="comp-names-container" style="display:flex; flex-direction:column; gap:10px; margin-bottom:15px;"></div>
+                    <button class="audio-trace-btn" style="background-color: var(--secondary); width: 100%; padding: 10px; font-size: 1rem; flex: none;" onclick="startCompetitionMatch()">Start Competition! 🚀</button>
+                </div>
+            </div>
+
+            <div id="comp-play-view" style="display: none;">
+                <div class="score-board" style="background: #FFF5F5; border: 2px solid var(--primary); margin-bottom: 12px;">
+                    <span id="lbl-comp-current-turn-announcement" style="color: var(--primary); font-size: 1.15rem;">👉 Turn: Child</span>
+                    <span id="lbl-comp-progress-counter" style="color: #627D98; font-size: 0.9rem;">Question 1 of 10</span>
+                </div>
+                <div class="comp-scoreboard-row" id="comp-active-scoreboard-tray"></div>
+                <div style="font-size:1.15rem; font-weight: bold; margin-top: 5px;">Listen carefully to the audio trace prompt:</div>
+                <div class="target-fidel" id="comp-quiz-target" onclick="repeatCompetitionSound()">🔊</div>
+                <div>
+                    <button class="audio-trace-btn" style="background-color: var(--secondary); margin: 0 auto 10px auto; padding: 6px 18px; font-size: 0.9rem; flex: none; width: auto;" onclick="repeatCompetitionSound()">Repeat Sound 🔊</button>
+                </div>
+                <div class="options-grid" id="comp-quiz-options"></div>
+            </div>
+
+            <div id="comp-results-view" style="display: none;">
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 4rem; margin-bottom: 8px;">👑</div>
+                    <h3 style="color: var(--primary); font-size: 1.7rem; margin-bottom: 8px;">Match Finished!</h3>
+                    <p style="color: #627D98; font-size: 1rem; margin-bottom: 20px;">Here is the final score leaderboard breakdown for everyone:</p>
+                    <div id="comp-leaderboard-ranking-list" style="max-width: 400px; margin: 0 auto 20px auto; display: flex; flex-direction: column; gap: 10px;"></div>
+                    <button class="audio-trace-btn" style="background-color: var(--primary); padding: 10px 30px; font-size: 1rem; flex: none; width: auto;" onclick="resetCompetitionToSetup()">Play New Match 🔄</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="videos-panel" class="view-panel">
+        <div style="text-align: center; margin-bottom: 15px;">
+            <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">የልጆች አጫጭር ታሪኮች • Recorded Short Stories 📺</h3>
+            <p style="color: #627D98; font-size: 0.85rem;">Tap any recorded story button below to play its video narration directly from your Audio folder!</p>
+        </div>
+        <div class="trace-workspace">
+            <div class="trace-picker-container">
+                <div class="trace-grid-select" id="story-video-picker-tray" style="padding: 5px 0;"></div>
+            </div>
+            <div class="canvas-area-block" style="width: 100%; max-width: 580px; display: flex; flex-direction: column; align-items: center;">
+                <video id="storyVideoPlayerFrame" controls style="width: 100%; max-width: 480px; border-radius: 15px; border: 4px solid var(--secondary); background: #000; display: block; margin-bottom: 12px;"></video>
+                <div style="font-size: 1.1rem; font-weight: bold; color: var(--text); background: #EBF8FF; padding: 6px 20px; border-radius: 50px; border: 1px solid #BEE3F8;" id="lbl-active-story-title">Story: Select a piece to play</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="export-panel" class="view-panel">
+        <div style="text-align: center; margin-bottom: 15px;">
+            <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">Progressive Web App & Standalone Tools 📦</h3>
+            <p style="color: #627D98; font-size: 0.85rem;">Download this app instantly to host on your HTTPS web folder as an installable smartphone PWA app.</p>
+        </div>
+        <div class="export-instructions">
+            <div class="export-section" style="background: linear-gradient(135deg, #DCFCE7, #BBF7D0); border-left-color: #16A34A; text-align: center; padding: 20px;">
+                <h3 style="color: #14532D; font-size: 1.25rem; margin-bottom: 8px;">Instant Offline App Download 📥</h3>
+                <p style="color: #166534; margin-bottom: 12px; font-weight: 500; font-size: 0.9rem;">Click the button below to download this complete PWA-registered application package as a standalone file immediately!</p>
+                <button class="next-trace-btn" style="background-color: #16A34A; font-size: 1rem; padding: 10px 28px; flex: none; width: auto;" onclick="downloadStandaloneAppFile()">Download App File (.html) 💾</button>
+            </div>
+            <div class="export-section">
+                <h3>1. Configuration parameters for Web Manifest (`manifest.json`)</h3>
+                <div class="code-block-container">{
+  "name": "Eyana Ge'ez Fidel Kids Hub",
+  "short_name": "Eyana Ge'ez Fidel",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F7FFF7",
+  "theme_color": "#800080"
+}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" id="ui-overlay"></div>
+<div class="msg-box" id="ui-msg-box">
+    <h4 id="msg-title">Correct! ትክክል!</h4>
+    <p id="msg-body">Great job! ጎበዝ!</p>
+    <button onclick="closeMessageBox()">Next 🚀</button>
+</div>
+
+<footer style="font-size: 0.75rem; text-align: center; color: #800080; margin-top: 20px; padding: 10px 0; width: 100%;">
+    🎨 Made with love for Kids Learning Ge'ez Alphabet. ኤያና ግዕዝ ፊደል! &copy; <script>document.write(new Date().getFullYear());</script> Mulukonjo.
+</footer>
+
+<script>
+    // PWA Service Worker Registration Routine - Safe against local file protocols
+    if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('PWA Service Worker Registered Successfully!'))
+                .catch(err => console.log('Service Worker registration skipped or restricted locally:', err));
+        });
+    } else {
+        console.log('PWA active service worker setup deferred (running in local sandbox environment).');
+    }
+
+    const ASSET_BASE_PATH = 'Audio/';
+
+    const compactFidels = [
+        { b: "h", r: "ሀሁሂሃሄህሆ", v: ["ha","hu","hi","ha","he","he","ho"] },
+        { b: "l", r: "ለሉሊላሌልሎ", v: ["le","lu","li","la","le","l","lo"] },
+        { b: "h", r: "ሐሑሒሓሔሕሖ", v: ["ha","hu","hi","ha","he","he","ho"] },
+        { b: "m", r: "መሙሚማሜምሞ" },
+        { b: "s", r: "ሠሡሢሣሤሥሦ" },
+        { b: "r", r: "ረሩሪራሬርሮ" },
+        { b: "s", r: "ሰሱሲሳሴስሶ" },
+        { b: "sh", r: "ሸሹሺሻሼሽሾ" },
+        { b: "q", r: "ቀቁቂቃቄቅቆ" },
+        { b: "b", r: "በቡቢባቤብቦ" },
+        { b: "t", r: "ተቱቲታቴትቶ" },
+        { b: "ch", r: "ቸቹቺቻቼችቾ" },
+        { b: "h", r: "ኀኁኂኃኄኅኆ", v: ["ha","hu","hi","ha","he","he","ho"] },
+        { b: "n", r: "ነኑኒናኔንኖ" },
+        { b: "ny", r: "ኘኙኚኛኜኝኞ" },
+        { b: "a", r: "አኡኢኣኤእኦ", v: ["a","u","i","a","e","e","o"] },
+        { b: "k", r: "ከኩኪካኬክኮ" },
+        { b: "x", r: "ኸኹኺኻኼኽኾ" },
+        { b: "w", r: "ወዉዊዋዌውዎ" },
+        { b: "a", r: "ዐዑዒዓዔዕዖ", v: ["a","u","i","a","e","e","o"] },
+        { b: "z", r: "ዘዙዚዛዜዝዞ" },
+        { b: "zh", r: "ዠዡዢዣዤዥዦ" }, 
+        { b: "y", r: "የዩዪያዬይዮ" },
+        { b: "d", r: "ደዱዲዳዴድዶ" },
+        { b: "j", r: "ጀጁጂጃጄጅጆ" },
+        { b: "g", r: "ገጉጊጋጌግጎ" },
+        { b: "t'", r: "ጠጡጢጣጤጥጦ" },
+        { b: "ch'", r: "ጨጩጪጫጬጭጮ" },
+        { b: "p'", r: "ጰጱጲጳጴጵጶ" },
+        { b: "ts'", r: "ጸጹጺጻጼጽጾ" },
+        { b: "ts'", r: "ፀፁፂፃፄፅፆ" },
+        { b: "f", r: "ፈፉፊፋፌፍፎ" },
+        { b: "p", r: "ፐፑፒፓፔፕፖ" },
+        { b: "v", r: "ቨቩቪቫቬቭቮ", v: ["ve","vu","vi","va","ve","v","vo"] }
+    ];
+
+    const standardFidelChart = {};
+    compactFidels.forEach(item => {
+        const chars = Array.from(item.r);
+        const rowKey = chars[0];
+        const rowArr = [];
+        const suffixes = ["e", "u", "i", "a", "e", "", "o"];
+        for (let i = 0; i < 7; i++) {
+            let snd = item.v ? item.v[i] : (item.b + suffixes[i]);
+            rowArr.push({ char: chars[i], sound: snd });
+        }
+        standardFidelChart[rowKey] = rowArr;
+    });
+
+    const abugidaConsonantOrder = ["አ", "በ", "ገ", "ደ", "ሀ", "ወ", "ዘ", "ዠ", "ሐ", "ጠ", "ጨ", "የ", "ከ", "ኸ", "ለ", "መ", "ነ", "ኘ", "ሠ", "ረ", "ሰ", "ሸ", "ቀ", "ተ", "ቸ", "ኀ", "ዐ", "ጀ", "ጰ", "ጸ", "ፀ", "ፈ", "ቨ", "ፐ"];
+    const abugidaRowsData = {};
+
+    const labializedCharacters = [
+        {char:"ሏ", sound:"lwa"}, {char:"ሟ", sound:"mwa"}, {char:"ሯ", sound:"rwa"}, {char:"ሷ", sound:"swa"}, {char:"ሿ", sound:"shua"}, 
+        {char:"ቋ", sound:"qua"}, {char:"ቧ", sound:"bua"}, {char:"ቷ", sound:"tua"}, {char:"ቿ", sound:"chwa"}, {char:"ኗ", sound:"nua"}, 
+        {char:"ኟ", sound:"nyua"}, 
+        {char:"ኋ", sound:"hua"}, {char:"ኳ", sound:"kua"}, {char:"ጓ", sound:"gua"}, {char:"ጧ", sound:"ttwa"}, 
+        {char:"ጯ", sound:"ccwa"}, {char:"ጷ", sound:"ppwa"}
+    ];
+
+    const geezNumbersData = [
+        {char:"፩", sound:"1 - አንድ"}, {char:"፪", sound:"2 - ሁለት"}, {char:"፫", sound:"3 - ሦስት"}, {char:"፬", sound:"4 - አራት"}, 
+        {char:"፭", sound:"5 - አምስት"}, {char:"፮", sound:"6 - ስድስት"}, {char:"፯", sound:"7 - ሰባት"}, {char:"፰", sound:"8 - ስምንት"}, 
+        {char:"፱", sound:"9 - ዘጠኝ"}, {char:"፲", sound:"10 - ዐስር"}, {char:"፲፩", sound:"11 - ዐስራ አንድ"}, {char:"፲፪", sound:"12 - ዐስራ ሁለት"}, 
+        {char:"፲፫", sound:"13 - ዐስራ ሦስት"}, {char:"፲፬", sound:"14 - ዐስራ ዐራት"}, {char:"፲፭", sound:"15 - ዐስራ አምስት"}, {char:"፲፮", sound:"16 - ዐስራ ስድስት"}, 
+        {char:"፲፯", sound:"17 - ዐስራ ሰባት"}, {char:"፲፰", sound:"18 - ዐስራ ስምንት"}, {char:"፲፱", sound:"19 - ዐስራ ዘጠኝ"}, {char:"፳", sound:"20 - ሃያ"}, 
+        {char:"፴", sound:"30 - ሰላሳ"}, {char:"፵", sound:"40 - አርባ"}, {char:"፶", sound:"50 - አምሳ"}, {char:"፷", sound:"60 - ስልሳ"}, 
+        {char:"፸", sound:"70 - ሰባ"}, {char:"፹", sound:"80 - ሰማኒያ"}, {char:"፺", sound:"90 - ዘጠና"}, {char:"፻", Guide:"100 - Hundred", sound:"100 - መቶ"}, 
+        {char:"፲፻", Guide:"1000 - Thousand", sound:"1,000 - ዐስርቱ ምእት"}, {char:"፼", Guide:"10000 - Ten Thousand", sound:"10,000 - እልፍ"},
+        {char:"፻፲፻", Guide:"100000 - Hundred Thousand", sound:"100,000 - አእላፍ"}
+    ];
+
+    const compactSentences = [
+        ["ኳስ መጫወት እወዳለሁ።", "I love playing ball.", "⚽"],
+        ["መጽሐፍ ማንበብ እወዳለሁ።", "I love reading books.", "📚"],
+        ["ትምህርት ቤት እሄዳለሁ።", "I go to school.", "🏫"],
+        ["ወተት እጠጣለሁ።", "I drink milk.", "🥛"],
+        ["እንጀራ እወዳለሁ።", "I love Enjera.", "🥞"],
+        ["ውሻዬን እወዳለሁ።", "I love my dog.", "🐶"],
+        ["ድመት አለችኝ።", "I have a cat.", "🐱"],
+        ["አበባው ያምራል።", "The flower is beautiful.", "🌸"],
+        ["ፀሐይ ጠዋት ትወጣለች።", "The sun shines.", "☀️"],
+        ["ውሃ እጠጣለሁ።", "I drink water.", "💧"],
+        ["እጄን እታጠባለሁ።", "I wash my hands.", "🧼"],
+        ["በሩጫ እወዳደራለሁ።", "I love running.", "🏃"],
+        ["ብስክሌት እነዳለሁ።", "I ride a bicycle.", "🚲"],
+        ["ወፍ ትበራለች።", "A bird flies.", "🐦"],
+        ["ዓሳ በውሃ ውስጥ ይዋኛል።", "A fish swims in water.", "🐟"],
+        ["አባቴን እወዳለሁ።", "I love my father.", "👨"],
+        ["እናቴን እወዳለሁ።", "I love my mother.", "👩"],
+        ["ወንድም አለኝ።", "I have a brother.", "👦"],
+        ["እህት አለችኝ።", "I have a sister.", "👧"],
+        ["ኬክ መብላት እወዳለሁ።", "I like to eat cake.", "🍰"],
+        ["ሙዝ እወዳለሁ።", "I love bananas.", "🍌"],
+        ["ፖም እበላለሁ።", "I eat an apple.", "🍎"],
+        ["ብርቱካን ጣፋጭ ነው።", "Orange is sweet.", "🍊"],
+        ["ሀምራዊ ቀለም እወዳለሁ።", "I love the color purple.", "🟣"],
+        ["ሰማዩ ሰማያዊ ነው።", "The sky is blue.", "🌌"],
+        ["ሣሩ አረንጓዴ ነው።", "The grass is green.", "🌱"],
+        ["ጨረቃ በምሽት ታበራለች።", "The moon shines at night.", "🌙"],
+        ["ከዋክብት ያበራሉ።", "Stars shine.", "⭐"],
+        ["ዝናብ እየዘነበ ነው።", "It is raining.", "🌧️"],
+        ["ዛፉ ትልቅ ነው።", "The tree is big.", "🌳"],
+        ["መኪናው ፈጣን ነው።", "The car is fast.", "🚗"],
+        ["አውሮፕላን እያየሁ ነው።", "I am watching an airplane.", "✈️"],
+        ["ባቡር ይሄዳል።", "The train moves.", "🚂"],
+        ["መዝሙር እሰማለሁ።", "I listen to song.", "🎵"],
+        ["ስዕል እቀባለሁ።", "I paint a picture.", "🎨"],
+        ["መጫወቻ አለኝ።", "I have a toy.", "🧸"],
+        ["ፈገግታ እወዳለሁ።", "I love to smile.", "😊"],
+        ["ቶሎ እተኛለሁ።", "I go to sleep early.", "🛏️"],
+        ["ማለዳ እነቃለሁ።", "I wake up early.", "🌅"],
+        ["ጥርሴን እቦርሻለሁ።", "I brush my teeth.", "🪥"],
+        ["ጫማዬን አደርጋለሁ።", "I put on my shoes.", "👟"],
+        ["ልብሴን እቀይራለሁ።", "I change my clothes.", "👕"],
+        ["ፊኛ እወዳለሁ።", "I love balloons.", "🎈"],
+        ["አይስክሬም እወዳለሁ።", "I love ice cream.", "🍦"],
+        ["ቸኮሌት እበላለሁ።", "I eat chocolate.", "🍫"],
+        ["ጥንቸል ትዘላለች።", "The rabbit hops.", "🐇"],
+        ["አንበሳ ያገሳል።", "The lion roars.", "🦁"],
+        ["ዝሆን ትልቅ ነው።", "The elephant is big.", "🐘"],
+        ["ቢራቢሮ ውብ ናት።", "The butterfly is beautiful.", "🦋"],
+        ["እኔ ጎበዝ ነኝ!", "I am smart and clever!", "🧠"]
+    ];
+
+    const geezWordsData = [
+        { geez: "ሐሊብ", amharic: "ወተት", english: "Milk" },
+        { geez: "ማይ", amharic: "ውሃ", english: "Water" },
+        { geez: "እሳት", amharic: "እሳት", english: "Fire" },
+        { geez: "ንጉሥ", amharic: "ንጉሥ", english: "King" },
+        { geez: "ብርሃን", amharic: "ብርሃን", english: "Light" },
+        { geez: "ጽጌ", amharic: "አበባ", english: "Flower" },
+        { geez: "ወርቅ", amharic: "ወርቅ", english: "Gold" },
+        { geez: "ሰማይ", amharic: "ሰማይ", english: "Sky" },
+        { geez: "ምድር", amharic: "ምድር", english: "Earth" },
+        { geez: "ኮከብ", amharic: "ኮከብ", english: "Star" },
+        { geez: "ፀሐይ", amharic: "ፀሐይ", english: "Sun" },
+        { geez: "ወሬዛ", amharic: "ጎበዝ ወጣት", english: "Young Man" },
+        { geez: "ብእሲ", amharic: "ሰው / ወንድ", english: "Man" },
+        { geez: "ብእሲት", amharic: "ሴት", english: "Woman" },
+        { geez: "ሕፃን", amharic: "ልጅ", english: "Child" },
+        { geez: "ቤት", amharic: "ቤት", english: "House" },
+        { geez: "መጽሐፍ", amharic: "መጽሐፍ", english: "Book" },
+        { geez: "ዓሣ", amharic: "ዓሣ", english: "Fish" },
+        { geez: "ዖፍ", amharic: "ወፍ", english: "Bird" },
+        { geez: "አንበሳ", amharic: "አንበሳ", english: "Lion" },
+        { geez: "ከልብ", amharic: "ውሻ", english: "Dog" },
+        { geez: "ድሙ", amharic: "ድመት", english: "Cat" },
+        { geez: "ዕንጨት", amharic: "ዕንጨት", english: "Wood" },
+        { geez: "ኅብስት", amharic: "ዳቦ", english: "Bread" },
+        { geez: "ወይን", amharic: "ወይን", english: "Wine" },
+        { geez: "ሐመር", amharic: "መርከብ", english: "Ship" },
+        { geez: "ገነት", amharic: "ገነት", english: "Paradise" },
+        { geez: "ደብር", amharic: "ተራራ", english: "Mountain" },
+        { geez: "ባሕር", amharic: "ባሕር", english: "Sea" },
+        { geez: "ፈረስ", amharic: "ፈረስ", english: "Horse" },
+        { geez: "አህያ", amharic: "አህያ", english: "Donkey" },
+        { geez: "ላህም", amharic: "ላም", english: "Cow" },
+        { geez: "በግዕ", amharic: "በግ", english: "Sheep" },
+        { geez: "ጠሊ", amharic: "ፍየል", english: "Goat" },
+        { geez: "ገራህት", amharic: "እርሻ", english: "Field" },
+        { geez: "ዕፅ", amharic: "ዛፍ", english: "Tree" },
+        { geez: "ፈውስ", amharic: "መድኃኒት", english: "Medicine" },
+        { geez: "ሰላም", amharic: "ሰላም", english: "Peace" },
+        { geez: "ፍቅር", amharic: "ፍቅር", english: "Love" },
+        { geez: "ሐሤት", amharic: "ደስታ", english: "Joy" },
+        { geez: "ኃይል", amharic: "ኃይል", english: "Power" },
+        { geez: "ጥበብ", amharic: "ጥበብ", english: "Wisdom" },
+        { geez: "ኵናት", amharic: "ጦር", english: "Spear" },
+        { geez: "እግር", amharic: "እግር", english: "Foot" },
+        { geez: "እደ", amharic: "እጅ", english: "Hand" },
+        { geez: "ዐይን", amharic: "ዐይን", english: "Eye" },
+        { geez: "ልብ", amharic: "ልብ", english: "Heart" },
+        { geez: "ርእስ", amharic: "ራስ", english: "Head" },
+        { geez: "ስን", amharic: "ጥርስ", english: "Tooth" },
+        { geez: "ክነፍ", amharic: "ክንፍ", english: "Wing" }
+    ];
+
+    const shortStoriesList = [
+        { title: "አጠቃቀም", filename: "How to", icon: "💡" },
+		{ title: "ሀ ሁ በ ፲ ቀን Day 1-5", filename: "HAHU_10DAYS_Day1_5", icon: "📚" },
+        { title: "ሀ ሁ በ ፲ ቀን Day 6-10", filename: "HAHU_10DAYS_Day6_10", icon: "📚" },
+		{ title: "ቀበሮውና ወይኑ", filename: "The_Fox_Grape", icon: "🦊🍇" },
+        { title: "Story በቅርቡ ፩", filename: "አንበሳውና አይጥዋ", icon: "🦁🐭" },
+        { title: "Story በቅርቡ ፪", filename: "ኤሊዋና ጥንቸሉ", icon: "🐢🐇" },
+        { title: "Story በቅርቡ ፬", filename: "የቁራው ጥማት", icon: "🐦💧" },
+        { title: "Story በቅርቡ ፭", filename: "አያ ጅቦና በጎቹ", icon: "🐑" },
+        { title: "Story በቅርቡ ፮", filename: "አያ ጅቦና በጎቹ", icon: "🐺🦊" }
+    ];
+
+    const shortSentencesData = compactSentences.map(s => ({ amharic: s[0], english: s[1], pic: s[2] }));
+
+    let score = 0, streak = 0, quizCurrentItem = null, quizAnsweredCorrectly = false;
+    let compPlayersList = [], compCurrentActivePlayerIndex = 0, compCurrentGlobalQuestionCounter = 1, compTotalConfiguredQuestions = 0, compCurrentMatchItem = null, isCompetitionActiveState = false;
+    let traceCanvas, traceCtx, isDrawing = false, activeTraceCharacter = "ሀ", activeMarkerColor = "#2F3E46", comprehensiveFidelList = [];
+    let firstCard = null, secondCard = null, lockBoard = false, memoryMatches = 0, memoryTargetPairsCount = 6, memoryTargetColumnsCount = 4;
+    let isAutoReading = false, autoReadTimeoutId = null, autoReadSpeedMs = 2000;
+    let globalAudioPlaybackRate = 1.0, isSentenceAutoPlaying = false, sentenceAutoPlayTimeoutId = null, currentSentenceIndex = 0;
+    const alphabetOptionLetterLabels = ["A", "B", "C", "D"];
+
+    function playRewardSoundEffect(type) {
+        try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            const ctx = new AudioCtx();
+            const osc = ctx.createOscillator(), gain = ctx.createGain();
+            osc.connect(gain); gain.connect(ctx.destination);
+            const now = ctx.currentTime;
+            if (type === 'correct' || type === 'match') {
+                osc.type = 'triangle'; osc.frequency.setValueAtTime(523.25, now); osc.frequency.setValueAtTime(659.25, now + 0.08); osc.frequency.setValueAtTime(783.99, now + 0.16);
+                gain.gain.setValueAtTime(0.15, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.start(now); osc.stop(now + 0.3);
+            } else if (type === 'victory') {
+                osc.type = 'sine'; osc.frequency.setValueAtTime(523.25, now); osc.frequency.setValueAtTime(783.99, now + 0.15); osc.frequency.setValueAtTime(1046.50, now + 0.3);
+                gain.gain.setValueAtTime(0.15, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                osc.start(now); osc.stop(now + 0.5);
+            }
+        } catch (e) { console.log(e); }
+    }
+
+    function switchAppTheme(themeKey) {
+        const root = document.documentElement;
+        document.querySelectorAll('.theme-selector-container .theme-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('theme-' + themeKey)?.classList.add('active');
+        const themes = {
+            sunny: ['#800080', '#4ECDC4', '#F7FFF7', '#2F3E46'],
+            forest: ['#2E7D32', '#81C784', '#F1F8E9', '#1B5E20'],
+            space: ['#3F51B5', '#00BCD4', '#E8EAF6', '#1A237E'],
+            ocean: ['#0077BE', '#F48FB1', '#FCE4EC', '#880E4F']
+        };
+        const t = themes[themeKey];
+        root.style.setProperty('--primary', t[0]); root.style.setProperty('--secondary', t[1]); root.style.setProperty('--background', t[2]); root.style.setProperty('--text', t[3]);
+    }
+
+    function setMemoryGameMatrixSize(pairsCount, columnsCount) {
+        memoryTargetPairsCount = pairsCount; memoryTargetColumnsCount = columnsCount;
+        document.querySelectorAll('[id^="btn-size-"]').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-size-' + (pairsCount * 2))?.classList.add('active');
+        initMemoryGame();
+    }
+
+    function playFidelAudio(charName) {
+        if (!charName) return;
+        try {
+            let filename = encodeURIComponent(charName);
+            
+            // Check if it matches a Ge'ez vocabulary word
+            const geezItem = geezWordsData.find(g => g.geez === charName);
+            if (geezItem) {
+                filename = geezItem.english.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '_');
+            } else {
+                // Check if it matches a labialized combination character
+                const labItem = labializedCharacters.find(l => l.char === charName);
+                if (labItem) {
+                    filename = labItem.sound;
+                } else {
+                    // Check if it matches an Amharic short sentence from your dataset
+                    const sentItem = shortSentencesData.find(s => s.amharic === charName);
+                    if (sentItem) {
+                        filename = sentItem.english.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '_');
+                    } else {
+                        // Check if it's a Ge'ez number from your dataset array list
+                        const numItem = geezNumbersData.find(n => n.char === charName);
+                        if (numItem) {
+                            filename = numItem.sound.split(' - ')[0].replace(/,/g, '');
+                        } else {
+                            // Dynamic grid generator loop mapping characters systematically
+                            for (let r = 0; r < compactFidels.length; r++) {
+                                const chars = Array.from(compactFidels[r].r);
+                                const cIdx = chars.indexOf(charName);
+                                if (cIdx !== -1) {
+                                    const rowNum = r + 1;
+                                    const colLetter = String.fromCharCode(65 + cIdx); // 0->A, 1->B...
+                                    filename = `${rowNum}${colLetter}`;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            const p = ASSET_BASE_PATH + filename + '.mp3';
+            const audio = new Audio(p);
+            audio.playbackRate = globalAudioPlaybackRate;
+            audio.addEventListener('play', () => {
+                audio.playbackRate = globalAudioPlaybackRate;
+            });
+            audio.play().catch(e => console.log("Offline background audio player hook loaded"));
+        } catch (e) { console.error(e); }
+    }
+
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+        if (isSentenceAutoPlaying) toggleSentenceAutoPlay();
+        
+        const player = document.getElementById('storyVideoPlayerFrame');
+        if (player) player.pause();
+
+        const tabIdx = { explore:0, abugida:1, labialized:2, numbers:3, geezwords:4, sentences:5, memory:6, trace:7, quiz:8, competition:9, videos:10, export:11 }[tab];
+        document.querySelectorAll('.tab-btn')[tabIdx]?.classList.add('active');
+        document.getElementById(tab + '-panel')?.classList.add('active');
+        if (tab === 'memory') initMemoryGame();
+        if (tab === 'trace') setTimeout(() => updateTracingGuide(activeTraceCharacter), 50);
+        if (tab === 'quiz') setupNewQuestion();
+        if (tab === 'competition' && !isCompetitionActiveState) resetCompetitionToSetup();
+        if (tab === 'videos' && player && !player.src && shortStoriesList.length > 0) selectStoryVideo(0);
+    }
+
+    function renderStandardChart() {
+        const container = document.getElementById('chart-standard-series');
+        container.innerHTML = '';
+        Object.keys(standardFidelChart).forEach(k => {
+            const row = document.createElement('div'); row.className = 'series-row';
+            standardFidelChart[k].forEach(item => {
+                const card = document.createElement('div'); card.className = 'fidel-card'; card.id = 'fidel-card-' + item.char;
+                card.innerHTML = `<div class="char">${item.char}</div><div class="sound">${item.sound.toUpperCase()}</div>`;
+                card.onclick = () => {
+                    document.getElementById('lbl-fidel').innerText = item.char;
+                    document.getElementById('lbl-sound').innerText = item.sound.toUpperCase();
+                    playFidelAudio(item.char); activeTraceCharacter = item.char;
+                    document.querySelectorAll('.fidel-card').forEach(c => c.classList.remove('reading-active'));
+                    card.classList.add('reading-active');
+                };
+                row.appendChild(card);
+            });
+            container.appendChild(row);
+        });
+    }
+
+    function renderAbugidaChart() {
+        const abugidaContainer = document.getElementById('chart-abugida-series');
+        if (abugidaContainer) {
+            abugidaContainer.innerHTML = '';
+            Object.keys(abugidaRowsData).forEach(k => {
+                const row = document.createElement('div'); row.className = 'series-row';
+                abugidaRowsData[k].forEach(item => {
+                    if (!item) return;
+                    const card = document.createElement('div'); card.className = 'fidel-card';
+                    card.innerHTML = `<div class="char">${item.char}</div><div class="sound">${item.sound.toUpperCase()}</div>`;
+                    card.onclick = () => {
+                        document.getElementById('lbl-abugida-char').innerText = item.char;
+                        document.getElementById('lbl-abugida-sound').innerText = item.sound.toUpperCase();
+                        playFidelAudio(item.char); activeTraceCharacter = item.char;
+                    };
+                    row.appendChild(card);
+                });
+                abugidaContainer.appendChild(row);
+            });
+        }
+    }
+
+    function renderLabializedChart() {
+        const container = document.getElementById('chart-labialized-series');
+        container.innerHTML = '';
+        labializedCharacters.forEach(item => {
+            const card = document.createElement('div'); card.className = 'fidel-card';
+            card.innerHTML = `<div class="char">${item.char}</div><div class="sound">${item.sound.toUpperCase()}</div>`;
+            card.onclick = () => {
+                document.getElementById('lbl-fidel-lab').innerText = item.char;
+                document.getElementById('lbl-sound-lab').innerText = item.sound.toUpperCase();
+                playFidelAudio(item.char); activeTraceCharacter = item.char;
+            };
+            container.appendChild(card);
+        });
+    }
+
+    function renderNumbersChart() {
+        const container = document.getElementById('chart-numbers-grid');
+        container.innerHTML = '';
+        geezNumbersData.forEach(item => {
+            const card = document.createElement('div'); card.className = 'fidel-card';
+            card.innerHTML = `<div class="char">${item.char}</div><div class="sound">${item.sound.split(' - ')[0]}</div>`;
+            card.onclick = () => {
+                document.getElementById('lbl-num-char').innerText = item.char;
+                document.getElementById('lbl-num-meaning').innerText = item.sound.toUpperCase();
+                playFidelAudio(item.char); activeTraceCharacter = item.char;
+            };
+            container.appendChild(card);
+        });
+    }
+
+    function renderGeezWordsChart() {
+        const container = document.getElementById('chart-geezwords-container');
+        if (!container) return;
+        container.innerHTML = '';
+        geezWordsData.forEach(item => {
+            const card = document.createElement('div'); card.className = 'sentence-card';
+            card.innerHTML = `<div class="pic-representation">📜</div><div class="sentence-amharic" style="font-size:1.4rem; color:var(--primary);">${item.geez}</div><div class="sentence-amharic" style="font-size:1rem; color:#2F3E46;">${item.amharic}</div><div class="sentence-english">${item.english}</div>`;
+            card.onclick = () => {
+                document.getElementById('lbl-geez-active-word').innerText = item.geez;
+                document.getElementById('lbl-geez-active-translation').innerText = `አማርኛ: ${item.amharic} | English: "${item.english}"`;
+                playFidelAudio(item.geez);
+            };
+            container.appendChild(card);
+        });
+    }
+
+    function renderShortSentences() {
+        const container = document.getElementById('chart-sentences-container');
+        container.innerHTML = '';
+        shortSentencesData.forEach((item, idx) => {
+            const card = document.createElement('div'); card.className = 'sentence-card';
+            card.innerHTML = `<div class="pic-representation">${item.pic}</div><div class="sentence-amharic">${item.amharic}</div><div class="sentence-english">${item.english}</div>`;
+            card.onclick = () => {
+                currentSentenceIndex = idx;
+                document.getElementById('lbl-sent-active-amharic').innerText = item.amharic;
+                document.getElementById('lbl-sent-active-english').innerText = `"${item.english}"`;
+                playFidelAudio(item.amharic);
+            };
+            container.appendChild(card);
+        });
+    }
+
+    function initMemoryGame() {
+        const container = document.getElementById('memory-game-grid'); container.innerHTML = '';
+        container.style.gridTemplateColumns = `repeat(${memoryTargetColumnsCount}, 1fr)`;
+        firstCard = null; secondCard = null; lockBoard = false; memoryMatches = 0;
+        const pool = getAllItems(); if (pool.length < memoryTargetPairsCount) return;
+        const shuf = [...pool].sort(() => Math.random() - 0.5).slice(0, memoryTargetPairsCount);
+        let board = []; shuf.forEach(i => { board.push({...i}), board.push({...i}); });
+        board.sort(() => Math.random() - 0.5);
+        board.forEach(item => {
+            const card = document.createElement('div'); card.className = 'memory-card';
+            card.innerHTML = `<div class="memory-card-inner"><div class="memory-card-front">❓</div><div class="memory-card-back"><div style="font-size:32px;font-weight:bold;">${item.char}</div></div></div>`;
+            card.onclick = () => {
+                if (lockBoard || card === firstCard || card.classList.contains('flipped')) return;
+                card.classList.add('flipped'); playFidelAudio(item.char);
+                if (!firstCard) { firstCard = card; return; }
+                secondCard = card; lockBoard = true;
+                if (firstCard.innerHTML === secondCard.innerHTML) {
+                    memoryMatches++; score += 20; document.getElementById('lbl-score').innerText = score;
+                    playRewardSoundEffect('match'); firstCard = null; secondCard = null; lockBoard = false;
+                    if (memoryMatches === memoryTargetPairsCount) {
+                        setTimeout(() => { playRewardSoundEffect('victory'); showMessage("Victory! 🎉", "Matched all items correctly!"); }, 400);
+                    }
+                } else {
+                    setTimeout(() => { firstCard.classList.remove('flipped'); secondCard.classList.remove('flipped'); firstCard = null; secondCard = null; lockBoard = false; }, 1000);
+                }
+            };
+            container.appendChild(card);
+        });
+    }
+
+    function setTracingMarkerColor(hex, el) {
+        activeMarkerColor = hex; document.querySelectorAll('.color-swatch-circle').forEach(sw => sw.classList.remove('active')); el?.classList.add('active');
+    }
+
+    function initTracingSystem() {
+        traceCanvas = document.getElementById('traceCanvas'); if (!traceCanvas) return;
+        traceCtx = traceCanvas.getContext('2d');
+        traceCanvas.addEventListener('mousedown', startTrace); traceCanvas.addEventListener('mousemove', drawTrace);
+        traceCanvas.addEventListener('mouseup', stopTrace); traceCanvas.addEventListener('mouseleave', stopTrace);
+        traceCanvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+        traceCanvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+        traceCanvas.addEventListener('touchend', stopTrace);
+
+        const picker = document.getElementById('trace-character-picker'); picker.innerHTML = '';
+        comprehensiveFidelList = [];
+        Object.keys(standardFidelChart).forEach(k => standardFidelChart[k].forEach(f => comprehensiveFidelList.push(f.char)));
+        labializedCharacters.forEach(i => { if(i.char) comprehensiveFidelList.push(i.char); });
+        geezNumbersData.forEach(i => comprehensiveFidelList.push(i.char));
+
+        comprehensiveFidelList.forEach(letter => {
+            const btn = document.createElement('div'); btn.className = 'trace-select-item'; btn.id = 'trace-btn-' + letter;
+            if (letter === activeTraceCharacter) btn.classList.add('active');
+            btn.innerText = letter;
+            btn.onclick = () => selectTracingCharacter(letter);
+            picker.appendChild(btn);
+        });
+    }
+
+    function selectTracingCharacter(l) {
+        document.querySelectorAll('#trace-character-picker .trace-select-item').forEach(i => i.classList.remove('active'));
+        document.getElementById('trace-btn-' + l)?.classList.add('active');
+        document.getElementById('trace-btn-' + l)?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        activeTraceCharacter = l; updateTracingGuide(l); playFidelAudio(l);
+    }
+
+    function goToNextTracingFidel() {
+        let idx = comprehensiveFidelList.indexOf(activeTraceCharacter);
+        let nextIdx = (idx + 1) % comprehensiveFidelList.length;
+        selectTracingCharacter(comprehensiveFidelList[nextIdx]);
+    }
+
+    function updateTracingGuide(c) {
+        if (!traceCtx) return; traceCtx.clearRect(0, 0, traceCanvas.width, traceCanvas.height);
+        traceCtx.fillStyle = '#F1F5F9'; traceCtx.font = 'bold 180px "Segoe UI"'; traceCtx.textAlign = 'center'; traceCtx.textBaseline = 'middle';
+        traceCtx.fillText(c, traceCanvas.width / 2, traceCanvas.height / 2 + 10);
+    }
+
+    function clearTraceCanvas() { updateTracingGuide(activeTraceCharacter); }
+    function playCurrentTraceAudio() { playFidelAudio(activeTraceCharacter); }
+
+    function initVideoSystem() {
+        const tray = document.getElementById('story-video-picker-tray');
+        if (!tray) return;
+        tray.innerHTML = '';
+        shortStoriesList.forEach((story, idx) => {
+            const btn = document.createElement('div'); 
+            btn.className = 'story-select-item'; 
+            btn.id = 'story-btn-' + idx;
+            btn.innerHTML = `<span style="margin-right:5px;">${story.icon || '📺'}</span> ${story.title}`;
+            btn.onclick = () => selectStoryVideo(idx);
+            tray.appendChild(btn);
+        });
+    }
+
+    function selectStoryVideo(index) {
+        document.querySelectorAll('#story-video-picker-tray .story-select-item').forEach(i => i.classList.remove('active'));
+        document.getElementById('story-btn-' + index)?.classList.add('active');
+        document.getElementById('story-btn-' + index)?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        
+        const story = shortStoriesList[index];
+        document.getElementById('lbl-active-story-title').innerText = "Playing Story: " + story.title;
+        const player = document.getElementById('storyVideoPlayerFrame');
+        if (player) {
+            player.src = ASSET_BASE_PATH + encodeURIComponent(story.filename) + '.mp4';
+            player.load();
+        }
+    }
+
+    function startTrace(e) { isDrawing = true; const c = getCanvasCoords(e); traceCtx.beginPath(); traceCtx.moveTo(c.x, c.y); traceCtx.strokeStyle = activeMarkerColor; traceCtx.lineWidth = 10; traceCtx.lineCap = 'round'; }
+    function drawTrace(e) { if (!isDrawing) return; const c = getCanvasCoords(e); traceCtx.lineTo(c.x, c.y); traceCtx.stroke(); }
+    function handleTouchStart(e) { e.preventDefault(); isDrawing = true; const c = getTouchCoords(e); traceCtx.beginPath(); traceCtx.moveTo(c.x, c.y); traceCtx.strokeStyle = activeMarkerColor; traceCtx.lineWidth = 10; traceCtx.lineCap = 'round'; }
+    function handleTouchMove(e) { e.preventDefault(); if (!isDrawing) return; const c = getTouchCoords(e); traceCtx.lineTo(c.x, c.y); traceCtx.stroke(); }
+    function stopTrace() { isDrawing = false; }
+
+    function getAllItems() {
+        let arr = []; Object.keys(standardFidelChart).forEach(k => arr = arr.concat(standardFidelChart[k]));
+        return arr.concat(labializedCharacters.filter(i => i.char));
+    }
+
+    function setupNewQuestion() {
+        const list = getAllItems(); if (!list.length) return;
+        quizCurrentItem = list[Math.floor(Math.random() * list.length)];
+        document.getElementById('quiz-target').innerText = "🔊"; playFidelAudio(quizCurrentItem.char);
+        let choices = [quizCurrentItem.char];
+        while (choices.length < 4) {
+            let r = list[Math.floor(Math.random() * list.length)].char;
+            if (!choices.includes(r)) choices.push(r);
+        }
+        choices.sort(() => Math.random() - 0.5);
+        const grid = document.getElementById('quiz-options'); grid.innerHTML = '';
+        choices.forEach((c, idx) => {
+            const btn = document.createElement('button'); btn.className = 'option-btn';
+            btn.innerHTML = `<span class="option-label-badge">${alphabetOptionLetterLabels[idx]}</span><span style="font-size:2.2rem;font-weight:bold;">${c}</span>`;
+            btn.onclick = () => {
+                if (c === quizCurrentItem.char) {
+                    score += 10; streak++; playRewardSoundEffect('correct');
+                    quizAnsweredCorrectly = true;
+                    showMessage("Correct! ትክክል! 🎉", `Option ${alphabetOptionLetterLabels[idx]} matches perfectly.`);
+                } else {
+                    streak = 0;
+                    quizAnsweredCorrectly = false;
+                    showMessage("Try Again! 🤔", "Listen closely to the sound.");
+                }
+                document.getElementById('lbl-score').innerText = score;
+                document.getElementById('lbl-streak').innerText = streak;
+            };
+            grid.appendChild(btn);
+        });
+    }
+
+    function repeatQuizSound() { if (quizCurrentItem) playFidelAudio(quizCurrentItem.char); }
+
+    function generateCompetitionNameInputs() {
+        const count = parseInt(document.getElementById('comp-kids-count').value);
+        const c = document.getElementById('comp-names-container'); c.innerHTML = '';
+        for (let i = 1; i <= count; i++) {
+            c.innerHTML += `<div class="comp-input-group"><label>Kid #${i} Name:</label><input type="text" id="comp-pname-${i}" class="comp-input-field" value="Child ${i}"></div>`;
+        }
+        calculateBalancedTotalQuestions();
+    }
+
+    function calculateBalancedTotalQuestions() {
+        compTotalConfiguredQuestions = parseInt(document.getElementById('comp-kids-count').value) * parseInt(document.getElementById('comp-turns-per-kid').value);
+        document.getElementById('lbl-comp-total-calc').innerText = compTotalConfiguredQuestions;
+    }
+
+    function startCompetitionMatch() {
+        const count = parseInt(document.getElementById('comp-kids-count').value); compPlayersList = [];
+        for (let i = 1; i <= count; i++) {
+            let n = document.getElementById(`comp-pname-${i}`).value.trim() || `Child ${i}`;
+            compPlayersList.push({ name: n, score: 0 });
+        }
+        compCurrentActivePlayerIndex = 0; compCurrentGlobalQuestionCounter = 1; isCompetitionActiveState = true;
+        document.getElementById('comp-setup-view').style.display = 'none';
+        document.getElementById('comp-play-view').style.display = 'block';
+        setupCompetitionQuestionTurn();
+    }
+
+    function renderCompetitionScoreboardPills() {
+        const tray = document.getElementById('comp-active-scoreboard-tray'); tray.innerHTML = '';
+        compPlayersList.forEach((p, idx) => {
+            tray.innerHTML += `<div class="comp-player-score-pill ${idx === compCurrentActivePlayerIndex ? 'active-turn' : ''}">👤 <span>${p.name}:</span> <strong>${p.score}</strong></div>`;
+        });
+    }
+
+    function setupCompetitionQuestionTurn() {
+        const pool = getAllItems(); compCurrentMatchItem = pool[Math.floor(Math.random() * pool.length)];
+        const activeChild = compPlayersList[compCurrentActivePlayerIndex];
+        document.getElementById('lbl-comp-current-turn-announcement').innerText = `👉 Turn: ${activeChild.name}`;
+        document.getElementById('lbl-comp-progress-counter').innerText = `Question ${compCurrentGlobalQuestionCounter} of ${compTotalConfiguredQuestions}`;
+        playFidelAudio(compCurrentMatchItem.char);
+
+        let choices = [compCurrentMatchItem.char];
+        while (choices.length < 4) {
+            let r = pool[Math.floor(Math.random() * pool.length)].char;
+            if (!choices.includes(r)) choices.push(r);
+        }
+        choices.sort(() => Math.random() - 0.5);
+        const grid = document.getElementById('comp-quiz-options'); grid.innerHTML = '';
+        choices.forEach((c, idx) => {
+            const btn = document.createElement('button'); btn.className = 'option-btn';
+            btn.innerHTML = `<span class="option-label-badge" style="background:var(--secondary);">${alphabetOptionLetterLabels[idx]}</span><span style="font-size:2.2rem;font-weight:bold;">${c}</span>`;
+            btn.onclick = () => {
+                if (c === compCurrentMatchItem.char) {
+                    activeChild.score += 10; playRewardSoundEffect('correct');
+                    showMessage("Correct! 🎉", `${activeChild.name} got it right!`);
+                } else {
+                    showMessage("Nice try! 🤔", `The correct answer was ${compCurrentMatchItem.char}`);
+                }
+                compCurrentGlobalQuestionCounter++;
+                compCurrentActivePlayerIndex = (compCurrentActivePlayerIndex + 1) % compPlayersList.length;
+            };
+            grid.appendChild(btn);
+        });
+        renderCompetitionScoreboardPills();
+    }
+
+    function repeatCompetitionSound() { if (compCurrentMatchItem) playFidelAudio(compCurrentMatchItem.char); }
+
+    function advanceCompetitionLoopAfterPopupClose() {
+        if (compCurrentGlobalQuestionCounter > compTotalConfiguredQuestions) {
+            document.getElementById('comp-play-view').style.display = 'none';
+            document.getElementById('comp-results-view').style.display = 'block';
+            playRewardSoundEffect('victory');
+            const list = document.getElementById('comp-leaderboard-ranking-list'); list.innerHTML = '';
+            const ranked = [...compPlayersList].sort((a,b) => b.score - a.score);
+            const top = ranked[0]?.score || 0;
+            ranked.forEach((p, idx) => {
+                let m = p.score === top ? "🥇 Winner" : (idx === 1 ? "🥈 2nd" : "🥉 3rd");
+                list.innerHTML += `<div class="comp-player-score-pill" style="justify-content:space-between;width:100%;"><span>${m} • <strong>${p.name}</strong></span> <span>${p.score} pts</span></div>`;
+            });
+        } else {
+            setupCompetitionQuestionTurn();
+        }
+    }
+
+    function resetCompetitionToSetup() {
+        isCompetitionActiveState = false; document.getElementById('comp-play-view').style.display = 'none';
+        document.getElementById('comp-results-view').style.display = 'none'; document.getElementById('comp-setup-view').style.display = 'block';
+        generateCompetitionNameInputs();
+    }
+
+    function showMessage(title, text) {
+        document.getElementById('msg-title').innerText = title; document.getElementById('msg-body').innerText = text;
+        document.getElementById('ui-overlay').style.display = 'block'; document.getElementById('ui-msg-box').style.display = 'block';
+    }
+
+    function closeMessageBox() {
+        document.getElementById('ui-msg-box').style.display = 'none'; document.getElementById('ui-overlay').style.display = 'none';
+        if (document.getElementById('competition-panel').classList.contains('active') && isCompetitionActiveState) {
+            advanceCompetitionLoopAfterPopupClose();
+        } else if (document.getElementById('quiz-panel').classList.contains('active')) {
+            if (quizAnsweredCorrectly) {
+                setupNewQuestion();
+            }
+        }
+    }
+
+    function downloadStandaloneAppFile() {
+        const blob = new Blob(["<!DOCTYPE html>\n" + document.documentElement.outerHTML], { type: "text/html;charset=utf-8" });
+        const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "index.html"; a.click();
+    }
+
+    function toggleAutoRead() {
+        isAutoReading = !isAutoReading;
+        const btn = document.getElementById('btn-toggle-autoread');
+        if (isAutoReading) {
+            btn.innerHTML = "Stop Auto Read ⏸️"; btn.style.backgroundColor = "#EF4444"; runAutoReadTick();
+        } else {
+            btn.innerHTML = "Start Auto Read ▶️"; btn.style.backgroundColor = "var(--secondary)";
+            if (autoReadTimeoutId) clearTimeout(autoReadTimeoutId);
+            document.querySelectorAll('.fidel-card').forEach(c => c.classList.remove('reading-active'));
+        }
+    }
+
+    function runAutoReadTick() {
+        if (!isAutoReading) return;
+        let letter = document.getElementById('lbl-fidel').innerText;
+        let idx = comprehensiveFidelList.indexOf(letter);
+        let nextIdx = (idx + 1) % comprehensiveFidelList.length;
+        const nextLetter = comprehensiveFidelList[nextIdx];
+
+        Object.keys(standardFidelChart).forEach(k => {
+            standardFidelChart[k].forEach(item => {
+                if (item.char === nextLetter) {
+                    document.getElementById('lbl-fidel').innerText = item.char;
+                    document.getElementById('lbl-sound').innerText = item.sound.toUpperCase();
+                }
+            });
+        });
+
+        playFidelAudio(nextLetter); activeTraceCharacter = nextLetter;
+        document.querySelectorAll('.fidel-card').forEach(c => c.classList.remove('reading-active'));
+        const targetCard = document.getElementById('fidel-card-' + nextLetter);
+        if (targetCard) {
+            targetCard.classList.add('reading-active');
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+        if (document.getElementById('trace-panel').classList.contains('active')) selectTracingCharacter(nextLetter);
+        autoReadTimeoutId = setTimeout(runAutoReadTick, autoReadSpeedMs);
+    }
+
+    function adjustAutoReadSpeed(delta) {
+        autoReadSpeedMs = Math.max(500, Math.min(5000, autoReadSpeedMs + delta));
+        document.documentElement.querySelector('#lbl-autoread-speed').innerText = (autoReadSpeedMs / 1000).toFixed(1) + 's';
+    }
+
+    function setSentenceReadingSpeed(rate) {
+        globalAudioPlaybackRate = rate;
+        document.getElementById('btn-sent-slow').classList.remove('active');
+        document.getElementById('btn-sent-normal').classList.remove('active');
+        document.getElementById('btn-sent-fast').classList.remove('active');
+        if (rate === 0.75) document.getElementById('btn-sent-slow').classList.add('active');
+        if (rate === 1.0) document.getElementById('btn-sent-normal').classList.add('active');
+        if (rate === 1.35) document.getElementById('btn-sent-fast').classList.add('active');
+        
+        const txt = document.getElementById('lbl-sent-active-amharic').innerText;
+        if (txt && !isSentenceAutoPlaying) playFidelAudio(txt);
+    }
+
+    function toggleSentenceAutoPlay() {
+        isSentenceAutoPlaying = !isSentenceAutoPlaying;
+        const btn = document.getElementById('btn-sent-autoplay');
+        if (isSentenceAutoPlaying) {
+            btn.innerHTML = "Stop Auto Play ⏸️";
+            btn.style.backgroundColor = "#EF4444";
+            runSentenceAutoPlayTick();
+        } else {
+            btn.innerHTML = "Auto Play Sentences ▶️";
+            btn.style.backgroundColor = "var(--secondary)";
+            if (sentenceAutoPlayTimeoutId) clearTimeout(sentenceAutoPlayTimeoutId);
+        }
+    }
+
+    function runSentenceAutoPlayTick() {
+        if (!isSentenceAutoPlaying) return;
+        if (currentSentenceIndex >= shortSentencesData.length) currentSentenceIndex = 0;
+        
+        const item = shortSentencesData[currentSentenceIndex];
+        document.getElementById('lbl-sent-active-amharic').innerText = item.amharic;
+        document.getElementById('lbl-sent-active-english').innerText = `"${item.english}"`;
+        playFidelAudio(item.amharic);
+        
+        const targetCard = document.getElementById('chart-sentences-container').children[currentSentenceIndex];
+        if (targetCard) {
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        currentSentenceIndex++;
+        let d = globalAudioPlaybackRate === 0.75 ? 5500 : (globalAudioPlaybackRate === 1.35 ? 3000 : 4000);
+        sentenceAutoPlayTimeoutId = setTimeout(runSentenceAutoPlayTick, d);
+    }
+
+    function getCanvasCoords(evt) { 
+        const r = traceCanvas.getBoundingClientRect(); 
+        return { 
+            x: (evt.clientX - r.left) * (traceCanvas.width / r.width), 
+            y: (evt.clientY - r.top) * (traceCanvas.height / r.height) 
+        }; 
+    }
+    
+    // Exact touch scale alignment formulas to eliminate cursor offsets
+    function getTouchCoords(evt) { 
+        const r = traceCanvas.getBoundingClientRect(), t = evt.touches[0]; 
+        return { 
+            x: (t.clientX - r.left) * (traceCanvas.width / r.width), 
+            y: (t.clientY - r.top) * (traceCanvas.height / r.height) 
+        }; 
+    }
+
+    window.onload = function() {
+        abugidaConsonantOrder.forEach((baseChar, rowIndex) => {
+            const rowItems = [];
+            for (let colIndex = 0; colIndex < 7; colIndex++) {
+                const targetIdx = (rowIndex + colIndex) % abugidaConsonantOrder.length;
+                const fidelForm = standardFidelChart[abugidaConsonantOrder[targetIdx]][colIndex];
+                rowItems.push(fidelForm);
+            }
+            abugidaRowsData["Row " + (rowIndex + 1)] = rowItems;
+        });
+
+        renderStandardChart(); 
+        renderAbugidaChart(); 
+        renderLabializedChart(); 
+        renderNumbersChart(); 
+        renderGeezWordsChart();
+        renderShortSentences(); 
+        initTracingSystem(); 
+        initVideoSystem(); 
+        generateCompetitionNameInputs();
+    };
+</script>
+</body>
+</html>
