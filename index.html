@@ -525,7 +525,7 @@
 <div class="container">
     <header>
         <button id="btn-app-install" class="install-app-btn" onclick="triggerAppInstallation()">📥 Install App</button>
-        <h1>ኤያና የፊደል ገበታ • Eyana Ge'ez Hub</h1>
+        <h1>ኤያና የግዕዝ ፊደል ገበታ • Eyana Ge'ez Hub</h1>
         <p>Learn letters, numbers, read short sentences, trace shapes, and play traditional games!</p>
         <p style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px; font-weight: bold;">Share your comment: info@eyana-geez.com</p>
     </header>
@@ -633,6 +633,9 @@
         <div style="text-align: center; margin-bottom: 10px;">
             <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">Fidel Memory Match-up Game 🧠</h3>
             <p style="color: #627D98; font-size: 0.85rem; margin-bottom: 12px;">Flip cards over to look for matching pairs of letters and listen to their sounds!</p>
+            <div style="margin-bottom: 5px; font-weight: bold; font-size: 1rem; color: var(--primary);">
+                🔄 Steps Taken: <span id="lbl-memory-moves">0</span>
+            </div>
             <div style="margin-bottom: 15px; display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;">
                 <button class="theme-btn active" id="btn-size-12" onclick="setMemoryGameMatrixSize(6, 4)">Easy (12 Cards) 🟢</button>
                 <button class="theme-btn" id="btn-size-16" onclick="setMemoryGameMatrixSize(8, 4)">Medium (16 Cards) 🟡</button>
@@ -795,7 +798,6 @@
         const installBtn = document.getElementById('btn-app-install');
         if (!installBtn) return;
         
-        // Check if the application is running inside standalone mode (installed app window)
         if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
             installBtn.innerHTML = "🔄 Update App";
             installBtn.style.background = "#3B82F6";
@@ -808,7 +810,6 @@
     function triggerAppInstallation() {
         const installBtn = document.getElementById('btn-app-install');
         
-        // If app is already running as installed standalone PWA, click acts as a hard upgrade
         if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.getRegistrations().then((registrations) => {
@@ -1050,7 +1051,7 @@
     let score = 0, streak = 0, quizCurrentItem = null, quizAnsweredCorrectly = false;
     let compPlayersList = [], compCurrentActivePlayerIndex = 0, compCurrentGlobalQuestionCounter = 1, compTotalConfiguredQuestions = 0, compCurrentMatchItem = null, isCompetitionActiveState = false;
     let traceCanvas, traceCtx, isDrawing = false, activeTraceCharacter = "ሀ", activeMarkerColor = "#2F3E46", comprehensiveFidelList = [];
-    let firstCard = null, secondCard = null, lockBoard = false, memoryMatches = 0, memoryTargetPairsCount = 6, memoryTargetColumnsCount = 4;
+    let firstCard = null, secondCard = null, lockBoard = false, memoryMatches = 0, memoryTargetPairsCount = 6, memoryTargetColumnsCount = 4, memoryMovesCounter = 0;
     let isAutoReading = false, autoReadTimeoutId = null, autoReadSpeedMs = 2000;
     let globalAudioPlaybackRate = 1.0, isSentenceAutoPlaying = false, sentenceAutoPlayTimeoutId = null, currentSentenceIndex = 0;
     const alphabetOptionLetterLabels = ["A", "B", "C", "D"];
@@ -1264,7 +1265,9 @@
     function initMemoryGame() {
         const container = document.getElementById('memory-game-grid'); container.innerHTML = '';
         container.style.gridTemplateColumns = `repeat(${memoryTargetColumnsCount}, 1fr)`;
-        firstCard = null; secondCard = null; lockBoard = false; memoryMatches = 0;
+        firstCard = null; secondCard = null; lockBoard = false; memoryMatches = 0; memoryMovesCounter = 0;
+        document.getElementById('lbl-memory-moves').innerText = memoryMovesCounter;
+        
         const pool = getAllItems(); if (pool.length < memoryTargetPairsCount) return;
         const shuf = [...pool].sort(() => Math.random() - 0.5).slice(0, memoryTargetPairsCount);
         let board = []; shuf.forEach(i => { board.push({...i}), board.push({...i}); });
@@ -1277,11 +1280,16 @@
                 card.classList.add('flipped'); playFidelAudio(item.char);
                 if (!firstCard) { firstCard = card; return; }
                 secondCard = card; lockBoard = true;
+                
+                // Increment move step counter on the second card flip selection turn
+                memoryMovesCounter++;
+                document.getElementById('lbl-memory-moves').innerText = memoryMovesCounter;
+
                 if (firstCard.innerHTML === secondCard.innerHTML) {
                     memoryMatches++; score += 20; document.getElementById('lbl-score').innerText = score;
                     playRewardSoundEffect('match'); firstCard = null; secondCard = null; lockBoard = false;
                     if (memoryMatches === memoryTargetPairsCount) {
-                        setTimeout(() => { playRewardSoundEffect('victory'); showMessage("Victory! 🎉", "Matched all items correctly!"); }, 400);
+                        setTimeout(() => { playRewardSoundEffect('victory'); showMessage("Victory! 🎉", `Matched all items correctly in ${memoryMovesCounter} steps!`); }, 400);
                     }
                 } else {
                     setTimeout(() => { firstCard.classList.remove('flipped'); secondCard.classList.remove('flipped'); firstCard = null; secondCard = null; lockBoard = false; }, 1000);
