@@ -531,17 +531,17 @@
     </header>
 
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('explore')">ሀ ሁ መቁጠሪያ 📜</button>
-        <button class="tab-btn" onclick="switchTab('abugida')">አ ቡ ጊ ዳ 🔄</button>
-        <button class="tab-btn" onclick="switchTab('labialized')">ሏ ሟ ሯ ሷ 🌀</button>
-        <button class="tab-btn" onclick="switchTab('numbers')">የግዕዝ ቁጥሮች 🔢</button>
-        <button class="tab-btn" onclick="switchTab('geezwords')">ግዕዝ ተማሩ 📚</button>
-        <button class="tab-btn" onclick="switchTab('sentences')">Short Sentences 💬</button>
-        <button class="tab-btn" onclick="switchTab('memory')">Memory Cards 🃏</button>
-        <button class="tab-btn" onclick="switchTab('trace')">Tracing Room ✍️</button>
-        <button class="tab-btn" onclick="switchTab('quiz')">Single Quiz 🎮</button>
-        <button class="tab-btn" onclick="switchTab('competition')">Kids Competition 🏆</button>
-        <button class="tab-btn" onclick="switchTab('videos')">Short Stories 📺</button>
+        <button class="tab-btn active" onclick="switchTab('explore')">ሀ ሁ መቁጠሪያ</button>
+        <button class="tab-btn" onclick="switchTab('abugida')">አ ቡ ጊ ዳ</button>
+        <button class="tab-btn" onclick="switchTab('labialized')">ሏ ሟ ሯ ሷ</button>
+        <button class="tab-btn" onclick="switchTab('numbers')">የግዕዝ ቁጥሮች</button>
+        <button class="tab-btn" onclick="switchTab('geezwords')">ግዕዝ ተማሩ</button>
+        <button class="tab-btn" onclick="switchTab('sentences')">Short Sentences</button>
+        <button class="tab-btn" onclick="switchTab('memory')">Memory Cards</button>
+        <button class="tab-btn" onclick="switchTab('trace')">Tracing Room</button>
+        <button class="tab-btn" onclick="switchTab('quiz')">Single Quiz</button>
+        <button class="tab-btn" onclick="switchTab('competition')">Kids Competition</button>
+        <button class="tab-btn" onclick="switchTab('videos')">Short Stories</button>
     </div>
 
     <div id="explore-panel" class="view-panel active">
@@ -788,9 +788,41 @@
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
+        updatePWAButtonState();
     });
 
+    function updatePWAButtonState() {
+        const installBtn = document.getElementById('btn-app-install');
+        if (!installBtn) return;
+        
+        // Check if the application is running inside standalone mode (installed app window)
+        if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
+            installBtn.innerHTML = "🔄 Update App";
+            installBtn.style.background = "#3B82F6";
+            installBtn.style.color = "#FFFFFF";
+        } else {
+            installBtn.innerHTML = "📥 Install App";
+        }
+    }
+
     function triggerAppInstallation() {
+        const installBtn = document.getElementById('btn-app-install');
+        
+        // If app is already running as installed standalone PWA, click acts as a hard upgrade
+        if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then((registrations) => {
+                    for (let registration of registrations) {
+                        registration.unregister();
+                    }
+                    window.location.reload(true);
+                });
+            } else {
+                window.location.reload(true);
+            }
+            return;
+        }
+
         if (deferredPrompt) {
             deferredPrompt.prompt();
             deferredPrompt.userChoice.then((choiceResult) => {
@@ -809,6 +841,7 @@
 
     window.addEventListener('appinstalled', (evt) => {
         deferredPrompt = null;
+        updatePWAButtonState();
     });
 
     if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
@@ -936,7 +969,7 @@
         ["ማለዳ እነቃለሁ።", "I wake up early.", "🌅"],
         ["ጥርሴን እቦርሻለሁ።", "I brush my teeth.", "🪥"],
         ["ጫማዬን አደርጋለሁ።", "I put on my shoes.", "👟"],
-        ["ልบሴን እቀይራለሁ።", "I change my clothes.", "👕"],
+        ["ልብሴን እቀይራለሁ።", "I change my clothes.", "👕"],
         ["ፊኛ እወዳለሁ።", "I love balloons.", "🎈"],
         ["አይስክሬም እወዳለሁ።", "I love ice cream.", "🍦"],
         ["ቸኮሌት እበላለሁ።", "I eat chocolate.", "🍫"],
@@ -1591,7 +1624,7 @@
             abugidaRowsData["Row " + (rowIndex + 1)] = rowItems;
         });
 
-        renderStandardChart(); renderAbugidaChart(); renderLabializedChart(); renderNumbersChart(); renderGeezWordsChart(); renderShortSentences(); initTracingSystem(); initVideoSystem(); generateCompetitionNameInputs();
+        renderStandardChart(); renderAbugidaChart(); renderLabializedChart(); renderNumbersChart(); renderGeezWordsChart(); renderShortSentences(); initTracingSystem(); initVideoSystem(); generateCompetitionNameInputs(); updatePWAButtonState();
     };
 </script>
 </body>

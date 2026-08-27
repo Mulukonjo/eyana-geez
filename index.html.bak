@@ -112,19 +112,55 @@
             color: white;
             box-shadow: 0 10px 25px rgba(128, 0, 128, 0.15);
             transition: var(--transition);
+            position: relative;
         }
 
         header h1 {
             font-size: 2.1rem;
             margin-bottom: 5px;
             text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+            padding-right: 140px;
+            padding-left: 140px;
+        }
+
+        @media (max-width: 850px) {
+            header h1 {
+                padding-right: 0;
+                padding-left: 0;
+                margin-top: 45px;
+            }
         }
 
         header p { font-size: 0.95rem; opacity: 0.95; }
 
+        .install-app-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .install-app-btn:hover {
+            transform: scale(1.05);
+            background: white;
+        }
+
         .theme-selector-container {
             text-align: center;
-            margin-top: -5px;
+            margin-top: 10px;
             margin-bottom: 5px;
             display: flex;
             justify-content: center;
@@ -136,6 +172,10 @@
             border-radius: 50px;
             box-shadow: var(--shadow);
             backdrop-filter: blur(8px);
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .theme-btn {
@@ -422,6 +462,8 @@
         .option-btn { background: white; border: 3px solid #E2E8F0; padding: 14px; font-size: 1.15rem; font-weight: bold; border-radius: 15px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.01); transition: var(--transition); }
         .option-btn:hover { border-color: var(--primary); background: #FAF5FF; }
 
+        .option-btn .char { font-size: 2.2rem; font-weight: bold; }
+
         .option-label-badge { font-size: 0.85rem; background: var(--primary); color: white; padding: 2px 6px; border-radius: 6px; margin-bottom: 6px; font-weight: 800; }
 
         .comp-setup-card { background: white; border: 2px dashed #CBD5E1; border-radius: var(--border-radius); padding: 20px; max-width: 500px; margin: 0 auto; width: 100%; }
@@ -482,32 +524,24 @@
 
 <div class="container">
     <header>
-        <h1>ኤያና የግዕዝ ፊደል ገበታ • Eyana Ge'ez Hub</h1>
+        <button id="btn-app-install" class="install-app-btn" onclick="triggerAppInstallation()">📥 Install App</button>
+        <h1>ኤያና የፊደል ገበታ • Eyana Ge'ez Hub</h1>
         <p>Learn letters, numbers, read short sentences, trace shapes, and play traditional games!</p>
         <p style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px; font-weight: bold;">Share your comment: info@eyana-geez.com</p>
     </header>
 
-    <div class="theme-selector-container">
-        <span style="font-weight: bold; font-size: 0.9rem; color: var(--text);">🎨 App Theme:</span>
-        <button class="theme-btn active" id="theme-sunny" onclick="switchAppTheme('sunny')">Eyana's Fav 👧🏽</button>
-        <button class="theme-btn" id="theme-forest" onclick="switchAppTheme('forest')">Forest 🌳</button>
-        <button class="theme-btn" id="theme-space" onclick="switchAppTheme('space')">Space 🚀</button>
-        <button class="theme-btn" id="theme-ocean" onclick="switchAppTheme('ocean')">Ocean 🌊</button>
-    </div>
-
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('explore')">ሀ ሁ መቁጠሪያ</button>
-        <button class="tab-btn" onclick="switchTab('abugida')">አ ቡ ጊ ዳ</button>
-        <button class="tab-btn" onclick="switchTab('labialized')">ሏ ሟ ሯ ሷ</button>
-        <button class="tab-btn" onclick="switchTab('numbers')">የግዕዝ ቁጥሮች</button>
-        <button class="tab-btn" onclick="switchTab('geezwords')">ግዕዝ ተማሩ</button>
-        <button class="tab-btn" onclick="switchTab('sentences')">Short Sentences</button>
-        <button class="tab-btn" onclick="switchTab('memory')">Memory Cards</button>
+        <button class="tab-btn active" onclick="switchTab('explore')">ሀ ሁ መቁጠሪያ 📜</button>
+        <button class="tab-btn" onclick="switchTab('abugida')">አ ቡ ጊ ዳ 🔄</button>
+        <button class="tab-btn" onclick="switchTab('labialized')">ሏ ሟ ሯ ሷ 🌀</button>
+        <button class="tab-btn" onclick="switchTab('numbers')">የግዕዝ ቁጥሮች 🔢</button>
+        <button class="tab-btn" onclick="switchTab('geezwords')">ግዕዝ ተማሩ 📚</button>
+        <button class="tab-btn" onclick="switchTab('sentences')">Short Sentences 💬</button>
+        <button class="tab-btn" onclick="switchTab('memory')">Memory Cards 🃏</button>
         <button class="tab-btn" onclick="switchTab('trace')">Tracing Room ✍️</button>
         <button class="tab-btn" onclick="switchTab('quiz')">Single Quiz 🎮</button>
         <button class="tab-btn" onclick="switchTab('competition')">Kids Competition 🏆</button>
         <button class="tab-btn" onclick="switchTab('videos')">Short Stories 📺</button>
-     <!--   <button class="tab-btn" onclick="switchTab('export')">Distribute App 📦</button> -->
     </div>
 
     <div id="explore-panel" class="view-panel active">
@@ -728,29 +762,13 @@
         </div>
     </div>
 
-    <div id="export-panel" class="view-panel">
-        <div style="text-align: center; margin-bottom: 15px;">
-            <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">Progressive Web App & Standalone Tools 📦</h3>
-            <p style="color: #627D98; font-size: 0.85rem;">Download this app instantly to host on your HTTPS web folder as an installable smartphone PWA app.</p>
-        </div>
-        <div class="export-instructions">
-            <div class="export-section" style="background: linear-gradient(135deg, #DCFCE7, #BBF7D0); border-left-color: #16A34A; text-align: center; padding: 20px;">
-                <h3 style="color: #14532D; font-size: 1.25rem; margin-bottom: 8px;">Instant Offline App Download 📥</h3>
-                <p style="color: #166534; margin-bottom: 12px; font-weight: 500; font-size: 0.9rem;">Click the button below to download this complete PWA-registered application package as a standalone file immediately!</p>
-                <button class="next-trace-btn" style="background-color: #16A34A; font-size: 1rem; padding: 10px 28px; flex: none; width: auto;" onclick="downloadStandaloneAppFile()">Download App File (.html) 💾</button>
-            </div>
-            <div class="export-section">
-                <h3>1. Configuration parameters for Web Manifest (`manifest.json`)</h3>
-                <div class="code-block-container">{
-  "name": "Eyana Ge'ez Fidel Kids Hub",
-  "short_name": "Eyana Ge'ez Fidel",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#F7FFF7",
-  "theme_color": "#800080"
-}</div>
-            </div>
-        </div>
+    <!-- App Theme Selector Container Kept Content-Centered at Bottom -->
+    <div class="theme-selector-container">
+        <span style="font-weight: bold; font-size: 0.9rem; color: var(--text);">🎨 App Theme:</span>
+        <button class="theme-btn active" id="theme-sunny" onclick="switchAppTheme('sunny')">Eyana's Fav 👧🏽</button>
+        <button class="theme-btn" id="theme-forest" onclick="switchAppTheme('forest')">Forest 🌳</button>
+        <button class="theme-btn" id="theme-space" onclick="switchAppTheme('space')">Space 🚀</button>
+        <button class="theme-btn" id="theme-ocean" onclick="switchAppTheme('ocean')">Ocean 🌊</button>
     </div>
 </div>
 
@@ -766,6 +784,33 @@
 </footer>
 
 <script>
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+    });
+
+    function triggerAppInstallation() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted PWA installation');
+                }
+                deferredPrompt = null;
+            });
+        } else {
+            showMessage(
+                "How to Install 📥",
+                "• On Android/Chrome: Wait a few seconds for the prompt, or add to your home screen.\n\n• On iPhone/iPad (Safari): Tap the Share button at the bottom, then scroll down and select 'Add to Home Screen'!"
+            );
+        }
+    }
+
+    window.addEventListener('appinstalled', (evt) => {
+        deferredPrompt = null;
+    });
+
     if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('./sw.js')
@@ -891,7 +936,7 @@
         ["ማለዳ እነቃለሁ።", "I wake up early.", "🌅"],
         ["ጥርሴን እቦርሻለሁ።", "I brush my teeth.", "🪥"],
         ["ጫማዬን አደርጋለሁ።", "I put on my shoes.", "👟"],
-        ["ልብሴን እቀይራለሁ።", "I change my clothes.", "👕"],
+        ["ልบሴን እቀይራለሁ።", "I change my clothes.", "👕"],
         ["ፊኛ እወዳለሁ።", "I love balloons.", "🎈"],
         ["አይስክሬም እወዳለሁ።", "I love ice cream.", "🍦"],
         ["ቸኮሌት እበላለሁ።", "I eat chocolate.", "🍫"],
@@ -956,8 +1001,8 @@
     ];
 
     const shortStoriesList = [
-		{ title: "አጠቃቀም", filename: "How to", icon: "💡" },
-        { title: "ሀ ሁ በ ፲ ቀን Day 1-5", filename: "HAHU_10DAYS_Day1_5", icon: "📚" },
+        { title: "አጠቃቀም", filename: "How to", icon: "💡" },
+		{ title: "ሀ ሁ በ ፲ ቀን Day 1-5", filename: "HAHU_10DAYS_Day1_5", icon: "📚" },
         { title: "ሀ ሁ በ ፲ ቀን Day 6-10", filename: "HAHU_10DAYS_Day6_10", icon: "📚" },
 		{ title: "ቀበሮውና ወይኑ", filename: "The_Fox_Grape", icon: "🦊🍇" },
         { title: "Story በቅርቡ ፩", filename: "አንበሳውና አይጥዋ", icon: "🦁🐭" },
@@ -1067,7 +1112,7 @@
         const player = document.getElementById('storyVideoPlayerFrame');
         if (player) player.pause();
 
-        const tabIdx = { explore:0, abugida:1, labialized:2, numbers:3, geezwords:4, sentences:5, memory:6, trace:7, quiz:8, competition:9, videos:10, export:11 }[tab];
+        const tabIdx = { explore:0, abugida:1, labialized:2, numbers:3, geezwords:4, sentences:5, memory:6, trace:7, quiz:8, competition:9, videos:10 }[tab];
         document.querySelectorAll('.tab-btn')[tabIdx]?.classList.add('active');
         document.getElementById(tab + '-panel')?.classList.add('active');
         if (tab === 'memory') initMemoryGame();
@@ -1254,7 +1299,6 @@
         selectTracingCharacter(comprehensiveFidelList[nextIdx]);
     }
 
-    // Exact scale ratio mapping formula to solve high-res monitor coordinate mismatches
     function updateTracingGuide(c) {
         if (!traceCtx) return; traceCtx.clearRect(0, 0, traceCanvas.width, traceCanvas.height);
         traceCtx.fillStyle = '#F1F5F9'; traceCtx.font = 'bold 180px "Segoe UI"'; traceCtx.textAlign = 'center'; traceCtx.textBaseline = 'middle';
@@ -1313,7 +1357,7 @@
         const grid = document.getElementById('quiz-options'); grid.innerHTML = '';
         choices.forEach((c, idx) => {
             const btn = document.createElement('button'); btn.className = 'option-btn';
-            btn.innerHTML = `<span class="option-label-badge">${alphabetOptionLetterLabels[idx]}</span><span style="font-size:2.2rem;font-weight:bold;">${c}</span>`;
+            btn.innerHTML = `<span class="option-label-badge">${alphabetOptionLetterLabels[idx]}</span><span class="char">${c}</span>`;
             btn.onclick = () => {
                 if (c === quizCurrentItem.char) {
                     score += 10; streak++; playRewardSoundEffect('correct');
@@ -1381,7 +1425,7 @@
         const grid = document.getElementById('comp-quiz-options'); grid.innerHTML = '';
         choices.forEach((c, idx) => {
             const btn = document.createElement('button'); btn.className = 'option-btn';
-            btn.innerHTML = `<span class="option-label-badge" style="background:var(--secondary);">${alphabetOptionLetterLabels[idx]}</span><span style="font-size:2.2rem;font-weight:bold;">${c}</span>`;
+            btn.innerHTML = `<span class="option-label-badge" style="background:var(--secondary);">${alphabetOptionLetterLabels[idx]}</span><span class="char">${c}</span>`;
             btn.onclick = () => {
                 if (c === compCurrentMatchItem.char) {
                     activeChild.score += 10; playRewardSoundEffect('correct');
@@ -1422,7 +1466,6 @@
         generateCompetitionNameInputs();
     }
 
-    // Modal popup system to announce child milestones
     function showMessage(title, text) {
         document.getElementById('msg-title').innerText = title; document.getElementById('msg-body').innerText = text;
         document.getElementById('ui-overlay').style.display = 'block'; document.getElementById('ui-msg-box').style.display = 'block';
