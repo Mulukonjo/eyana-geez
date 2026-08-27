@@ -65,7 +65,11 @@
         }
         .animal-owl { top: 12%; left: 3%; animation: bounceAnimal 5s ease-in-out infinite; }
         .animal-monkey { top: 35%; right: 2%; transform: scaleX(-1); animation: bounceAnimal 6s ease-in-out infinite 1s; }
-        .animal-squirrel { bottom: 10%; left: 4%; animation: swayLeaf 4s ease-in-out infinite; }
+        .animal-squirrel { bottom: 12%; left: 4%; animation: swayLeaf 4s ease-in-out infinite; }
+        .animal-fox { top: 58%; right: 3%; animation: bounceAnimal 7s ease-in-out infinite 0.5s; }
+        .animal-deer { bottom: 28%; left: 2%; animation: bounceAnimal 8s ease-in-out infinite 2s; }
+        .animal-lion { top: 72%; left: 8%; opacity: 0.15; animation: swayLeaf 9s ease-in-out infinite; }
+        .animal-elephant { bottom: 5%; right: 4%; opacity: 0.12; animation: bounceAnimal 10s ease-in-out infinite; }
 
         .glowing-bark-fidel {
             position: fixed;
@@ -299,11 +303,11 @@
         }
 
         .pic-representation {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 10px;
             background: #F8FAFC;
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -455,7 +459,7 @@
 
         .score-board { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: bold; background: #F0F4F8; padding: 10px 18px; border-radius: 50px; }
 
-        .target-fidel { font-size: 4.5rem; font-weight: bold; color: var(--primary); margin: 5px 0; cursor: pointer; }
+        .target-fidel { font-size: 1.8rem; font-weight: bold; color: var(--primary); margin: 15px 0; cursor: pointer; background: #EBF8FF; border: 2px solid #BEE3F8; padding: 10px 20px; border-radius: 50px; display: inline-block; }
 
         .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 
@@ -501,7 +505,7 @@
             header p { font-size: 1rem; }
             .canvas-area-block { max-width: 440px; padding: 25px; }
             #traceCanvas { width: 360px; height: 360px; }
-            .target-fidel { font-size: 5.5rem; }
+            .target-fidel { font-size: 1.8rem; }
             .option-btn { padding: 18px; font-size: 1.3rem; }
             .view-panel { padding: 25px; }
         }
@@ -509,7 +513,7 @@
 </head>
 <body>
 
-<!-- Warka Oak Learning Circle Backdrops -->
+<!-- Warka Oak Learning Circle Backdrops with Expanded Restored Emojis -->
 <div class="tree-canopy-leaf leaf-1"></div>
 <div class="tree-canopy-leaf leaf-2"></div>
 <div class="tree-canopy-leaf leaf-3"></div>
@@ -517,6 +521,10 @@
 <div class="woodland-animal-guide animal-owl">🦉</div>
 <div class="woodland-animal-guide animal-monkey">🐒</div>
 <div class="woodland-animal-guide animal-squirrel">🐿️</div>
+<div class="woodland-animal-guide animal-fox">🦊</div>
+<div class="woodland-animal-guide animal-deer">🦌</div>
+<div class="woodland-animal-guide animal-lion">🦁</div>
+<div class="woodland-animal-guide animal-elephant">🐘</div>
 
 <div class="glowing-bark-fidel etched-ሀ">ሀ</div>
 <div class="glowing-bark-fidel etched-ለ">ለ</div>
@@ -524,7 +532,7 @@
 
 <div class="container">
     <header>
-        <button id="btn-app-install" class="install-app-btn" onclick="triggerAppInstallation()">📥 Install App</button>
+        <button id="btn-app-install" class="install-app-btn" onclick="triggerAppInstallation()">Install App</button>
         <h1>ኤያና የግዕዝ ፊደል ገበታ • Eyana Ge'ez Hub</h1>
         <p>Learn letters, numbers, read short sentences, trace shapes, and play traditional games!</p>
         <p style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px; font-weight: bold;">Share your comment: info@eyana-geez.com</p>
@@ -546,12 +554,12 @@
 
     <div id="explore-panel" class="view-panel active">
         <div style="background: #F1F5F9; border: 1px solid #E2E8F0; padding: 12px; border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
-            <span style="font-weight: bold; font-size: 0.95rem; color: var(--text);">🔊 Auto Reader Mode:</span>
-            <button id="btn-toggle-autoread" class="audio-trace-btn" style="background-color: var(--secondary); margin: 0; padding: 6px 16px; flex: none; width: auto;" onclick="toggleAutoRead()">Start Auto Read ▶️</button>
+            <span style="font-weight: bold; font-size: 0.95rem; color: var(--text);">Auto Reader Mode:</span>
+            <button id="btn-toggle-autoread" class="audio-trace-btn" style="background-color: var(--secondary); margin: 0; padding: 6px 16px; flex: none; width: auto;" onclick="toggleAutoRead()">Start Auto Read</button>
             <div style="display: flex; align-items: center; gap: 6px; background: white; padding: 4px 12px; border-radius: 50px; border: 1px solid #E2E8F0;">
-                <button class="theme-btn" style="padding: 2px 8px; margin: 0;" onclick="adjustAutoReadSpeed(500)">Slower 🐌</button>
+                <button class="theme-btn" style="padding: 2px 8px; margin: 0;" onclick="adjustAutoReadSpeed(500)">Slower</button>
                 <span style="font-weight: bold; font-size: 0.9rem; color: var(--primary); min-width: 40px; text-align: center;" id="lbl-autoread-speed">2.0s</span>
-                <button class="theme-btn" style="padding: 2px 8px; margin: 0;" onclick="adjustAutoReadSpeed(-500)">Faster ⚡</button>
+                <button class="theme-btn" style="padding: 2px 8px; margin: 0;" onclick="adjustAutoReadSpeed(-500)">Faster</button>
             </div>
         </div>
         <div class="chart-container" id="chart-standard-series"></div>
@@ -565,7 +573,7 @@
 
     <div id="abugida-panel" class="view-panel">
         <div style="text-align: center; margin-bottom: 12px;">
-            <h3 style="color: var(--primary); font-size: 1.25rem; margin-bottom: 4px;">የአቡጊዳ ቅደም ተከተል • Complete Abugida Matrix 🔄</h3>
+            <h3 style="color: var(--primary); font-size: 1.25rem; margin-bottom: 4px;">የአቡጊዳ ቅደም ተከተል • Complete Abugida Matrix</h3>
             <p style="color: #627D98; font-size: 0.85rem;">Explore the traditional phonetic vowel cross-shifting sequence chart containing all 34 rows!</p>
         </div>
         <div class="chart-container" id="chart-abugida-series"></div>
@@ -599,7 +607,7 @@
 
     <div id="geezwords-panel" class="view-panel">
         <div style="text-align: center; margin-bottom: 15px;">
-            <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">ግዕዝ ተማሩ • Learn Ge'ez Vocabulary 📚</h3>
+            <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">ግዕዝ ተማሩ • Learn Ge'ez Vocabulary</h3>
             <p style="color: #627D98; font-size: 0.85rem;">Explore classical Ge'ez vocabulary words featuring standard Amharic definitions and accurate English translations!</p>
         </div>
         <div class="sentences-grid" id="chart-geezwords-container"></div>
@@ -613,12 +621,12 @@
 
     <div id="sentences-panel" class="view-panel">
         <div style="background: #F1F5F9; border: 1px solid #E2E8F0; padding: 12px; border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;">
-            <span style="font-weight: bold; font-size: 0.95rem; color: var(--text);">🗣️ Sentence Speech Speed:</span>
-            <button class="theme-btn" id="btn-sent-slow" onclick="setSentenceReadingSpeed(0.75)">Slow 🐌</button>
-            <button class="theme-btn active" id="btn-sent-normal" onclick="setSentenceReadingSpeed(1.0)">Normal 🚶</button>
-            <button class="theme-btn" id="btn-sent-fast" onclick="setSentenceReadingSpeed(1.35)">Fast ⚡</button>
+            <span style="font-weight: bold; font-size: 0.95rem; color: var(--text);">Sentence Speech Speed:</span>
+            <button class="theme-btn" id="btn-sent-slow" onclick="setSentenceReadingSpeed(0.75)">Slow</button>
+            <button class="theme-btn active" id="btn-sent-normal" onclick="setSentenceReadingSpeed(1.0)">Normal</button>
+            <button class="theme-btn" id="btn-sent-fast" onclick="setSentenceReadingSpeed(1.35)">Fast</button>
             <span style="border-left: 2px solid #CBD5E1; height: 20px; margin: 0 5px;"></span>
-            <button id="btn-sent-autoplay" class="audio-trace-btn" style="background-color: var(--secondary); margin: 0; padding: 6px 16px; flex: none; width: auto;" onclick="toggleSentenceAutoPlay()">Auto Play Sentences ▶️</button>
+            <button id="btn-sent-autoplay" class="audio-trace-btn" style="background-color: var(--secondary); margin: 0; padding: 6px 16px; flex: none; width: auto;" onclick="toggleSentenceAutoPlay()">Auto Play Sentences</button>
         </div>
         <div class="sentences-grid" id="chart-sentences-container"></div>
         <div class="detail-display" style="margin-top: 15px; background: linear-gradient(135deg, #EAE8FF, #D2CFFF);">
@@ -631,18 +639,18 @@
 
     <div id="memory-panel" class="view-panel">
         <div style="text-align: center; margin-bottom: 10px;">
-            <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">Fidel Memory Match-up Game 🧠</h3>
+            <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">Fidel Memory Match-up Game</h3>
             <p style="color: #627D98; font-size: 0.85rem; margin-bottom: 12px;">Flip cards over to look for matching pairs of letters and listen to their sounds!</p>
             <div style="margin-bottom: 5px; font-weight: bold; font-size: 1rem; color: var(--primary);">
-                🔄 Steps Taken: <span id="lbl-memory-moves">0</span>
+                Steps Taken: <span id="lbl-memory-moves">0</span>
             </div>
             <div style="margin-bottom: 15px; display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;">
-                <button class="theme-btn active" id="btn-size-12" onclick="setMemoryGameMatrixSize(6, 4)">Easy (12 Cards) 🟢</button>
-                <button class="theme-btn" id="btn-size-16" onclick="setMemoryGameMatrixSize(8, 4)">Medium (16 Cards) 🟡</button>
-                <button class="theme-btn" id="btn-size-24" onclick="setMemoryGameMatrixSize(12, 6)">Hard (24 Cards) 🟠</button>
-                <button class="theme-btn" id="btn-size-36" onclick="setMemoryGameMatrixSize(18, 6)">Expert (36 Cards) 🔴</button>
+                <button class="theme-btn active" id="btn-size-12" onclick="setMemoryGameMatrixSize(6, 4)">Easy (12 Cards)</button>
+                <button class="theme-btn" id="btn-size-16" onclick="setMemoryGameMatrixSize(8, 4)">Medium (16 Cards)</button>
+                <button class="theme-btn" id="btn-size-24" onclick="setMemoryGameMatrixSize(12, 6)">Hard (24 Cards)</button>
+                <button class="theme-btn" id="btn-size-36" onclick="setMemoryGameMatrixSize(18, 6)">Expert (36 Cards)</button>
             </div>
-            <button class="audio-trace-btn" style="background-color: var(--primary); flex: none; width: auto; padding: 8px 24px;" onclick="initMemoryGame()">Mix & Shuffle Cards 🔄</button>
+            <button class="audio-trace-btn" style="background-color: var(--primary); flex: none; width: auto; padding: 8px 24px;" onclick="initMemoryGame()">Mix & Shuffle Cards</button>
         </div>
         <div class="memory-grid" id="memory-game-grid"></div>
     </div>
@@ -650,12 +658,12 @@
     <div id="trace-panel" class="view-panel">
         <div class="trace-workspace">
             <div class="trace-picker-container">
-                <div class="trace-picker-label">🌟 Tap any character below to change your tracing practice board:</div>
+                <div class="trace-picker-label">Tap any character below to change your tracing practice board:</div>
                 <div class="trace-grid-select" id="trace-character-picker"></div>
             </div>
             <div class="canvas-area-block">
                 <div class="color-palette-tray">
-                    <span style="font-size:0.8rem; font-weight:bold; color:var(--text); margin-right:2px;">✏️ Pen Color:</span>
+                    <span style="font-size:0.8rem; font-weight:bold; color:var(--text); margin-right:2px;">Pen Color:</span>
                     <div class="color-swatch-circle active" style="background-color: #2F3E46;" onclick="setTracingMarkerColor('#2F3E46', this)"></div>
                     <div class="color-swatch-circle" style="background-color: #EF4444;" onclick="setTracingMarkerColor('#EF4444', this)"></div>
                     <div class="color-swatch-circle" style="background-color: #3B82F6;" onclick="setTracingMarkerColor('#3B82F6', this)"></div>
@@ -666,9 +674,9 @@
                 </div>
                 <canvas id="traceCanvas" width="280" height="280"></canvas>
                 <div class="trace-controls">
-                    <button class="clear-btn" onclick="clearTraceCanvas()">Clear Board ✨</button>
-                    <button class="audio-trace-btn" onclick="playCurrentTraceAudio()">Listen Sound 🔊</button>
-                    <button class="next-trace-btn" onclick="goToNextTracingFidel()">Next Character ➡️</button>
+                    <button class="clear-btn" onclick="clearTraceCanvas()">Clear Board</button>
+                    <button class="audio-trace-btn" onclick="playCurrentTraceAudio()">Listen Sound</button>
+                    <button class="next-trace-btn" onclick="goToNextTracingFidel()">Next Character</button>
                 </div>
             </div>
         </div>
@@ -677,13 +685,13 @@
     <div id="quiz-panel" class="view-panel">
         <div class="quiz-container">
             <div class="score-board">
-                <span>⭐ Streak: <span id="lbl-streak">0</span></span>
+                <span>Streak: <span id="lbl-streak">0</span></span>
                 <span>Score: <span id="lbl-score">0</span></span>
             </div>
             <div style="font-size:1.15rem; font-weight: bold;">Listen to the sound and choose the matching Fidel:</div>
-            <div class="target-fidel" id="quiz-target" onclick="repeatQuizSound()">🔊</div>
+            <div class="target-fidel" id="quiz-target" onclick="repeatQuizSound()">Click to Listen</div>
             <div>
-                <button class="audio-trace-btn" style="background-color: var(--secondary); margin: 0 auto 10px auto; padding: 6px 18px; font-size: 0.9rem; flex: none; width: auto;" onclick="repeatQuizSound()">Repeat Sound 🔊</button>
+                <button class="audio-trace-btn" style="background-color: var(--secondary); margin: 0 auto 10px auto; padding: 6px 18px; font-size: 0.9rem; flex: none; width: auto;" onclick="repeatQuizSound()">Repeat Sound</button>
             </div>
             <div class="options-grid" id="quiz-options"></div>
         </div>
@@ -693,7 +701,7 @@
         <div class="quiz-container">
             <div id="comp-setup-view">
                 <div style="text-align: center; margin-bottom: 15px;">
-                    <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">Multiplayer Kids Competition 🏆</h3>
+                    <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">Multiplayer Kids Competition</h3>
                     <p style="color: #627D98; font-size: 0.85rem;">Equally distribute random listening audio questions between 2 or more children!</p>
                 </div>
                 <div class="comp-setup-card">
@@ -716,34 +724,33 @@
                         </select>
                     </div>
                     <div style="background: #EDF2F7; padding: 10px; border-radius: 10px; font-weight: bold; margin-bottom: 12px; color: var(--primary); text-align: center; font-size: 0.9rem;">
-                        🔢 Total Distributed Match Round Questions: <span id="lbl-comp-total-calc">10</span>
+                        Total Distributed Match Round Questions: <span id="lbl-comp-total-calc">10</span>
                     </div>
                     <div id="comp-names-container" style="display:flex; flex-direction:column; gap:10px; margin-bottom:15px;"></div>
-                    <button class="audio-trace-btn" style="background-color: var(--secondary); width: 100%; padding: 10px; font-size: 1rem; flex: none;" onclick="startCompetitionMatch()">Start Competition! 🚀</button>
+                    <button class="audio-trace-btn" style="background-color: var(--secondary); width: 100%; padding: 10px; font-size: 1rem; flex: none;" onclick="startCompetitionMatch()">Start Competition!</button>
                 </div>
             </div>
 
             <div id="comp-play-view" style="display: none;">
                 <div class="score-board" style="background: #FFF5F5; border: 2px solid var(--primary); margin-bottom: 12px;">
-                    <span id="lbl-comp-current-turn-announcement" style="color: var(--primary); font-size: 1.15rem;">👉 Turn: Child</span>
+                    <span id="lbl-comp-current-turn-announcement" style="color: var(--primary); font-size: 1.15rem;">Turn: Child</span>
                     <span id="lbl-comp-progress-counter" style="color: #627D98; font-size: 0.9rem;">Question 1 of 10</span>
                 </div>
                 <div class="comp-scoreboard-row" id="comp-active-scoreboard-tray"></div>
                 <div style="font-size:1.15rem; font-weight: bold; margin-top: 5px;">Listen carefully to the audio trace prompt:</div>
-                <div class="target-fidel" id="comp-quiz-target" onclick="repeatCompetitionSound()">🔊</div>
+                <div class="target-fidel" id="comp-quiz-target" onclick="repeatCompetitionSound()">Click to Listen</div>
                 <div>
-                    <button class="audio-trace-btn" style="background-color: var(--secondary); margin: 0 auto 10px auto; padding: 6px 18px; font-size: 0.9rem; flex: none; width: auto;" onclick="repeatCompetitionSound()">Repeat Sound 🔊</button>
+                    <button class="audio-trace-btn" style="background-color: var(--secondary); margin: 0 auto 10px auto; padding: 6px 18px; font-size: 0.9rem; flex: none; width: auto;" onclick="repeatCompetitionSound()">Repeat Sound</button>
                 </div>
                 <div class="options-grid" id="comp-quiz-options"></div>
             </div>
 
             <div id="comp-results-view" style="display: none;">
                 <div style="text-align: center; padding: 15px;">
-                    <div style="font-size: 4rem; margin-bottom: 8px;">👑</div>
                     <h3 style="color: var(--primary); font-size: 1.7rem; margin-bottom: 8px;">Match Finished!</h3>
                     <p style="color: #627D98; font-size: 1rem; margin-bottom: 20px;">Here is the final score leaderboard breakdown for everyone:</p>
                     <div id="comp-leaderboard-ranking-list" style="max-width: 400px; margin: 0 auto 20px auto; display: flex; flex-direction: column; gap: 10px;"></div>
-                    <button class="audio-trace-btn" style="background-color: var(--primary); padding: 10px 30px; font-size: 1rem; flex: none; width: auto;" onclick="resetCompetitionToSetup()">Play New Match 🔄</button>
+                    <button class="audio-trace-btn" style="background-color: var(--primary); padding: 10px 30px; font-size: 1rem; flex: none; width: auto;" onclick="resetCompetitionToSetup()">Play New Match</button>
                 </div>
             </div>
         </div>
@@ -751,7 +758,7 @@
 
     <div id="videos-panel" class="view-panel">
         <div style="text-align: center; margin-bottom: 15px;">
-            <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">የልጆች አጫጭር ታሪኮች • Recorded Short Stories 📺</h3>
+            <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">የልጆች አጫጭር ታሪኮች • Recorded Short Stories</h3>
             <p style="color: #627D98; font-size: 0.85rem;">Tap any recorded story button below to play its video narration directly from your Audio folder!</p>
         </div>
         <div class="trace-workspace">
@@ -767,23 +774,23 @@
 
     <!-- App Theme Selector Container Kept Content-Centered at Bottom -->
     <div class="theme-selector-container">
-        <span style="font-weight: bold; font-size: 0.9rem; color: var(--text);">🎨 App Theme:</span>
-        <button class="theme-btn active" id="theme-sunny" onclick="switchAppTheme('sunny')">Eyana's Fav 👧🏽</button>
-        <button class="theme-btn" id="theme-forest" onclick="switchAppTheme('forest')">Forest 🌳</button>
-        <button class="theme-btn" id="theme-space" onclick="switchAppTheme('space')">Space 🚀</button>
-        <button class="theme-btn" id="theme-ocean" onclick="switchAppTheme('ocean')">Ocean 🌊</button>
+        <span style="font-weight: bold; font-size: 0.9rem; color: var(--text);">App Theme:</span>
+        <button class="theme-btn active" id="theme-sunny" onclick="switchAppTheme('sunny')">Eyana's Fav</button>
+        <button class="theme-btn" id="theme-forest" onclick="switchAppTheme('forest')">Forest</button>
+        <button class="theme-btn" id="theme-space" onclick="switchAppTheme('space')">Space</button>
+        <button class="theme-btn" id="theme-ocean" onclick="switchAppTheme('ocean')">Ocean</button>
     </div>
 </div>
 
 <div class="overlay" id="ui-overlay"></div>
 <div class="msg-box" id="ui-msg-box">
-    <h4 id="msg-title">Correct! ትክክል!</h4>
-    <p id="msg-body">Great job! ጎበዝ!</p>
-    <button onclick="closeMessageBox()">Next 🚀</button>
+    <h4 id="msg-title">Correct!</h4>
+    <p id="msg-body">Great job!</p>
+    <button onclick="closeMessageBox()">Next</button>
 </div>
 
 <footer style="font-size: 0.75rem; text-align: center; color: #800080; margin-top: 20px; padding: 10px 0; width: 100%;">
-    🎨 Made with love for Kids Learning Ge'ez Alphabet. ኤያና ግዕዝ ፊደል! &copy; <script>document.write(new Date().getFullYear());</script> Mulukonjo.
+    Made with love for Kids Learning Ge'ez Alphabet. ኤያና ግዕዝ ፊደል! &copy; <script>document.write(new Date().getFullYear());</script> Mulukonjo.
 </footer>
 
 <script>
@@ -799,11 +806,11 @@
         if (!installBtn) return;
         
         if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
-            installBtn.innerHTML = "🔄 Update App";
+            installBtn.innerHTML = "Update App";
             installBtn.style.background = "#3B82F6";
             installBtn.style.color = "#FFFFFF";
         } else {
-            installBtn.innerHTML = "📥 Install App";
+            installBtn.innerHTML = "Install App";
         }
     }
 
@@ -811,15 +818,24 @@
         const installBtn = document.getElementById('btn-app-install');
         
         if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
+            if ('caches' in window) {
+                caches.keys().then((names) => {
+                    for (let name of names) caches.delete(name);
+                });
+            }
+            
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.getRegistrations().then((registrations) => {
+                    let promises = [];
                     for (let registration of registrations) {
-                        registration.unregister();
+                        promises.push(registration.unregister());
                     }
-                    window.location.reload(true);
+                    Promise.all(promises).then(() => {
+                        window.location.href = window.location.origin + window.location.pathname + '?u=' + Date.now();
+                    });
                 });
             } else {
-                window.location.reload(true);
+                window.location.href = window.location.origin + window.location.pathname + '?u=' + Date.now();
             }
             return;
         }
@@ -834,7 +850,7 @@
             });
         } else {
             showMessage(
-                "How to Install 📥",
+                "How to Install",
                 "• On Android/Chrome: Wait a few seconds for the prompt, or add to your home screen.\n\n• On iPhone/iPad (Safari): Tap the Share button at the bottom, then scroll down and select 'Add to Home Screen'!"
             );
         }
@@ -1035,15 +1051,15 @@
     ];
 
     const shortStoriesList = [
-        { title: "አጠቃቀም", filename: "How to", icon: "💡" },
-		{ title: "ሀ ሁ በ ፲ ቀን Day 1-5", filename: "HAHU_10DAYS_Day1_5", icon: "📚" },
-        { title: "ሀ ሁ በ ፲ ቀን Day 6-10", filename: "HAHU_10DAYS_Day6_10", icon: "📚" },
-		{ title: "ቀበሮውና ወይኑ", filename: "The_Fox_Grape", icon: "🦊🍇" },
-        { title: "Story በቅርቡ ፩", filename: "አንበሳውና አይጥዋ", icon: "🦁🐭" },
-        { title: "Story በቅርቡ ፪", filename: "ኤሊዋና ጥንቸሉ", icon: "🐢🐇" },
-        { title: "Story በቅርቡ ፬", filename: "የቁራው ጥማት", icon: "🐦💧" },
-        { title: "Story በቅርቡ ፭", filename: "አያ ጅቦና በጎቹ", icon: "🐑" },
-        { title: "Story በቅርቡ ፮", filename: "አያ ጅቦና በጎቹ", icon: "🐺🦊" }
+         { title: "አጠቃቀም", filename: "How to", icon: "" },
+		{ title: "ሀ ሁ በ ፲ ቀን Day 1-5", filename: "HAHU_10DAYS_Day1_5", icon: "" },
+        { title: "ሀ ሁ በ ፲ ቀን Day 6-10", filename: "HAHU_10DAYS_Day6_10", icon: "" },
+		{ title: "ቀበሮውና ወይኑ", filename: "The_Fox_Grape", icon: "" },
+        { title: "Story በቅርቡ ፩", filename: "አንበሳውና አይጥዋ", icon: "" },
+        { title: "Story በቅርቡ ፪", filename: "ኤሊዋና ጥንቸሉ", icon: "" },
+        { title: "Story በቅርቡ ፬", filename: "የቁራው ጥማት", icon: "" },
+        { title: "Story በቅርቡ ፭", filename: "አያ ጅቦና በጎቹ", icon: "" },
+        { title: "Story በቅርቡ ፮", filename: "አያ ጅቦና በጎቹ", icon: "" }
     ];
 
     const shortSentencesData = compactSentences.map(s => ({ amharic: s[0], english: s[1], pic: s[2] }));
@@ -1190,7 +1206,7 @@
                     card.onclick = () => {
                         document.getElementById('lbl-abugida-char').innerText = item.char;
                         document.getElementById('lbl-abugida-sound').innerText = item.sound.toUpperCase();
-                        playFidelAudio(item.char); activeTraceCharacter = item.char;
+                        playFidelAudio(charName); activeTraceCharacter = item.char;
                     };
                     row.appendChild(card);
                 });
@@ -1236,7 +1252,7 @@
         container.innerHTML = '';
         geezWordsData.forEach(item => {
             const card = document.createElement('div'); card.className = 'sentence-card';
-            card.innerHTML = `<div class="pic-representation">📜</div><div class="sentence-amharic" style="font-size:1.4rem; color:var(--primary);">${item.geez}</div><div class="sentence-amharic" style="font-size:1rem; color:#2F3E46;">${item.amharic}</div><div class="sentence-english">${item.english}</div>`;
+            card.innerHTML = `<div class="sentence-amharic" style="font-size:1.4rem; color:var(--primary);">${item.geez}</div><div class="sentence-amharic" style="font-size:1rem; color:#2F3E46;">${item.amharic}</div><div class="sentence-english">${item.english}</div>`;
             card.onclick = () => {
                 document.getElementById('lbl-geez-active-word').innerText = item.geez;
                 document.getElementById('lbl-geez-active-translation').innerText = `አማርኛ: ${item.amharic} | English: "${item.english}"`;
@@ -1274,14 +1290,13 @@
         board.sort(() => Math.random() - 0.5);
         board.forEach(item => {
             const card = document.createElement('div'); card.className = 'memory-card';
-            card.innerHTML = `<div class="memory-card-inner"><div class="memory-card-front">❓</div><div class="memory-card-back"><div style="font-size:32px;font-weight:bold;">${item.char}</div></div></div>`;
+            card.innerHTML = `<div class="memory-card-inner"><div class="memory-card-front">?</div><div class="memory-card-back"><div style="font-size:32px;font-weight:bold;">${item.char}</div></div></div>`;
             card.onclick = () => {
                 if (lockBoard || card === firstCard || card.classList.contains('flipped')) return;
                 card.classList.add('flipped'); playFidelAudio(item.char);
                 if (!firstCard) { firstCard = card; return; }
                 secondCard = card; lockBoard = true;
                 
-                // Increment move step counter on the second card flip selection turn
                 memoryMovesCounter++;
                 document.getElementById('lbl-memory-moves').innerText = memoryMovesCounter;
 
@@ -1289,7 +1304,7 @@
                     memoryMatches++; score += 20; document.getElementById('lbl-score').innerText = score;
                     playRewardSoundEffect('match'); firstCard = null; secondCard = null; lockBoard = false;
                     if (memoryMatches === memoryTargetPairsCount) {
-                        setTimeout(() => { playRewardSoundEffect('victory'); showMessage("Victory! 🎉", `Matched all items correctly in ${memoryMovesCounter} steps!`); }, 400);
+                        setTimeout(() => { playRewardSoundEffect('victory'); showMessage("Victory!", `Matched all items correctly in ${memoryMovesCounter} steps!`); }, 400);
                     }
                 } else {
                     setTimeout(() => { firstCard.classList.remove('flipped'); secondCard.classList.remove('flipped'); firstCard = null; secondCard = null; lockBoard = false; }, 1000);
@@ -1354,7 +1369,7 @@
         tray.innerHTML = '';
         shortStoriesList.forEach((story, idx) => {
             const btn = document.createElement('div'); btn.className = 'story-select-item'; btn.id = 'story-btn-' + idx;
-            btn.innerHTML = `<span style="margin-right:5px;">${story.icon || '📺'}</span> ${story.title}`;
+            btn.innerHTML = story.title;
             btn.onclick = () => selectStoryVideo(idx);
             tray.appendChild(btn);
         });
@@ -1388,7 +1403,7 @@
     function setupNewQuestion() {
         const list = getAllItems(); if (!list.length) return;
         quizCurrentItem = list[Math.floor(Math.random() * list.length)];
-        document.getElementById('quiz-target').innerText = "🔊"; playFidelAudio(quizCurrentItem.char);
+        document.getElementById('quiz-target').innerText = "Click to Listen"; playFidelAudio(quizCurrentItem.char);
         let choices = [quizCurrentItem.char];
         while (choices.length < 4) {
             let r = list[Math.floor(Math.random() * list.length)].char;
@@ -1403,10 +1418,10 @@
                 if (c === quizCurrentItem.char) {
                     score += 10; streak++; playRewardSoundEffect('correct');
                     quizAnsweredCorrectly = true;
-                    showMessage("Correct! ትክክል! 🎉", `Option ${alphabetOptionLetterLabels[idx]} matches perfectly.`);
+                    showMessage("Correct! ትክክል!", `Option ${alphabetOptionLetterLabels[idx]} matches perfectly.`);
                 } else {
                     streak = 0; quizAnsweredCorrectly = false;
-                    showMessage("Try Again! 🤔", "Listen closely to the sound.");
+                    showMessage("Try Again!", "Listen closely to the sound.");
                 }
                 document.getElementById('lbl-score').innerText = score;
                 document.getElementById('lbl-streak').innerText = streak;
@@ -1446,14 +1461,14 @@
     function renderCompetitionScoreboardPills() {
         const tray = document.getElementById('comp-active-scoreboard-tray'); tray.innerHTML = '';
         compPlayersList.forEach((p, idx) => {
-            tray.innerHTML += `<div class="comp-player-score-pill ${idx === compCurrentActivePlayerIndex ? 'active-turn' : ''}">👤 <span>${p.name}:</span> <strong>${p.score}</strong></div>`;
+            tray.innerHTML += `<div class="comp-player-score-pill ${idx === compCurrentActivePlayerIndex ? 'active-turn' : ''}">User <span>${p.name}:</span> <strong>${p.score}</strong></div>`;
         });
     }
 
     function setupCompetitionQuestionTurn() {
         const pool = getAllItems(); compCurrentMatchItem = pool[Math.floor(Math.random() * pool.length)];
         const activeChild = compPlayersList[compCurrentActivePlayerIndex];
-        document.getElementById('lbl-comp-current-turn-announcement').innerText = `👉 Turn: ${activeChild.name}`;
+        document.getElementById('lbl-comp-current-turn-announcement').innerText = "Turn: " + activeChild.name;
         document.getElementById('lbl-comp-progress-counter').innerText = `Question ${compCurrentGlobalQuestionCounter} of ${compTotalConfiguredQuestions}`;
         playFidelAudio(compCurrentMatchItem.char);
 
@@ -1470,9 +1485,9 @@
             btn.onclick = () => {
                 if (c === compCurrentMatchItem.char) {
                     activeChild.score += 10; playRewardSoundEffect('correct');
-                    showMessage("Correct! 🎉", `${activeChild.name} got it right!`);
+                    showMessage("Correct!", `${activeChild.name} got it right!`);
                 } else {
-                    showMessage("Nice try! 🤔", `The correct answer was ${compCurrentMatchItem.char}`);
+                    showMessage("Nice try!", `The correct answer was ${compCurrentMatchItem.char}`);
                 }
                 compCurrentGlobalQuestionCounter++;
                 compCurrentActivePlayerIndex = (compCurrentActivePlayerIndex + 1) % compPlayersList.length;
@@ -1493,7 +1508,7 @@
             const ranked = [...compPlayersList].sort((a,b) => b.score - a.score);
             const top = ranked[0]?.score || 0;
             ranked.forEach((p, idx) => {
-                let m = p.score === top ? "🥇 Winner" : (idx === 1 ? "🥈 2nd" : "🥉 3rd");
+                let m = p.score === top ? "Winner" : (idx === 1 ? "2nd" : "3rd");
                 list.innerHTML += `<div class="comp-player-score-pill" style="justify-content:space-between;width:100%;"><span>${m} • <strong>${p.name}</strong></span> <span>${p.score} pts</span></div>`;
             });
         } else {
@@ -1530,9 +1545,9 @@
         isAutoReading = !isAutoReading;
         const btn = document.getElementById('btn-toggle-autoread');
         if (isAutoReading) {
-            btn.innerHTML = "Stop Auto Read ⏸️"; btn.style.backgroundColor = "#EF4444"; runAutoReadTick();
+            btn.innerHTML = "Stop Auto Read"; btn.style.backgroundColor = "#EF4444"; runAutoReadTick();
         } else {
-            btn.innerHTML = "Start Auto Read ▶️"; btn.style.backgroundColor = "var(--secondary)";
+            btn.innerHTML = "Start Auto Read"; btn.style.backgroundColor = "var(--secondary)";
             if (autoReadTimeoutId) clearTimeout(autoReadTimeoutId);
             document.querySelectorAll('.fidel-card').forEach(c => c.classList.remove('reading-active'));
         }
@@ -1587,9 +1602,9 @@
         isSentenceAutoPlaying = !isSentenceAutoPlaying;
         const btn = document.getElementById('btn-sent-autoplay');
         if (isSentenceAutoPlaying) {
-            btn.innerHTML = "Stop Auto Play ⏸️"; btn.style.backgroundColor = "#EF4444"; runSentenceAutoPlayTick();
+            btn.innerHTML = "Stop Auto Play"; btn.style.backgroundColor = "#EF4444"; runSentenceAutoPlayTick();
         } else {
-            btn.innerHTML = "Auto Play Sentences ▶️"; btn.style.backgroundColor = "var(--secondary)";
+            btn.innerHTML = "Auto Play Sentences"; btn.style.backgroundColor = "var(--secondary)";
             if (sentenceAutoPlayTimeoutId) clearTimeout(sentenceAutoPlayTimeoutId);
         }
     }
