@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +17,6 @@
     <style>
         :root {
             --primary: #800080;
-
             --secondary: #4ECDC4;
             --accent: #FFD700;
             --background: linear-gradient(135deg, #FEF3C7 0%, #D1FAE5 50%, #ECFDF5 100%);
@@ -38,11 +36,10 @@
         .animal-owl { top: 12%; left: 3%; animation: bounceAnimal 5s ease-in-out infinite; }
         .animal-monkey { top: 35%; right: 2%; transform: scaleX(-1); animation: bounceAnimal 6s ease-in-out infinite 1s; }
         .animal-squirrel { bottom: 12%; left: 4%; animation: swayLeaf 4s ease-in-out infinite; }
-
         .animal-fox { top: 58%; right: 3%; animation: bounceAnimal 7s ease-in-out infinite 0.5s; }
         .animal-deer { bottom: 28%; left: 2%; animation: bounceAnimal 8s ease-in-out infinite 2s; }
-        .animal-lion { top: 72%; left: 8%; opacity: 0.15; animation: swayLeaf 9s ease-in-out infinite; }
-        .animal-elephant { bottom: 5%; right: 4%; opacity: 0.12; animation: bounceAnimal 10s ease-in-out infinite; }
+        .woodland-animal-guide.animal-lion { top: 72%; left: 8%; opacity: 0.15; animation: swayLeaf 9s ease-in-out infinite; }
+        .woodland-animal-guide.animal-elephant { bottom: 5%; right: 4%; opacity: 0.12; animation: bounceAnimal 10s ease-in-out infinite; }
         .glowing-bark-fidel { position: fixed; font-size: 5.5rem; font-weight: 900; color: rgba(16, 185, 129, 0.1); z-index: -1; user-select: none; pointer-events: none; font-family: 'Georgia', serif; text-shadow: 0 0 15px rgba(253, 224, 71, 0.4); }
         .etched-ሀ { top: 22%; right: 18%; transform: rotate(10deg); }
         .etched-ለ { top: 65%; left: 12%; transform: rotate(-15deg); }
@@ -57,14 +54,19 @@
         header p { font-size: 0.95rem; opacity: 0.95; }
         .install-app-btn { position: absolute; top: 15px; right: 15px; background: var(--accent); color: var(--primary); border: none; padding: 8px 18px; font-size: 0.85rem; font-weight: bold; border-radius: 50px; cursor: pointer; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); display: inline-flex; align-items: center; gap: 6px; transition: var(--transition); z-index: 10; }
         .install-app-btn:hover { transform: scale(1.05); background: white; }
-        .theme-selector-container { text-align: center; margin-top: 10px; margin-bottom: 5px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; align-items: center; background: var(--card-bg); padding: 10px 15px; border-radius: 50px; box-shadow: var(--shadow); backdrop-filter: blur(8px); width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; }
+        
+        .global-navigation-wrapper { display: flex; align-items: center; justify-content: center; gap: 15px; width: 100%; }
+        .global-ad-container { width: 220px; height: 140px; flex-shrink: 0; display: block; }
+        .global-ad-video { width: 100%; height: 100%; object-fit: cover; border-radius: var(--border-radius); box-shadow: var(--shadow); border: 2px solid white; background: #000; }
+        @media (max-width: 1100px) { .global-ad-container { display: none; } }
 
+        .theme-selector-container { text-align: center; margin-top: 10px; margin-bottom: 5px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; align-items: center; background: var(--card-bg); padding: 10px 15px; border-radius: 50px; box-shadow: var(--shadow); backdrop-filter: blur(8px); width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; }
         .theme-btn { border: 2px solid #E2E8F0; background: white; padding: 6px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 50px; cursor: pointer; transition: var(--transition); }
         .theme-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-        .nav-tabs { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .nav-tabs { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; flex: 1; }
         .tab-btn { background: var(--card-bg); border: 3px solid transparent; padding: 10px 18px; font-size: 0.95rem; font-weight: bold; border-radius: 50px; cursor: pointer; color: var(--text); box-shadow: var(--shadow); backdrop-filter: blur(8px); transition: all 0.3s ease; }
         .tab-btn.active { background: var(--primary); color: white; }
-        .view-panel { display: none; background: var(--card-bg); border-radius: var(--border-radius); padding: 20px; box-shadow: var(--shadow); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.6); }
+        .view-panel { display: none; background: var(--card-bg); border-radius: var(--border-radius); padding: 20px; box-shadow: var(--shadow); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.6); width: 100%; }
         .view-panel.active { display: block; }
         .chart-container { display: flex; flex-direction: column; gap: 15px; max-height: 60vh; overflow-y: auto; overflow-x: auto; padding-right: 5px; padding-bottom: 10px; margin-bottom: 20px; -webkit-overflow-scrolling: touch; }
         .series-row { display: grid; grid-template-columns: repeat(7, minmax(70px, 1fr)); gap: 10px; align-items: center; background: rgba(248, 250, 252, 0.75); padding: 10px; border-radius: 15px; border: 1px solid #E2E8F0; min-width: 540px; }
@@ -78,7 +80,6 @@
         .memory-grid { display: grid; gap: 12px; margin: 15px auto; width: 100%; max-width: 600px; }
         .memory-card { aspect-ratio: 1; perspective: 1000px; cursor: pointer; }
         .memory-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.5s; transform-style: preserve-3d; box-shadow: var(--shadow); border-radius: 15px; }
-
         .memory-card.flipped .memory-card-inner { transform: rotateY(180deg); }
         .memory-card-front, .memory-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 15px; border: 2px solid #E2E8F0; }
         .memory-card-front { background: linear-gradient(135deg, var(--primary), #FFA8A8); color: white; font-size: 1.8rem; font-weight: bold; }
@@ -88,7 +89,7 @@
         .fidel-card.reading-active { background-color: var(--accent) !important; border-color: var(--primary) !important; transform: scale(1.04); box-shadow: 0 4px 12px rgba(128, 0, 128, 0.15); }
         .fidel-card .char { font-size: 48px; font-weight: bold; color: #1A252C; line-height: 1.1; }
         .fidel-card .sound { font-size: 0.8rem; color: #627D98; margin-top: 2px; font-weight: bold; }
-        .detail-display { background: linear-gradient(135deg, #E0F7FA, #B2EBF2); padding: 12px; border-radius: 15px; display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+        .detail-display { background: linear-gradient(135deg, #E0F7FA, #B2EBF2); padding: 15px; border-radius: 15px; display: flex; align-items: center; justify-content: center; gap: 20px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); width: 100%; max-width: 500px; margin: 0 auto; }
         .detail-main { font-size: 4rem; font-weight: bold; color: #006064; }
         .detail-info h3 { font-size: 1.4rem; color: #006064; }
         .trace-workspace { display: flex; flex-direction: column; align-items: center; gap: 15px; width: 100%; }
@@ -98,7 +99,6 @@
         .trace-select-item { background: #F8FAFC; border: 2px solid #E2E8F0; padding: 6px 12px; font-size: 36px; font-weight: bold; border-radius: 12px; cursor: pointer; min-width: 65px; text-align: center; line-height: 1.1; }
         .story-select-item { background: #F8FAFC; border: 2px solid #E2E8F0; padding: 8px 14px; font-size: 1rem; font-weight: bold; border-radius: 12px; cursor: pointer; white-space: nowrap; text-align: center; }
         .story-select-item.active { background: var(--primary); color: white; border-color: var(--primary); }
-
         .trace-select-item.active { background: var(--primary); color: white; border-color: var(--primary); }
         .canvas-area-block { display: flex; flex-direction: column; align-items: center; gap: 12px; background: #FFF; padding: 15px; border-radius: 20px; border: 1px solid #E2E8F0; width: 100%; max-width: 340px; box-shadow: var(--shadow); }
         #traceCanvas { background: #FFFFFF; border: 4px dashed var(--secondary); border-radius: 15px; touch-action: none; max-width: 100%; height: auto; }
@@ -118,7 +118,6 @@
         .option-btn:hover { border-color: var(--primary); background: #FAF5FF; }
         .option-btn .char { font-size: 2.2rem; font-weight: bold; }
         .option-label-badge { font-size: 0.85rem; background: var(--primary); color: white; padding: 2px 6px; border-radius: 6px; margin-bottom: 6px; font-weight: 800; }
-
         .comp-setup-card { background: white; border: 2px dashed #CBD5E1; border-radius: var(--border-radius); padding: 20px; max-width: 500px; margin: 0 auto; width: 100%; }
         .comp-input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; text-align: left; }
         .comp-input-group label { font-weight: bold; color: var(--text); font-size: 0.9rem; }
@@ -131,6 +130,7 @@
         .msg-box h4 { font-size: 1.5rem; margin-bottom: 8px; }
         .msg-box p { font-size: 1rem; color: #627D98; margin-bottom: 15px; }
         .msg-box button { background: var(--primary); color: white; border: none; padding: 8px 20px; font-size: 1rem; font-weight: bold; border-radius: 50px; cursor: pointer; }
+        
         @media (min-width: 768px) {
             body { padding: 25px; }
             header { padding: 25px 20px; }
@@ -138,7 +138,6 @@
             header p { font-size: 1rem; }
             .canvas-area-block { max-width: 440px; padding: 25px; }
             #traceCanvas { width: 360px; height: 360px; }
-
             .target-fidel { font-size: 1.8rem; }
             .option-btn { padding: 18px; font-size: 1.3rem; }
             .view-panel { padding: 25px; }
@@ -159,7 +158,6 @@
 <div class="woodland-animal-guide animal-lion">🦁</div>
 <div class="woodland-animal-guide animal-elephant">🐘</div>
 
-
 <div class="glowing-bark-fidel etched-ሀ">ሀ</div>
 <div class="glowing-bark-fidel etched-ለ">ለ</div>
 <div class="glowing-bark-fidel etched-መ">መ</div>
@@ -172,19 +170,31 @@
         <p style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px; font-weight: bold;">Share your comment: info@eyana-geez.com</p>
     </header>
 
-    <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('explore')">ሀ ሁ መቁጠሪያ</button>
-        <button class="tab-btn" onclick="switchTab('abugida')">አ ቡ ጊ ዳ</button>
-        <button class="tab-btn" onclick="switchTab('labialized')">ሏ ሟ ሯ ሷ</button>
-        <button class="tab-btn" onclick="switchTab('numbers')">የግዕዝ ቁጥሮች</button>
-        <button class="tab-btn" onclick="switchTab('geezwords')">ግዕዝ ተማሩ</button>
-        <button class="tab-btn" onclick="switchTab('sentences')">Short Sentences</button>
+    <div class="global-navigation-wrapper">
+        <div class="global-ad-container">
+            <!-- Fixed: Added explicit playsinline attribute so iOS Safari doesn't block background autoplay looping templates -->
+            <video id="img-explore-video-left" class="global-ad-video" autoplay loop muted playsinline controls></video>
+        </div>
 
-        <button class="tab-btn" onclick="switchTab('memory')">Memory Cards</button>
-        <button class="tab-btn" onclick="switchTab('trace')">Tracing Room</button>
-        <button class="tab-btn" onclick="switchTab('quiz')">Single Quiz</button>
-        <button class="tab-btn" onclick="switchTab('competition')">Kids Competition</button>
-        <button class="tab-btn" onclick="switchTab('videos')">Short Stories</button>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('explore')">ሀ ሁ መቁጠሪያ</button>
+            <button class="tab-btn" onclick="switchTab('abugida')">አ ቡ ጊ ዳ</button>
+            <button class="tab-btn" onclick="switchTab('labialized')">ሏ ሟ ሯ ሷ</button>
+            <button class="tab-btn" onclick="switchTab('numbers')">የግዕዝ ቁጥሮች</button>
+            <button class="tab-btn" onclick="switchTab('geezwords')">ግዕዝ ተማሩ</button>
+            <button class="tab-btn" onclick="switchTab('sentences')">Short Sentences</button>
+            <button class="tab-btn" onclick="switchTab('memory')">Memory Cards</button>
+            <button class="tab-btn" onclick="switchTab('trace')">Tracing Room</button>
+            <button class="tab-btn" onclick="switchTab('quiz')">Single Quiz</button>
+            <button class="tab-btn" onclick="switchTab('competition')">Kids Competition</button>
+            <button class="tab-btn" onclick="switchTab('videos')">Short Stories</button>
+            <button class="tab-btn" style="background: var(--accent); color: var(--primary);" onclick="redirectToAmazonStorefront()">Order Traceable Books</button>
+        </div>
+
+        <div class="global-ad-container">
+            <!-- Fixed: Added explicit playsinline attribute so iOS Safari doesn't block background autoplay looping templates -->
+            <video id="img-explore-video-right" class="global-ad-video" autoplay loop muted playsinline controls></video>
+        </div>
     </div>
 
     <div id="explore-panel" class="view-panel active">
@@ -197,9 +207,10 @@
                 <button class="theme-btn" style="padding: 2px 8px; margin: 0;" onclick="adjustAutoReadSpeed(-500)">Faster</button>
             </div>
         </div>
+        
         <div class="chart-container" id="chart-standard-series"></div>
+        
         <div class="detail-display">
-
             <div class="detail-main" id="lbl-fidel">ሀ</div>
             <div class="detail-info">
                 <h3 id="lbl-sound">HA</h3>
@@ -218,7 +229,6 @@
             <div class="detail-info"><h3 id="lbl-abugida-sound" style="color: #E65100;">A</h3></div>
         </div>
     </div>
-
 
     <div id="labialized-panel" class="view-panel">
         <div class="labialized-row" id="chart-labialized-series"></div>
@@ -239,7 +249,6 @@
     <div id="geezwords-panel" class="view-panel">
         <div style="text-align: center; margin-bottom: 15px;">
             <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 4px;">ግዕዝ ተማሩ • Learn Ge'ez Vocabulary</h3>
-
             <p style="color: #627D98; font-size: 0.85rem;">Explore classical Ge'ez vocabulary words featuring standard Amharic definitions and accurate English translations!</p>
         </div>
         <div class="sentences-grid" id="chart-geezwords-container"></div>
@@ -259,7 +268,6 @@
             <button class="theme-btn" id="btn-sent-fast" onclick="setSentenceReadingSpeed(1.35)">Fast</button>
             <span style="border-left: 2px solid #CBD5E1; height: 20px; margin: 0 5px;"></span>
             <button id="btn-sent-autoplay" class="audio-trace-btn" style="background-color: var(--secondary); margin: 0; padding: 6px 16px; flex: none; width: auto;" onclick="toggleSentenceAutoPlay()">Auto Play Sentences</button>
-
         </div>
         <div class="sentences-grid" id="chart-sentences-container"></div>
         <div class="detail-display" style="margin-top: 15px; background: linear-gradient(135deg, #EAE8FF, #D2CFFF);">
@@ -279,7 +287,6 @@
                 <button class="theme-btn active" id="btn-size-12" onclick="setMemoryGameMatrixSize(6, 4)">Easy (12 Cards)</button>
                 <button class="theme-btn" id="btn-size-16" onclick="setMemoryGameMatrixSize(8, 4)">Medium (16 Cards)</button>
                 <button class="theme-btn" id="btn-size-24" onclick="setMemoryGameMatrixSize(12, 6)">Hard (24 Cards)</button>
-
                 <button class="theme-btn" id="btn-size-36" onclick="setMemoryGameMatrixSize(18, 6)">Expert (36 Cards)</button>
             </div>
             <button class="audio-trace-btn" style="background-color: var(--primary); flex: none; width: auto; padding: 8px 24px;" onclick="initMemoryGame()">Mix & Shuffle Cards</button>
@@ -293,24 +300,42 @@
                 <div class="trace-picker-label">Tap any character below to change your tracing practice board:</div>
                 <div class="trace-grid-select" id="trace-character-picker"></div>
             </div>
-            <div class="canvas-area-block">
-                <div class="color-palette-tray">
-                    <span style="font-size:0.8rem; font-weight:bold; color:var(--text); margin-right:2px;">Pen Color:</span>
-                    <div class="color-swatch-circle active" style="background-color: #2F3E46;" onclick="setTracingMarkerColor('#2F3E46', this)"></div>
-                    <div class="color-swatch-circle" style="background-color: #EF4444;" onclick="setTracingMarkerColor('#EF4444', this)"></div>
-                    <div class="color-swatch-circle" style="background-color: #3B82F6;" onclick="setTracingMarkerColor('#3B82F6', this)"></div>
+            
+            <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; width: 100%;">
+                <div style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
+                    <img id="img-cover-left" src="" onerror="this.onerror=null; this.src='https://placehold.co/130x190/800080/ffffff?text=Add+Left+Cover'" alt="Book Cover Left" style="width: 130px; height: 190px; object-fit: cover; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); border: 3px solid white;">
+                    <img id="img-cover-left-landscape" src="" onerror="this.onerror=null; this.src='https://placehold.co/190x130/800080/ffffff?text=Landscape+Left'" alt="Book Cover Left Landscape" style="width: 130px; height: 90px; object-fit: cover; border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); border: 3px solid white;">
+                </div>
+                
+                <div class="canvas-area-block">
+                    <div class="color-palette-tray">
+                        <span style="font-size:0.8rem; font-weight:bold; color:var(--text); margin-right:2px;">Pen Color:</span>
+                        <div class="color-swatch-circle active" style="background-color: #2F3E46;" onclick="setTracingMarkerColor('#2F3E46', this)"></div>
+                        <div class="color-swatch-circle" style="background-color: #EF4444;" onclick="setTracingMarkerColor('#EF4444', this)"></div>
+                        <div class="color-swatch-circle" style="background-color: #3B82F6;" onclick="setTracingMarkerColor('#3B82F6', this)"></div>
+                        <div class="color-swatch-circle" style="background-color: #10B981;" onclick="setTracingMarkerColor('#10B981', this)"></div>
+                        <div class="color-swatch-circle" style="background-color: #F59E0B;" onclick="setTracingMarkerColor('#F59E0B', this)"></div>
+                        <div class="color-swatch-circle" style="background-color: #8B5CF6;" onclick="setTracingMarkerColor('#8B5CF6', this)"></div>
+                        <div class="color-swatch-circle" style="background-color: #EC4899;" onclick="setTracingMarkerColor('#EC4899', this)"></div>
+                    </div>
+                    <canvas id="traceCanvas" width="280" height="280"></canvas>
+                    <div class="trace-controls">
+                        <button class="clear-btn" onclick="clearTraceCanvas()">Clear Board</button>
+                        <button class="audio-trace-btn" onclick="playCurrentTraceAudio()">Listen Sound</button>
+                        <button class="next-trace-btn" onclick="goToNextTracingFidel()">Next Character</button>
+                    </div>
+                </div>
 
-                    <div class="color-swatch-circle" style="background-color: #10B981;" onclick="setTracingMarkerColor('#10B981', this)"></div>
-                    <div class="color-swatch-circle" style="background-color: #F59E0B;" onclick="setTracingMarkerColor('#F59E0B', this)"></div>
-                    <div class="color-swatch-circle" style="background-color: #8B5CF6;" onclick="setTracingMarkerColor('#8B5CF6', this)"></div>
-                    <div class="color-swatch-circle" style="background-color: #EC4899;" onclick="setTracingMarkerColor('#EC4899', this)"></div>
+                <div style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
+                    <img id="img-cover-right" src="" onerror="this.onerror=null; this.src='https://placehold.co/130x190/800080/ffffff?text=Add+Right+Cover'" alt="Book Cover Right" style="width: 130px; height: 190px; object-fit: cover; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); border: 3px solid white;">
+                    <img id="img-cover-right-landscape" src="" onerror="this.onerror=null; this.src='https://placehold.co/190x130/800080/ffffff?text=Landscape+Right'" alt="Book Cover Right Landscape" style="width: 130px; height: 90px; object-fit: cover; border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); border: 3px solid white;">
                 </div>
-                <canvas id="traceCanvas" width="280" height="280"></canvas>
-                <div class="trace-controls">
-                    <button class="clear-btn" onclick="clearTraceCanvas()">Clear Board</button>
-                    <button class="audio-trace-btn" onclick="playCurrentTraceAudio()">Listen Sound</button>
-                    <button class="next-trace-btn" onclick="goToNextTracingFidel()">Next Character</button>
-                </div>
+            </div>
+            
+            <div style="background: white; border: 2px dashed #10B981; padding: 18px; border-radius: 15px; margin-top: 15px; text-align: center; width: 100%; max-width: 340px; box-shadow: var(--shadow);">
+                <h4 style="color: var(--primary); font-size: 1.05rem; margin-bottom: 4px; font-weight: bold;">Companion Print Workbook</h4>
+                <p style="color: #627D98; font-size: 0.85rem; margin-bottom: 12px; line-height: 1.3;">Get the physical trace-and-write handwriting workbook that perfectly mirrors this Tracing Room's character order for tactile offline practice!</p>
+                <button class="audio-trace-btn" style="background-color: #F59E0B; padding: 6px 18px; font-size: 0.85rem; flex: none; width: auto; margin: 0 auto; display: block;" onclick="redirectToAmazonStorefront()">Order Printed Copy</button>
             </div>
         </div>
     </div>
@@ -319,7 +344,6 @@
         <div class="quiz-container">
             <div class="score-board">
                 <span>Streak: <span id="lbl-streak">0</span></span>
-
                 <span>Score: <span id="lbl-score">0</span></span>
             </div>
             <div style="font-size:1.15rem; font-weight: bold;">Listen to the sound and choose the matching Fidel:</div>
@@ -339,7 +363,6 @@
                 <div class="comp-setup-card">
                     <div class="comp-input-group">
                         <label for="comp-kids-count">Select Number of Kids playing:</label>
-
                         <select id="comp-kids-count" class="comp-input-field" onchange="generateCompetitionNameInputs()">
                             <option value="2" selected>2 Players</option>
                             <option value="3">3 Players</option>
@@ -359,7 +382,6 @@
                     <div style="background: #EDF2F7; padding: 10px; border-radius: 10px; font-weight: bold; margin-bottom: 12px; color: var(--primary); text-align: center; font-size: 0.9rem;">Total Distributed Match Round Questions: <span id="lbl-comp-total-calc">10</span></div>
                     <div id="comp-names-container" style="display:flex; flex-direction:column; gap:10px; margin-bottom:15px;"></div>
                     <button class="audio-trace-btn" style="background-color: var(--secondary); width: 100%; padding: 10px; font-size: 1rem; flex: none;" onclick="startCompetitionMatch()">Start Competition!</button>
-
                 </div>
             </div>
             <div id="comp-play-view" style="display: none;">
@@ -379,7 +401,6 @@
                     <p style="color: #627D98; font-size: 1rem; margin-bottom: 20px;">Here is the final score leaderboard breakdown for everyone:</p>
                     <div id="comp-leaderboard-ranking-list" style="max-width: 400px; margin: 0 auto 20px auto; display: flex; flex-direction: column; gap: 10px;"></div>
                     <button class="audio-trace-btn" style="background-color: var(--primary); padding: 10px 30px; font-size: 1rem; flex: none; width: auto;" onclick="resetCompetitionToSetup()">Play New Match</button>
-
                 </div>
             </div>
         </div>
@@ -391,14 +412,13 @@
             <p style="color: #627D98; font-size: 0.85rem;">Tap any recorded story button below to play its video narration directly from your Audio folder!</p>
         </div>
         <div class="trace-workspace">
-            <div class="trace-picker-container"><div class="trace-grid-select" id="story-video-picker-tray" style="padding: 5px 0;"></div></div>
+            <div class="trace-picker-container" style="width: 100%; margin: 0; min-width: 260px;"><div class="trace-grid-select" id="story-video-picker-tray" style="padding: 5px 0;"></div></div>
             <div class="canvas-area-block" style="width: 100%; max-width: 580px; display: flex; flex-direction: column; align-items: center;">
                 <video id="storyVideoPlayerFrame" controls style="width: 100%; max-width: 480px; border-radius: 15px; border: 4px solid var(--secondary); background: #000; display: block; margin-bottom: 12px;"></video>
                 <div style="font-size: 1.1rem; font-weight: bold; color: var(--text); background: #EBF8FF; padding: 6px 20px; border-radius: 50px; border: 1px solid #BEE3F8;" id="lbl-active-story-title">Story: Select a piece to play</div>
             </div>
         </div>
     </div>
-
 
     <div class="theme-selector-container">
         <span style="font-weight: bold; font-size: 0.9rem; color: var(--text);">App Theme:</span>
@@ -421,27 +441,23 @@
 </footer>
 
 <script>
-
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault(); deferredPrompt = e; updatePWAButtonState();
     });
 
-    // Standalone Execution Detector
     function updatePWAButtonState() {
         const installBtn = document.getElementById('btn-app-install'); if (!installBtn) return;
         if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
-            installBtn.innerHTML = "Update App"; installBtn.style.background = "#3B82F6"; installBtn.style.color = "#FFFFFF";
+            installBtn.innerHTML = "Refresh"; installBtn.style.background = "#3B82F6"; installBtn.style.color = "#FFFFFF";
         } else {
             installBtn.innerHTML = "Install App";
         }
     }
 
-    // Programmatic Cache Eviction and Hard Upgrades
     function triggerAppInstallation() {
         if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
             if ('caches' in window) { caches.keys().then((names) => { for (let n of names) caches.delete(name); }); }
-
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.getRegistrations().then((regs) => {
                     let pr = regs.map(r => r.unregister());
@@ -461,11 +477,18 @@
     if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('./sw.js').catch(err => console.log('Service Worker offline restricted locally:', err));
-
         });
     }
 
     const ASSET_BASE_PATH = 'Audio/';
+    
+    const shortStoriesList = [
+        { title: "አጠቃቀም", filename: "How to", icon: "" },
+        { title: "ሀ ሁ በ ፲ ቀን Day 1-5", filename: "HAHU_10DAYS_Day1_5", icon: "" },
+        { title: "ሀ ሁ በ ፲ ቀን Day 6-10", filename: "HAHU_10DAYS_Day6_10", icon: "" },
+        { title: "ቀበሮውና ወይኑ", filename: "The_Fox_Grape", icon: "" }
+    ];
+
     const compactFidels = [
         { b: "h", r: "ሀሁሂሃሄህሆ", v: ["ha","hu","hi","ha","he","he","ho"] },
         { b: "l", r: "ለሉሊላሌልሎ", v: ["le","lu","li","la","le","l","lo"] },
@@ -481,7 +504,6 @@
         { b: "j", r: "ጀጁጂጃጄጅጆ" }, { b: "g", r: "ገጉጊጋጌግጎ" }, { b: "t'", r: "ጠጡጢጣጤጥጦ" },
         { b: "ch'", r: "ጨጩጪጫጬጭጮ" }, { b: "p'", r: "ጰጱጲጳጴጵጶ" }, { b: "ts'", r: "ጸጹጺጻጼጽጾ" },
         { b: "ts'", r: "ፀፁፂፃፄፅፆ" }, { b: "f", r: "ፈፉፊፋፌፍፎ" }, { b: "p", r: "ፐፑፒፓፔፕፖ" },
-
         { b: "v", r: "ቨቩቪቫቬቭቮ", v: ["ve","vu","vi","va","ve","v","vo"] }
     ];
 
@@ -500,19 +522,11 @@
     const geezNumbersData = [{char:"፩", sound:"1 - አንድ"}, {char:"፪", sound:"2 - ሁለት"}, {char:"፫", sound:"3 - ሦስት"}, {char:"፬", sound:"4 - አራት"}, {char:"፭", sound:"5 - አምስት"}, {char:"፮", sound:"6 - ስድስት"}, {char:"፯", sound:"7 - ሰባት"}, {char:"፰", sound:"8 - ስምንት"}, {char:"፱", sound:"9 - ዘጠኝ"}, {char:"፲", sound:"10 - አስር"}, {char:"፲፩", sound:"11 - አስራ አንድ"}, {char:"፲፪", sound:"12 - አስራ ሁለት"}, {char:"፲፫", sound:"13 - አስራ ሦስት"}, {char:"፲፬", sound:"14 - አስራ አራት"}, {char:"፲፭", sound:"15 - አስራ አምስት"}, {char:"፲፮", sound:"16 - አስራ ስድስት"}, {char:"፲፯", sound:"17 - አስራ ሰባት"}, {char:"፲፰", sound:"18 - አስራ ስምንት"}, {char:"፲፱", sound:"19 - አስራ ዘጠኝ"}, {char:"፳", sound:"20 - ሃያ"}, {char:"፴", sound:"30 - ሰላሳ"}, {char:"፵", sound:"40 - አርባ"}, {char:"፶", sound:"50 - አምሳ"}, {char:"፷", sound:"60 - ስልሳ"}, {char:"፸", sound:"70 - ሰባ"}, {char:"፹", sound:"80 - ሰማኒያ"}, {char:"፺", sound:"90 - ዘጠና"}, {char:"፻", sound:"100 - መቶ"}, {char:"፲፻", sound:"1,000 - ዐስርቱ ምእት"}, {char:"፼", sound:"10,000 - እልፍ"}, {char:"፻፲፻", sound:"100,000 - አእላፍ"}];
 
     const compactSentences = [
-        ["ኳስ መጫወት እወዳለሁ።", "I love playing ball.", "⚽"], ["መጽሐፍ ማንበብ እወዳለሁ።", "I love reading books.", "📚"], ["ትምህርት ቤት እሄዳለሁ።", "I go to school.", "🏫"], ["ወተት እጠጣለሁ።", "I drink milk.", "🥛"], ["እንጀራ እወዳለሁ።", "I love Enjera.", "🥞"], ["ውሻዬን እወዳለሁ።", "I love my dog.", "🐶"], ["ድመት አለችኝ።", "I have a cat.", "🐱"], ["አበባው ያምራል።", "The flower is beautiful.", "🌸"], ["ፀሐይ ጠዋት ትወጣለች።", "The sun shines.", "☀️"], ["ውሃ እጠጣለሁ።", "I drink water.", "💧"], ["እጄን እታጠባለሁ።", "I wash my hands.", "🧼"], ["በሩጫ እወዳደራለሁ።", "I love running.", "🏃"], ["ብስክሌት እነዳለሁ።", "I ride a bicycle.", "🚲"], ["ወፍ ትበራለች።", "A bird flies.", "🐦"], ["ዓሳ በውሃ ውስጥ ይዋኛል።", "A fish swims in water.", "🐟"], ["አባቴን እወዳለሁ።", "I love my father.", "👨"], ["እናቴን እወዳለሁ።", "I love my mother.", "👩"], ["ወንድም አለኝ።", "I have a brother.", "👦"], ["እህት አለችኝ።", "I have a sister.", "👧"], ["ኬክ መብላት እወዳለሁ።", "I like to eat cake.", "🍰"], ["ሙዝ እወዳለሁ።", "I love bananas.", "🍌"], ["ፖም እበላለሁ።", "I eat an apple.", "🍎"], ["ብርቱካን ጣፋጭ ነው።", "Orange is sweet.", "🍊"], ["ሀምራዊ ቀለም እወዳለሁ።", "I love the color purple.", "🟣"], ["ሰማዩ ሰማያዊ ነው።", "The sky is blue.", "🌌"], ["ሣሩ አረንጓዴ ነው።", "The grass is green.", "🌱"], ["ጨረቃ በምሽት ታበራለች።", "The moon shines at night.", "🌙"], ["ከዋክብት ያበራሉ።", "Stars shine.", "⭐"], ["ዝናብ እየዘነበ ነው።", "It is raining.", "🌧️"], ["ዛፉ ትልቅ ነው።", "The tree is big.", "🌳"], ["መኪናው ፈጣን ነው።", "The car is fast.", "🚗"], ["አውሮፕላን እያየሁ ነው።", "I am watching an airplane.", "✈️"], ["ባቡር ይሄዳል።", "The train moves.", "🚂"], ["መዝሙር እሰማለሁ።", "I listen to song.", "🎵"], ["ስዕል እቀባለሁ።", "I paint a picture.", "🎨"], ["መጫወቻ አለኝ።", "I have a toy.", "🧸"], ["ፈገግታ እወዳለሁ።", "I love to smile.", "😊"], ["ቶሎ እተኛለሁ።", "I go to sleep early.", "🛏️"], ["ማለዳ እነቃለሁ።", "I wake up early.", "🌅"], ["ጥርሴን እቦርሻለሁ።", "I brush my teeth.", "🪥"], ["ጫማዬን አደርጋለሁ።", "I put on my shoes.", "👟"], ["ልบሴን እቀይራለሁ።", "I change my clothes.", "👕"], ["ፊኛ እወዳለሁ።", "I love balloons.", "🎈"], ["አይስክሬም እወዳለሁ።", "I love ice cream.", "🍦"], ["ቸኮሌት እበላለሁ።", "I eat chocolate.", "🍫"], ["ጥንቸል ትዘላለች።", "The rabbit hops.", "🐇"], ["አንበሳ ያገሳል።", "The lion roars.", "🦁"], ["ዝሆን ትልቅ ነው።", "The elephant is big.", "🐘"], ["ቢራቢሮ ውብ ናት።", "The butterfly is beautiful.", "🦋"], ["እኔ ጎበዝ ነኝ!", "I am smart and clever!", "🧠"]
-
+        ["ኳስ መጫወት እወዳለሁ።", "I love playing ball.", "⚽"], ["መጽሐፍ ማንበብ እወዳለሁ።", "I love reading books.", "📚"], ["ትምህርት ቤት እሄዳለሁ።", "I go to school.", "🏫"], ["ወተት እጠጣለሁ።", "I drink milk.", "🥛"], ["እንጀራ እወዳለሁ።", "I love Enjera.", "🥞"], ["ውሻዬን እወዳለሁ።", "I love my dog.", "🐶"], ["ድመት አለችኝ።", "I have a cat.", "🐱"], ["አበባው ያምራል።", "The flower is beautiful.", "🌸"], ["ፀሐይ ጠዋት ትወጣለች።", "The sun shines.", "☀️"], ["ውሃ እጠጣለሁ።", "I drink water.", "💧"], ["እጄን እታጠባለሁ።", "I wash my hands.", "🧼"], ["በሩጫ እወዳደራለሁ።", "I love running.", "🏃"], ["ብስክሌት እነዳለሁ።", "I ride a bicycle.", "🚲"], ["ወፍ ትበራለች።", "A bird flies.", "🐦"], ["ዓሳ በውሃ ውስጥ ይዋኛል።", "A fish swims in water.", "🐟"], ["አባቴን እወዳለሁ።", "I love my father.", "👨"], ["እናቴን እወዳለሁ።", "I love my mother.", "👩"], ["ወንድም አለኝ።", "I have a brother.", "👦"], ["እህት አለችኝ።", "I have a sister.", "👧"], ["ኳስ መጫወት እወዳለሁ።", "I like to eat cake.", "🍰"], ["ሙዝ እወዳለሁ።", "I love bananas.", "🍌"], ["ፖም እበላለሁ።", "I eat an apple.", "🍎"], ["ብርቱካን ጣፋጭ ነው።", "Orange is sweet.", "🍊"], ["ሀምራዊ ቀለም እወዳለሁ።", "I love the color purple.", "🟣"], ["ሰማዩ ሰማያዊ ነው።", "The sky is blue.", "🌌"], ["ሣሩ አረንጓዴ ነው።", "The grass is green.", "🌱"], ["ጨረቃ በምሽት ታበራለች።", "The moon shines at night.", "🌙"], ["ከዋክብት ያበራሉ።", "Stars shine.", "⭐"], ["ዝናብ እየዘነበ ነው።", "It is raining.", "🌧️"], ["ዛፉ ትልቅ ነው።", "The tree is big.", "🌳"], ["መኪናው ፈጣን ነው።", "The car is fast.", "🚗"], ["አውሮፕላን እያየሁ ነው።", "I am watching an airplane.", "✈️"], ["ባቡር ይሄዳል።", "The train moves.", "🚂"], ["መዝሙር እሰማለሁ።", "I listen to song.", "🎵"], ["ስዕል እቀባለሁ።", "I paint a picture.", "🎨"], ["መጫወቻ አለኝ።", "I have a toy.", "🧸"], ["ፈገግታ እወዳለሁ።", "I love to smile.", "😊"], ["ቶሎ እተኛለሁ።", "I go to sleep early.", "🛏️"], ["ማለዳ እነቃለሁ።", "I wake up early.", "🌅"], ["ጥርሴን እቦርሻለሁ።", "I brush my teeth.", "🪥"], ["ጫማዬን አደርጋለሁ።", "I put on my shoes.", "👟"], ["ልብሴን እቀይራለሁ።", "I change my clothes.", "👕"], ["ፊኛ እወዳለሁ።", "I love balloons.", "🎈"], ["አይስክሬም እወዳለሁ።", "I love ice cream.", "🍦"], ["ቸኮሌት እበላለሁ።", "I eat chocolate.", "🍫"], ["ጥንቸል ትዘላለች።", "The rabbit hops.", "🐇"], ["አንበሳ ያገሳል።", "The lion roars.", "🦁"], ["ዝሆን ትልቅ ነው።", "The elephant is big.", "🐘"], ["ቢራቢሮ ውብ ናት።", "The butterfly is beautiful.", "🦋"], ["እኔ ጎበዝ ነኝ!", "I am smart and clever!", "🧠"]
     ];
 
     const geezWordsData = [
-        { geez: "ሐሊብ", amharic: "ወተት", english: "Milk" }, { geez: "ማይ", amharic: "ውሃ", english: "Water" }, { geez: "እሳት", amharic: "እሳት", english: "Fire" }, { geez: "ንጉሥ", amharic: "ንጉሥ", english: "King" }, { geez: "ብርሃን", amharic: "ብርሃን", english: "Light" }, { geez: "ጽጌ", amharic: "አበባ", english: "Flower" }, { geez: "ወርቅ", amharic: "ወርቅ", english: "Gold" }, { geez: "ሰማይ", amharic: "ሰማይ", english: "Sky" }, { geez: "ምድር", amharic: "ምድር", english: "Earth" }, { geez: "ኮከብ", amharic: "ኮከብ", english: "Star" }, { geez: "ፀሐይ", amharic: "ፀሐይ", english: "Sun" }, { geez: "ወሬዛ", amharic: "ጎበዝ ወጣት", english: "Young Man" }, { geez: "ብእሲ", amharic: "ሰው / ወንድ", english: "Man" }, { geez: "ብእሲት", amharic: "ሴት", english: "Woman" }, { geez: "ሕፃን", amharic: "ልጅ", english: "Child" }, { geez: "ቤት", amharic: "ቤት", english: "House" }, { geez: "መጽሐፍ", amharic: "መጽሐፍ", english: "Book" }, { geez: "ዓሣ", amharic: "ዓሣ", english: "Fish" }, { geez: "ዖፍ", amharic: "ወፍ", english: "Bird" }, { geez: "አንበሳ", amharic: "አንበሳ", english: "Lion" }, { geez: "ከልብ", amharic: "ውሻ", english: "Dog" }, { geez: "ድሙ", amharic: "ድመት", english: "Cat" }, { geez: "ዕንጨት", amharic: "ዕንጨት", english: "Wood" }, { geez: "ኅብስት", amharic: "ዳቦ", english: "Bread" }, { geez: "ወይን", amharic: "ወይን", english: "Wine" }, { geez: "ሐመር", amharic: "መርከብ", english: "Ship" }, { geez: "ገነት", amharic: "ገነት", english: "Paradise" }, { geez: "ደብር", amharic: "ተራራ", english: "Mountain" }, { geez: "ባሕር", amharic: "ባሕር", english: "Sea" }, { geez: "ፈረስ", amharic: "ፈረስ", english: "Horse" }, { geez: "አህያ", amharic: "አህያ", english: "Donkey" }, { geez: "ላህም", amharic: "ላም", english: "Cow" }, { geez: "በግዕ", amharic: "በግ", english: "Sheep" }, { geez: "ጠሊ", amharic: "ፍየል", english: "Goat" }, { geez: "ገራህት", amharic: "እርሻ", english: "Field" }, { geez: "ዕፅ", amharic: "ዛፍ", english: "Tree" }, { geez: "ፈውስ", amharic: "መድኃኒት", english: "Medicine" }, { geez: "ሰላም", amharic: "ሰላም", english: "Peace" }, { geez: "ፍቅር", amharic: "ፍቅር", english: "Love" }, { geez: "ሐሤት", amharic: "ደስታ", english: "Joy" }, { geez: "ኃይል", amharic: "ኃይል", english: "Power" }, { geez: "ጥበብ", amharic: "ጥበብ", english: "Wisdom" }, { geez: "ኵናት", amharic: "ጦር", english: "Spear" }, { geez: "እግር", amharic: "እግር", english: "Foot" }, { geez: "እደ", amharic: "እጅ", english: "Hand" }, { geez: "ዐይን", amharic: "ዐይን", english: "Eye" }, { geez: "ልብ", amharic: "ልብ", english: "Heart" }, { geez: "ርእስ", amharic: "ራስ", english: "Head" }, { geez: "ስን", amharic: "ጥርስ", english: "Tooth" }, { geez: "ክነፍ", amharic: "ክንፍ", english: "Wing" }
-    ];
-
-    const shortStoriesList = [
-        { title: "አጠቃቀም", filename: "How to", icon: "" },
-		{ title: "ሀ ሁ በ ፲ ቀን Day 1-5", filename: "HAHU_10DAYS_Day1_5", icon: "" },
-        { title: "ሀ ሁ በ ፲ ቀን Day 6-10", filename: "HAHU_10DAYS_Day6_10", icon: "" },
-		{ title: "ቀበሮውና ወይኑ", filename: "The_Fox_Grape", icon: "" }
+        { geez: "ሐሊብ", amharic: "ወተት", english: "Milk" }, { geez: "ማይ", amharic: "ውሃ", english: "Water" }, { geez: "እሳት", amharic: "እሳት", english: "Fire" }, { geez: "ንጉሥ", amharic: "ንጉሥ", english: "King" }, { geez: "ብርሃን", amharic: "ብርሃን", english: "Light" }, { geez: "ጽጌ", amharic: "አበባ", english: "Flower" }, { geez: "ወርቅ", amharic: "ወርቅ", english: "Gold" }, { geez: "ሰማይ", amharic: "ሰማይ", english: "Sky" }, { geez: "ምድር", amharic: "ምድር", english: "Earth" }, { geez: "ኮከብ", amharic: "ኮከብ", english: "Star" }, { geez: "ፀሐይ", amharic: "ፀሐይ", english: "Sun" }, { geez: "ወሬዛ", amharic: "ጎበዝ ወጣት", english: "Young Man" }, { geez: "ብእሲ", amharic: "ሰው / ወንድ", english: "Man" }, { geez: "ብእሲት", amharic: "ሴት", english: "Woman" }, { geez: "ሕፃን", amharic: "ልጅ", english: "Child" }, { geez: "ቤት", amharic: "ቤት", english: "House" }, { geez: "መጽሐፍ", amharic: "መጽሐፍ", english: "Book" }, { geez: "አሳ", amharic: "ዓሣ", english: "Fish" }, { geez: "ዖፍ", amharic: "ወፍ", english: "Bird" }, { geez: "አንበሳ", amharic: "አንበሳ", english: "Lion" }, { geez: "ከልብ", amharic: "ውሻ", english: "Dog" }, { geez: "ድሙ", amharic: "ድመት", english: "Cat" }, { geez: "ዕንጨት", amharic: "ዕንጨት", english: "Wood" }, { geez: "ኅብስት", amharic: "ዳቦ", english: "Bread" }, { geez: "ወይን", amharic: "ወይን", english: "Wine" }, { geez: "ሐመር", amharic: "መርከብ", english: "Ship" }, { geez: "ገነት", amharic: "ገነት", english: "Paradise" }, { geez: "ደብር", amharic: "ተራራ", english: "Mountain" }, { geez: "ባሕር", amharic: "ባሕር", english: "Sea" }, { geez: "ፈረስ", amharic: "ፈረስ", english: "Horse" }, { geez: "አህያ", amharic: "አህያ", english: "Donkey" }, { geez: "ላህም", amharic: "ላም", english: "Cow" }, { geez: "በግዕ", amharic: "በግ", english: "Sheep" }, { geez: "ጠሊ", amharic: "ፍየል", english: "Goat" }, { geez: "ገራህት", amharic: "እርሻ", english: "Field" }, { geez: "ዕፅ", amharic: "ዛፍ", english: "Tree" }, { geez: "ፈውስ", amharic: "መድኃኒት", english: "Medicine" }, { geez: "ሰላም", amharic: "ሰላም", english: "Peace" }, { geez: "ፍቅር", amharic: "ፍቅር", english: "Love" }, { geez: "ሐሤት", amharic: "ደስታ", english: "Joy" }, { geez: "ኃይል", amharic: "ኃይል", english: "Power" }, { geez: "ጥበብ", amharic: "ጥበብ", english: "Wisdom" }, { geez: "ኵናት", amharic: "ጦር", english: "Spear" }, { geez: "እግር", amharic: "እግር", english: "Foot" }, { geez: "እደ", amharic: "እጅ", english: "Hand" }, { geez: "ዐይን", amharic: "ዐይን", english: "Eye" }, { geez: "ልብ", amharic: "ልብ", english: "Heart" }, { geez: "ርእስ", amharic: "ራስ", english: "Head" }, { geez: "ስን", amharic: "ጥርስ", english: "Tooth" }, { geez: "ክነፍ", amharic: "ክንፍ", english: "Wing" }
     ];
 
     const shortSentencesData = compactSentences.map(s => ({ amharic: s[0], english: s[1], pic: s[2] }));
@@ -522,7 +536,6 @@
     let firstCard = null, secondCard = null, lockBoard = false, memoryMatches = 0, memoryTargetPairsCount = 6, memoryTargetColumnsCount = 4, memoryMovesCounter = 0;
     let isAutoReading = false, autoReadTimeoutId = null, autoReadSpeedMs = 2000;
     let globalAudioPlaybackRate = 1.0, isSentenceAutoPlaying = false, sentenceAutoPlayTimeoutId = null, currentSentenceIndex = 0;
-
     const alphabetOptionLetterLabels = ["A", "B", "C", "D"];
 
     function playRewardSoundEffect(type) {
@@ -542,7 +555,6 @@
     function switchAppTheme(themeKey) {
         const root = document.documentElement; document.querySelectorAll('.theme-selector-container .theme-btn').forEach(b => b.classList.remove('active')); document.getElementById('theme-' + themeKey)?.classList.add('active');
         const themes = {
-
             sunny: ['#800080', '#4ECDC4', 'linear-gradient(135deg, #FEF3C7 0%, #D1FAE5 50%, #ECFDF5 100%)', '#2F3E46'],
             forest: ['#2E7D32', '#81C784', 'linear-gradient(135deg, #F1F8E9 0%, #DCEDC8 100%)', '#1B5E20'],
             space: ['#3F51B5', '#00BCD4', 'linear-gradient(135deg, #E8EAF6 0%, #C5CAE9 100%)', '#1A237E'],
@@ -562,7 +574,6 @@
         try {
             let filename = encodeURIComponent(charName); const geezItem = geezWordsData.find(g => g.geez === charName);
             if (geezItem) { filename = geezItem.english.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '_'); }
-
             else {
                 const labItem = labializedCharacters.find(l => l.char === charName);
                 if (labItem) { filename = labItem.sound; }
@@ -582,18 +593,22 @@
                 }
             }
             const audio = new Audio(ASSET_BASE_PATH + filename + '.mp3'); audio.playbackRate = globalAudioPlaybackRate;
-
             audio.addEventListener('play', () => { audio.playbackRate = globalAudioPlaybackRate; });
             audio.play().catch(e => console.log("Offline background audio loaded"));
         } catch (e) { console.error(e); }
     }
 
     function switchTab(tab) {
+        if (!tab) return;
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
         if (isSentenceAutoPlaying) toggleSentenceAutoPlay();
+        if (isAutoReading && tab !== 'explore') toggleAutoRead();
         const player = document.getElementById('storyVideoPlayerFrame'); if (player) player.pause();
+        
         const tabIdx = { explore:0, abugida:1, labialized:2, numbers:3, geezwords:4, sentences:5, memory:6, trace:7, quiz:8, competition:9, videos:10 }[tab];
-        document.querySelectorAll('.tab-btn')[tabIdx]?.classList.add('active'); document.getElementById(tab + '-panel')?.classList.add('active');
+        if (tabIdx !== undefined) {
+            document.querySelectorAll('.nav-tabs .tab-btn')[tabIdx]?.classList.add('active'); document.getElementById(tab + '-panel')?.classList.add('active');
+        }
         if (tab === 'memory') initMemoryGame();
         if (tab === 'trace') setTimeout(() => updateTracingGuide(activeTraceCharacter), 50);
         if (tab === 'quiz') setupNewQuestion();
@@ -602,7 +617,6 @@
     }
 
     function renderStandardChart() {
-
         const container = document.getElementById('chart-standard-series'); container.innerHTML = '';
         Object.keys(standardFidelChart).forEach(k => {
             const row = document.createElement('div'); row.className = 'series-row';
@@ -622,7 +636,6 @@
 
     function renderAbugidaChart() {
         const abugidaContainer = document.getElementById('chart-abugida-series');
-
         if (abugidaContainer) {
             abugidaContainer.innerHTML = '';
             Object.keys(abugidaRowsData).forEach(k => {
@@ -641,7 +654,6 @@
             });
         }
     }
-
 
     function renderLabializedChart() {
         const container = document.getElementById('chart-labialized-series'); container.innerHTML = '';
@@ -662,7 +674,6 @@
         geezNumbersData.forEach(item => {
             const card = document.createElement('div'); card.className = 'fidel-card';
             card.innerHTML = `<div class="char">${item.char}</div><div class="sound">${item.sound.split(' - ')[0]}</div>`;
-
             card.onclick = () => {
                 document.getElementById('lbl-num-char').innerText = item.char; document.getElementById('lbl-num-meaning').innerText = item.sound.toUpperCase();
                 playFidelAudio(item.char); activeTraceCharacter = item.char;
@@ -682,7 +693,6 @@
             };
             container.appendChild(card);
         });
-
     }
 
     function renderShortSentences() {
@@ -702,7 +712,6 @@
         const container = document.getElementById('memory-game-grid'); container.innerHTML = ''; container.style.gridTemplateColumns = `repeat(${memoryTargetColumnsCount}, 1fr)`;
         firstCard = null; secondCard = null; lockBoard = false; memoryMatches = 0; memoryMovesCounter = 0; document.getElementById('lbl-memory-moves').innerText = memoryMovesCounter;
         const pool = getAllItems(); if (pool.length < memoryTargetPairsCount) return;
-
         const shuf = [...pool].sort(() => Math.random() - 0.5).slice(0, memoryTargetPairsCount);
         let board = []; shuf.forEach(i => { board.push({...i}), board.push({...i}); }); board.sort(() => Math.random() - 0.5);
         board.forEach(item => {
@@ -722,7 +731,6 @@
         });
     }
 
-
     function setTracingMarkerColor(hex, el) { activeMarkerColor = hex; document.querySelectorAll('.color-swatch-circle').forEach(sw => sw.classList.remove('active')); el?.classList.add('active'); }
     
     function initTracingSystem() {
@@ -736,15 +744,25 @@
             const btn = document.createElement('div'); btn.className = 'trace-select-item'; btn.id = 'trace-btn-' + letter; if (letter === activeTraceCharacter) btn.classList.add('active');
             btn.innerText = letter; btn.onclick = () => selectTracingCharacter(letter); picker.appendChild(btn);
         });
+        updateTracingGuide(activeTraceCharacter);
     }
 
     function selectTracingCharacter(l) {
         document.querySelectorAll('#trace-character-picker .trace-select-item').forEach(i => i.classList.remove('active')); document.getElementById('trace-btn-' + l)?.classList.add('active');
         document.getElementById('trace-btn-' + l)?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); activeTraceCharacter = l; updateTracingGuide(l); playFidelAudio(l);
     }
-
     function goToNextTracingFidel() { let idx = comprehensiveFidelList.indexOf(activeTraceCharacter); let nextIdx = (idx + 1) % comprehensiveFidelList.length; selectTracingCharacter(comprehensiveFidelList[nextIdx]); }
-    function updateTracingGuide(c) { if (!traceCtx) return; traceCtx.clearRect(0, 0, traceCanvas.width, traceCanvas.height); traceCtx.fillStyle = '#F1F5F9'; traceCtx.font = 'bold 180px "Segoe UI"'; traceCtx.textBaseline = 'middle'; traceCtx.textAlign = 'center'; traceCtx.fillText(c, traceCanvas.width / 2, traceCanvas.height / 2 + 10); }
+    
+    function updateTracingGuide(c) { 
+        if (!traceCtx) return; 
+        traceCtx.clearRect(0, 0, traceCanvas.width, traceCanvas.height); 
+        traceCtx.fillStyle = '#CBD5E1';
+        traceCtx.font = 'bold 160px "Nyala", "Abyssinica SIL", "Kefa", "Segoe UI", sans-serif';
+        traceCtx.textBaseline = 'middle'; 
+        traceCtx.textAlign = 'center'; 
+        traceCtx.fillText(c, traceCanvas.width / 2, traceCanvas.height / 2 + 10); 
+    }
+    
     function clearTraceCanvas() { updateTracingGuide(activeTraceCharacter); }
     function playCurrentTraceAudio() { playFidelAudio(activeTraceCharacter); }
 
@@ -761,7 +779,6 @@
         document.getElementById('lbl-active-story-title').innerText = "Playing Story: " + story.title;
         const player = document.getElementById('storyVideoPlayerFrame'); if (player) { player.src = ASSET_BASE_PATH + encodeURIComponent(story.filename) + '.mp4'; player.load(); }
     }
-
 
     function startTrace(e) { isDrawing = true; const c = getCanvasCoords(e); traceCtx.beginPath(); traceCtx.moveTo(c.x, c.y); traceCtx.strokeStyle = activeMarkerColor; traceCtx.lineWidth = 10; traceCtx.lineCap = 'round'; }
     function drawTrace(e) { if (!isDrawing) return; const c = getCanvasCoords(e); traceCtx.lineTo(c.x, c.y); traceCtx.stroke(); }
@@ -782,7 +799,6 @@
                 if (c === quizCurrentItem.char) { score += 10; streak++; playRewardSoundEffect('correct'); quizAnsweredCorrectly = true; showMessage("Correct! ትክክል!", `Option ${alphabetOptionLetterLabels[idx]} matches perfectly.`); }
                 else { streak = 0; quizAnsweredCorrectly = false; showMessage("Try Again!", "Listen closely to the sound."); }
                 document.getElementById('lbl-score').innerText = score; document.getElementById('lbl-streak').innerText = streak;
-
             };
             grid.appendChild(btn);
         });
@@ -802,7 +818,6 @@
         const count = parseInt(document.getElementById('comp-kids-count').value); compPlayersList = [];
         for (let i = 1; i <= count; i++) { let n = document.getElementById(`comp-pname-${i}`).value.trim() || `Child ${i}`; compPlayersList.push({ name: n, score: 0 }); }
         compCurrentActivePlayerIndex = 0; compCurrentGlobalQuestionCounter = 1; isCompetitionActiveState = true;
-
         document.getElementById('comp-setup-view').style.display = 'none'; document.getElementById('comp-play-view').style.display = 'block';
         setupCompetitionQuestionTurn();
     }
@@ -822,7 +837,6 @@
             const btn = document.createElement('button'); btn.className = 'option-btn'; btn.innerHTML = `<span class="option-label-badge" style="background:var(--secondary);">${alphabetOptionLetterLabels[idx]}</span><span class="char">${c}</span>`;
             btn.onclick = () => {
                 if (c === compCurrentMatchItem.char) { activeChild.score += 10; playRewardSoundEffect('correct'); showMessage("Correct!", `${activeChild.name} got it right!`); }
-
                 else { showMessage("Nice try!", `The correct answer was ${compCurrentMatchItem.char}`); }
                 compCurrentGlobalQuestionCounter++; compCurrentActivePlayerIndex = (compCurrentActivePlayerIndex + 1) % compPlayersList.length;
             };
@@ -842,15 +856,20 @@
                 list.innerHTML += `<div class="comp-player-score-pill" style="justify-content:space-between;width:100%;"><span>${m} • <strong>${p.name}</strong></span> <span>${p.score} pts</span></div>`;
             });
         } else { setupCompetitionQuestionTurn(); }
-
     }
 
     function resetCompetitionToSetup() { isCompetitionActiveState = false; document.getElementById('comp-play-view').style.display = 'none'; document.getElementById('comp-results-view').style.display = 'none'; document.getElementById('comp-setup-view').style.display = 'block'; generateCompetitionNameInputs(); }
+    
     function showMessage(title, text) { document.getElementById('msg-title').innerText = title; document.getElementById('msg-body').innerText = text; document.getElementById('ui-overlay').style.display = 'block'; document.getElementById('ui-msg-box').style.display = 'block'; }
+    
     function closeMessageBox() {
         document.getElementById('ui-msg-box').style.display = 'none'; document.getElementById('ui-overlay').style.display = 'none';
         if (document.getElementById('competition-panel').classList.contains('active') && isCompetitionActiveState) { advanceCompetitionLoopAfterPopupClose(); }
         else if (document.getElementById('quiz-panel').classList.contains('active')) { if (quizAnsweredCorrectly) setupNewQuestion(); }
+    }
+
+    function redirectToAmazonStorefront() {
+        window.open('https://amazon.com', '_blank');
     }
 
     function toggleAutoRead() {
@@ -862,7 +881,6 @@
     function runAutoReadTick() {
         if (!isAutoReading) return; let letter = document.getElementById('lbl-fidel').innerText; let idx = comprehensiveFidelList.indexOf(letter); let nextIdx = (idx + 1) % comprehensiveFidelList.length; const nextLetter = comprehensiveFidelList[nextIdx];
         Object.keys(standardFidelChart).forEach(k => { standardFidelChart[k].forEach(item => { if (item.char === nextLetter) { document.getElementById('lbl-fidel').innerText = item.char; document.getElementById('lbl-sound').innerText = item.sound.toUpperCase(); } }); });
-
         playFidelAudio(nextLetter); activeTraceCharacter = nextLetter; document.querySelectorAll('.fidel-card').forEach(c => c.classList.remove('reading-active'));
         const targetCard = document.getElementById('fidel-card-' + nextLetter);
         if (targetCard) { targetCard.classList.add('reading-active'); targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); }
@@ -882,7 +900,6 @@
 
     function toggleSentenceAutoPlay() {
         isSentenceAutoPlaying = !isSentenceAutoPlaying; const btn = document.getElementById('btn-sent-autoplay');
-
         if (isSentenceAutoPlaying) { btn.innerHTML = "Stop Auto Play"; btn.style.backgroundColor = "#EF4444"; runSentenceAutoPlayTick(); }
         else { btn.innerHTML = "Auto Play Sentences"; btn.style.backgroundColor = "var(--secondary)"; if (sentenceAutoPlayTimeoutId) clearTimeout(sentenceAutoPlayTimeoutId); }
     }
@@ -903,10 +920,23 @@
             abugidaRowsData["Row " + (rowIndex + 1)] = rowItems;
         });
 
+        const leftImg = document.getElementById('img-cover-left');
+        const rightImg = document.getElementById('img-cover-right');
+        if (leftImg) leftImg.src = ASSET_BASE_PATH + 'cover_left.png';
+        if (rightImg) rightImg.src = ASSET_BASE_PATH + 'cover_right.png';
+
+        const leftLandImg = document.getElementById('img-cover-left-landscape');
+        const rightLandImg = document.getElementById('img-cover-right-landscape');
+        if (leftLandImg) leftLandImg.src = ASSET_BASE_PATH + 'cover_left_landscape.png';
+        if (rightLandImg) rightLandImg.src = ASSET_BASE_PATH + 'cover_right_landscape.png';
+
+        const exploreVidLeft = document.getElementById('img-explore-video-left');
+        const exploreVidRight = document.getElementById('img-explore-video-right');
+        if (exploreVidLeft) exploreVidLeft.src = ASSET_BASE_PATH + 'advertise_here.mp4';
+        if (exploreVidRight) exploreVidRight.src = ASSET_BASE_PATH + 'advertise_here.mp4';
+
         renderStandardChart(); renderAbugidaChart(); renderLabializedChart(); renderNumbersChart(); renderGeezWordsChart(); renderShortSentences(); initTracingSystem(); initVideoSystem(); generateCompetitionNameInputs(); updatePWAButtonState();
     };
 </script>
 </body>
 </html>
-
-

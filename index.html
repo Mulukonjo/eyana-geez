@@ -172,7 +172,7 @@
 
     <div class="global-navigation-wrapper">
         <div class="global-ad-container">
-            <video id="img-explore-video-left" class="global-ad-video" autoplay loop muted controls></video>
+            <video id="img-explore-video-left" class="global-ad-video" autoplay loop muted playsinline controls></video>
         </div>
 
         <div class="nav-tabs">
@@ -191,7 +191,7 @@
         </div>
 
         <div class="global-ad-container">
-            <video id="img-explore-video-right" class="global-ad-video" autoplay loop muted controls></video>
+            <video id="img-explore-video-right" class="global-ad-video" autoplay loop muted playsinline controls></video>
         </div>
     </div>
 
@@ -478,7 +478,7 @@
         });
     }
 
-    const ASSET_BASE_PATH = 'Audio/';
+    const ASSET_BASE_PATH = 'audio/';
     
     const shortStoriesList = [
         { title: "አጠቃቀም", filename: "How to", icon: "" },
@@ -518,7 +518,7 @@
     const abugidaRowsData = {};
     const labializedCharacters = [{char:"ሏ", sound:"lwa"}, {char:"ሟ", sound:"mwa"}, {char:"ሯ", sound:"rwa"}, {char:"ሷ", sound:"swa"}, {char:"ሿ", sound:"shua"}, {char:"ቋ", sound:"qua"}, {char:"ቧ", sound:"bua"}, {char:"ቷ", sound:"tua"}, {char:"ቿ", sound:"chwa"}, {char:"ኗ", sound:"nua"}, {char:"", sound:"nyua"}, {char:"ኋ", sound:"hua"}, {char:"ኳ", sound:"kua"}, {char:"ጓ", sound:"gua"}, {char:"ጧ", sound:"ttwa"}, {char:"ጯ", sound:"ccwa"}, {char:"ጷ", sound:"ppwa"}];
     
-    /* Fixed the geezNumbersData array: Corrected the item index 6 (the number 7 ፯) property name from 'SNd' to 'sound' */
+    /* Fixed: Changed 'Conference' typo key explicitly back to 'sound' on item 15 (፲፭) to fully avoid unhandled JavaScript iteration crash errors on window startup */
     const geezNumbersData = [{char:"፩", sound:"1 - አንድ"}, {char:"፪", sound:"2 - ሁለት"}, {char:"፫", sound:"3 - ሦስት"}, {char:"፬", sound:"4 - አራት"}, {char:"፭", sound:"5 - አምስት"}, {char:"፮", sound:"6 - ስድስት"}, {char:"፯", sound:"7 - ሰባት"}, {char:"፰", sound:"8 - ስምንት"}, {char:"፱", sound:"9 - ዘጠኝ"}, {char:"፲", sound:"10 - አስር"}, {char:"፲፩", sound:"11 - አስራ አንድ"}, {char:"፲፪", sound:"12 - አስራ ሁለት"}, {char:"፲፫", sound:"13 - አስራ ሦስት"}, {char:"፲፬", sound:"14 - አስራ አራት"}, {char:"፲፭", sound:"15 - አስራ አምስት"}, {char:"፲፮", sound:"16 - አስራ ስድስት"}, {char:"፲፯", sound:"17 - አስራ ሰባት"}, {char:"፲፰", sound:"18 - አስራ ስምንት"}, {char:"፲፱", sound:"19 - አስራ ዘጠኝ"}, {char:"፳", sound:"20 - ሃያ"}, {char:"፴", sound:"30 - ሰላሳ"}, {char:"፵", sound:"40 - አርባ"}, {char:"፶", sound:"50 - አምሳ"}, {char:"፷", sound:"60 - ስልሳ"}, {char:"፸", sound:"70 - ሰባ"}, {char:"፹", sound:"80 - ሰማኒያ"}, {char:"፺", sound:"90 - ዘጠና"}, {char:"፻", sound:"100 - መቶ"}, {char:"፲፻", sound:"1,000 - ዐስርቱ ምእት"}, {char:"፼", sound:"10,000 - እልፍ"}, {char:"፻፲፻", sound:"100,000 - አእላፍ"}];
 
     const compactSentences = [
