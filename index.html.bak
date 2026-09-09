@@ -40,7 +40,7 @@
         .animal-fox { top: 58%; right: 3%; animation: bounceAnimal 7s ease-in-out infinite 0.5s; }
         .animal-deer { bottom: 28%; left: 2%; animation: bounceAnimal 8s ease-in-out infinite 2s; }
         .woodland-animal-guide.animal-lion { top: 72%; left: 8%; opacity: 0.15; animation: swayLeaf 9s ease-in-out infinite; }
-        .woodland-animal-guide.animal-elephant { bottom: 5%; right: 4%; opacity: 0.12; animation: bounceAnimal 10s ease-in-out infinite; }
+        .woodland-animal-guide.animal-elephant { bottom: 5%; right: 4%; opacity: 0.12; animation: bounceAnimal 100s ease-in-out infinite; }
         .glowing-bark-fidel { position: fixed; font-size: 5.5rem; font-weight: 900; color: rgba(16, 185, 129, 0.1); z-index: -1; user-select: none; pointer-events: none; font-family: 'Georgia', serif; text-shadow: 0 0 15px rgba(253, 224, 71, 0.4); }
         .etched-ሀ { top: 22%; right: 18%; transform: rotate(10deg); }
         .etched-ለ { top: 65%; left: 12%; transform: rotate(-15deg); }
@@ -479,7 +479,24 @@
         });
     }
 
-    const ASSET_BASE_PATH = './audio/';
+    // Unlocked Hardware Audio Engine Primer: Wakes up Safari/Mobile WebKit device audio channels on initial screen interaction
+    let isBrowserAudioEnginePrimed = false;
+    function primeDeviceHardwareAudioMixer() {
+        if (isBrowserAudioEnginePrimed) return;
+        try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) {
+                const dummyCtx = new AudioCtx();
+                if (dummyCtx.state === 'suspended') { dummyCtx.resume(); }
+            }
+            isBrowserAudioEnginePrimed = true;
+            console.log("[Audio Engine] Device hardware audio channels primed and unlocked successfully.");
+            window.removeEventListener('click', primeDeviceHardwareAudioMixer);
+            window.removeEventListener('touchstart', primeDeviceHardwareAudioMixer);
+        } catch(e) { console.error("[Audio Engine] Primer failure:", e); }
+    }
+    window.addEventListener('click', primeDeviceHardwareAudioMixer);
+    window.addEventListener('touchstart', primeDeviceHardwareAudioMixer);
     
     const shortStoriesList = [
         { title: "አጠቃቀም", filename: "How to", icon: "" },
@@ -518,12 +535,10 @@
     const abugidaConsonantOrder = ["አ", "በ", "ገ", "ደ", "ሀ", "ወ", "ዘ", "ዠ", "ሐ", "ጠ", "ጨ", "የ", "ከ", "ኸ", "ለ", "መ", "ነ", "ኘ", "ሠ", "ረ", "ሰ", "ሸ", "ቀ", "ተ", "ቸ", "ኀ", "ዐ", "ጀ", "ጰ", "ጸ", "ፀ", "ፈ", "ቨ", "ፐ"];
     const abugidaRowsData = {};
     const labializedCharacters = [{char:"ሏ", sound:"lwa"}, {char:"ሟ", sound:"mwa"}, {char:"ሯ", sound:"rwa"}, {char:"ሷ", sound:"swa"}, {char:"ሿ", sound:"shua"}, {char:"ቋ", sound:"qua"}, {char:"ቧ", sound:"bua"}, {char:"ቷ", sound:"tua"}, {char:"ቿ", sound:"chwa"}, {char:"ኗ", sound:"nua"}, {char:"", sound:"nyua"}, {char:"ኋ", sound:"hua"}, {char:"ኳ", sound:"kua"}, {char:"ጓ", sound:"gua"}, {char:"ጧ", sound:"ttwa"}, {char:"ጯ", sound:"ccwa"}, {char:"ጷ", sound:"ppwa"}];
-    
-    /* Fixed: Corrected 'city' key typo back to 'sound' on item 9 (፲) to avoid unhandled split exception crashes and restore loading for the remaining number charts */
     const geezNumbersData = [{char:"፩", sound:"1 - አንድ"}, {char:"፪", sound:"2 - ሁለት"}, {char:"፫", sound:"3 - ሦስት"}, {char:"፬", sound:"4 - አራት"}, {char:"፭", sound:"5 - አምስት"}, {char:"፮", sound:"6 - ስድስት"}, {char:"፯", sound:"7 - ሰባት"}, {char:"፰", sound:"8 - ስምንት"}, {char:"፱", sound:"9 - ዘጠኝ"}, {char:"፲", sound:"10 - አስር"}, {char:"፲፩", sound:"11 - አስራ አንድ"}, {char:"፲፪", sound:"12 - አስራ ሁለት"}, {char:"፲፫", sound:"13 - አስራ ሦስት"}, {char:"፲፬", sound:"14 - አስራ አራት"}, {char:"፲፭", sound:"15 - አስራ አምስት"}, {char:"፲፮", sound:"16 - አስራ ስድስት"}, {char:"፲፯", sound:"17 - አስራ ሰባት"}, {char:"፲፰", sound:"18 - አስራ ስምንት"}, {char:"፲፱", sound:"19 - አስራ ዘጠኝ"}, {char:"፳", sound:"20 - ሃያ"}, {char:"፴", sound:"30 - ሰላሳ"}, {char:"፵", sound:"40 - አርባ"}, {char:"፶", sound:"50 - አምሳ"}, {char:"፷", sound:"60 - ስልሳ"}, {char:"፸", sound:"70 - ሰባ"}, {char:"፹", sound:"80 - ሰማኒያ"}, {char:"፺", sound:"90 - ዘጠና"}, {char:"፻", sound:"100 - መቶ"}, {char:"፲፻", sound:"1,000 - ዐስርቱ ምእት"}, {char:"፼", sound:"10,000 - እልፍ"}, {char:"፻፲፻", sound:"100,000 - አእላፍ"}];
 
     const compactSentences = [
-        ["ኳስ መጫወት እወዳለሁ።", "I love playing ball.", "⚽"], ["መጽሐፍ ማንበብ እወዳለሁ።", "I love reading books.", "📚"], ["ትምህርት ቤት እሄዳለሁ።", "I go to school.", "🏫"], ["ወተት እጠጣለሁ።", "I drink milk.", "🥛"], ["እንጀራ እወዳለሁ።", "I love Enjera.", "🥞"], ["ውሻዬን እወዳለሁ።", "I love my dog.", "🐶"], ["ድመት አለችኝ።", "I have a cat.", "🐱"], ["አበባው ያምራል።", "The flower is beautiful.", "🌸"], ["ፀሐይ ጠዋት ትወጣለች።", "The sun shines.", "☀️"], ["ውሃ እጠጣለሁ።", "I drink water.", "💧"], ["እጄን እታጠባለሁ።", "I wash my hands.", "🧼"], ["በሩጫ እወዳደራለሁ።", "I love running.", "🏃"], ["ብስክሌት እነዳለሁ።", "I ride a bicycle.", "🚲"], ["ወፍ ትበራለች።", "A bird flies.", "🐦"], ["ዓሳ በውሃ ውስጥ ይዋኛል።", "A fish swims in water.", "🐟"], ["አባቴን እወዳለሁ።", "I love my father.", "👨"], ["እናቴን እወዳለሁ።", "I love my mother.", "👩"], ["ወንድም አለኝ።", "I have a brother.", "👦"], ["እህት አለችኝ።", "I have a sister.", "👧"], ["ኳስ መጫወት እወዳለሁ።", "I like to eat cake.", "🍰"], ["ሙዝ እወዳለሁ።", "I love bananas.", "🍌"], ["ፖም እበላለሁ።", "I eat an apple.", "🍎"], ["ብርቱካን ጣፋጭ ነው።", "Orange is sweet.", "🍊"], ["ሀምራዊ ቀለም እወዳለሁ።", "I love the color purple.", "🟣"], ["ሰማዩ ሰማያዊ ነው።", "The sky is blue.", "🌌"], ["ሣሩ አረንጓዴ ነው።", "The grass is green.", "🌱"], ["ጨረቃ በምሽት ታበራለች።", "The moon shines at night.", "🌙"], ["ከዋክብት ያበራሉ።", "Stars shine.", "⭐"], ["ዝናብ እየዘነበ ነው።", "It is raining.", "🌧️"], ["ዛፉ ትልቅ ነው።", "The tree is big.", "🌳"], ["መኪናው ፈጣን ነው።", "The car is fast.", "🚗"], ["አውሮፕላን እያየሁ ነው።", "I am watching an airplane.", "✈️"], ["ባቡር ይሄዳል።", "The train moves.", "🚂"], ["መዝሙር እሰማለሁ።", "I listen to song.", "🎵"], ["ስዕል እቀባለሁ።", "I paint a picture.", "🎨"], ["መጫወቻ አለኝ።", "I have a toy.", "🧸"], ["ፈገግታ እወዳለሁ።", "I love to smile.", "😊"], ["ቶሎ እተኛለሁ።", "I go to sleep early.", "🛏️"], ["ማለዳ እነቃለሁ።", "I wake up early.", "🌅"], ["ጥርሴን እቦርሻለሁ።", "I brush my teeth.", "🪥"], ["ጫማዬን አደርጋለሁ።", "I put on my shoes.", "👟"], ["ልብሴን እቀይራለሁ።", "I change my clothes.", "👕"], ["ፊኛ እወዳለሁ።", "I love balloons.", "🎈"], ["አይስክሬም እወዳለሁ።", "I love ice cream.", "🍦"], ["ቸኮሌት እበላለሁ።", "I eat chocolate.", "🍫"], ["ጥንቸል ትዘላለች።", "The rabbit hops.", "🐇"], ["አንበሳ ያገሳል።", "The lion roars.", "🦁"], ["ዝሆን ትልቅ ነው።", "The elephant is big.", "🐘"], ["ቢራ比ሮ ውብ ናት።", "The butterfly is beautiful.", "🦋"], ["እኔ ጎበዝ ነኝ!", "I am smart and clever!", "🧠"]
+        ["ኳስ መጫወት እወዳለሁ።", "I love playing ball.", "⚽"], ["መጽሐፍ ማንበብ እወዳለሁ።", "I love reading books.", "📚"], ["ትምህርት ቤት እሄዳለሁ።", "I go to school.", "🏫"], ["ወተት እጠጣለሁ።", "I drink milk.", "🥛"], ["እንጀራ እወዳለሁ።", "I love Enjera.", "🥞"], ["ውሻዬን እወዳለሁ።", "I love my dog.", "🐶"], ["ድመት አለችኝ።", "I have a cat.", "🐱"], ["አበባው ያምራል።", "The flower is beautiful.", "🌸"], ["ፀሐይ ጠዋት ትወጣለች።", "The sun shines.", "☀️"], ["ውሃ እጠጣለሁ።", "I drink water.", "💧"], ["እጄን እታጠባለሁ።", "I wash my hands.", "🧼"], ["በሩጫ እወዳደራለሁ።", "I love running.", "🏃"], ["ብስክሌት እነዳለሁ።", "I ride a bicycle.", "🚲"], ["ወፍ ትበራለች።", "A bird flies.", "🐦"], ["ዓሳ በውሃ ውስጥ ይዋኛል።", "A fish swims in water.", "🐟"], ["አባቴን እወዳለሁ።", "I love my father.", "👨"], ["እናቴን እወዳለሁ።", "I love my mother.", "👩"], ["ወንድም አለኝ።", "I have a brother.", "👦"], ["እህት አለችኝ።", "I have a sister.", "👧"], ["ኳስ መጫወት እወዳለሁ።", "I like to eat cake.", "🍰"], ["ሙዝ እወዳለሁ።", "I love bananas.", "🍌"], ["ፖም እበላለሁ።", "I eat an apple.", "🍎"], ["ብርቱካን ጣፋጭ ነው።", "Orange is sweet.", "🍊"], ["ሀምራዊ ቀለም እወዳለሁ።", "I love the color purple.", "🟣"], ["ሰማዩ ሰማያዊ ነው።", "The sky is blue.", "🌌"], ["ሣሩ አረንጓዴ ነው።", "The grass is green.", "🌱"], ["ጨረቃ በምሽት ታበራለች።", "The moon shines at night.", "🌙"], ["ከዋክብት ያበራሉ።", "Stars shine.", "⭐"], ["ዝናብ እየዘነበ ነው።", "It is raining.", "🌧️"], ["ዛፉ ትልቅ ነው።", "The tree is big.", "🌳"], ["መኪናው ፈጣን ነው።", "The car is fast.", "🚗"], ["አውሮፕላን እያየሁ ነው።", "I am watching an airplane.", "✈️"], ["ባቡር ይሄዳል።", "The train moves.", "🚂"], ["መዝሙር እሰማለሁ።", "I listen to song.", "🎵"], ["ስዕል እቀባለሁ።", "I paint a picture.", "🎨"], ["መጫወቻ አለኝ።", "I have a toy.", "🧸"], ["ፈገግታ እወዳለሁ።", "I love to smile.", "😊"], ["ቶሎ እተኛለሁ።", "I go to sleep early.", "🛏️"], ["ማለዳ እነቃለሁ።", "I wake up early.", "🌅"], ["ጥርሴን እቦርሻለሁ።", "I brush my teeth.", "🪥"], ["ጫማዬን አደርጋለሁ።", "I put on my shoes.", "👟"], ["ልብሴን እቀይራለሁ።", "I change my clothes.", "👕"], ["ፊኛ እወዳለሁ።", "I love balloons.", "🎈"], ["አይስክሬም እወዳለሁ።", "I love ice cream.", "🍦"], ["ቸኮሌት እበላለሁ።", "I eat chocolate.", "🍫"], ["ጥንቸል ትዘላለች።", "The rabbit hops.", "🐇"], ["አንበሳ ያገሳል።", "The lion roars.", "🦁"], ["ዝሆን ትልቅ ነው።", "The elephant is big.", "🐘"], ["ቢራቢሮ ውብ ናት።", "The butterfly is beautiful.", "🦋"], ["እኔ ጎበዝ ነኝ!", "I am smart and clever!", "🧠"]
     ];
 
     const geezWordsData = [
@@ -570,6 +585,7 @@
         initMemoryGame();
     }
 
+    // Direct String-Literal Dynamic Fallback Audio Routing Logic completely removing ASSET_BASE_PATH dependencies
     function playFidelAudio(charName) {
         if (!charName) return;
         try {
@@ -594,18 +610,22 @@
                 }
             }
             
-            console.log(`[Audio Request] Attempting to load: ${ASSET_BASE_PATH}${filename}.mp3`);
-            const audio = new Audio(ASSET_BASE_PATH + filename + '.mp3');
-            audio.playbackRate = globalAudioPlaybackRate;
+            // Computes an absolute path string using exact absolute slash literal declarations
+            const primaryPath = "/audio/" + filename + ".mp3";
+            console.log(`[Audio Pipeline] Initial request firing straight to root path: ${primaryPath}`);
             
+            const audio = new Audio(primaryPath);
+            audio.playbackRate = globalAudioPlaybackRate;
             audio.addEventListener('play', () => { audio.playbackRate = globalAudioPlaybackRate; });
             
             audio.play().catch(e => {
-                console.warn(`[Audio Retry] Primary uppercase lookup failed for "${filename}.mp3". Trying lowercase alternative fallback...`);
-                const fallbackAudio = new Audio(ASSET_BASE_PATH + filename.toLowerCase() + '.mp3');
+                const secondaryFallbackPath = "/audio/" + filename.toLowerCase() + ".mp3";
+                console.warn(`[Audio Pipeline] Uppercase root path failed. Re-routing straight to case-insensitive alternative: ${secondaryFallbackPath}`);
+                
+                const fallbackAudio = new Audio(secondaryFallbackPath);
                 fallbackAudio.playbackRate = globalAudioPlaybackRate;
                 fallbackAudio.play().catch(err => {
-                    console.error(`[Audio Error] Could not find or play audio file for "${charName}". Checked both "${filename}.mp3" and "${filename.toLowerCase()}.mp3" inside the "${ASSET_BASE_PATH}" folder.`);
+                    console.error(`[Audio Pipeline Critical Failure] File not found under absolute root. Checked literals "${primaryPath}" and "${secondaryFallbackPath}" directly. Please verify that your folder is named exactly "audio" and sits at the top level of your production hosting space next to index.html.`);
                 });
             });
         } catch (e) { console.error(e); }
@@ -790,7 +810,7 @@
         document.querySelectorAll('#story-video-picker-tray .story-select-item').forEach(i => i.classList.remove('active')); document.getElementById('story-btn-' + index)?.classList.add('active');
         document.getElementById('story-btn-' + index)?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); const story = shortStoriesList[index];
         document.getElementById('lbl-active-story-title').innerText = "Playing Story: " + story.title;
-        const player = document.getElementById('storyVideoPlayerFrame'); if (player) { player.src = ASSET_BASE_PATH + encodeURIComponent(story.filename) + '.mp4'; player.load(); }
+        const player = document.getElementById('storyVideoPlayerFrame'); if (player) { player.src = "/audio/" + encodeURIComponent(story.filename) + '.mp4'; player.load(); }
     }
 
     function startTrace(e) { isDrawing = true; const c = getCanvasCoords(e); traceCtx.beginPath(); traceCtx.moveTo(c.x, c.y); traceCtx.strokeStyle = activeMarkerColor; traceCtx.lineWidth = 10; traceCtx.lineCap = 'round'; }
@@ -933,20 +953,21 @@
             abugidaRowsData["Row " + (rowIndex + 1)] = rowItems;
         });
 
+        // Direct literal assignment patterns completely independent of tracking path variables
         const leftImg = document.getElementById('img-cover-left');
         const rightImg = document.getElementById('img-cover-right');
-        if (leftImg) leftImg.src = ASSET_BASE_PATH + 'cover_left.png';
-        if (rightImg) rightImg.src = ASSET_BASE_PATH + 'cover_right.png';
+        if (leftImg) leftImg.src = '/audio/cover_left.png';
+        if (rightImg) rightImg.src = '/audio/cover_right.png';
 
         const leftLandImg = document.getElementById('img-cover-left-landscape');
         const rightLandImg = document.getElementById('img-cover-right-landscape');
-        if (leftLandImg) leftLandImg.src = ASSET_BASE_PATH + 'cover_left_landscape.png';
-        if (rightLandImg) rightLandImg.src = ASSET_BASE_PATH + 'cover_right_landscape.png';
+        if (leftLandImg) leftLandImg.src = '/audio/cover_left_landscape.png';
+        if (rightLandImg) rightLandImg.src = '/audio/cover_right_landscape.png';
 
         const exploreVidLeft = document.getElementById('img-explore-video-left');
         const exploreVidRight = document.getElementById('img-explore-video-right');
-        if (exploreVidLeft) exploreVidLeft.src = ASSET_BASE_PATH + 'advertise_here.mp4';
-        if (exploreVidRight) exploreVidRight.src = ASSET_BASE_PATH + 'advertise_here.mp4';
+        if (exploreVidLeft) exploreVidLeft.src = '/audio/advertise_here.mp4';
+        if (exploreVidRight) exploreVidRight.src = '/audio/advertise_here.mp4';
 
         renderStandardChart(); renderAbugidaChart(); renderLabializedChart(); renderNumbersChart(); renderGeezWordsChart(); renderShortSentences(); initTracingSystem(); initVideoSystem(); generateCompetitionNameInputs(); updatePWAButtonState();
     };
