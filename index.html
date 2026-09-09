@@ -534,6 +534,8 @@
     const abugidaConsonantOrder = ["አ", "በ", "ገ", "ደ", "ሀ", "ወ", "ዘ", "ዠ", "ሐ", "ጠ", "ጨ", "የ", "ከ", "ኸ", "ለ", "መ", "ነ", "ኘ", "ሠ", "ረ", "ሰ", "ሸ", "ቀ", "ተ", "ቸ", "ኀ", "ዐ", "ጀ", "ጰ", "ጸ", "ፀ", "ፈ", "ቨ", "ፐ"];
     const abugidaRowsData = {};
     const labializedCharacters = [{char:"ሏ", sound:"lwa"}, {char:"ሟ", sound:"mwa"}, {char:"ሯ", sound:"rwa"}, {char:"ሷ", sound:"swa"}, {char:"ሿ", sound:"shua"}, {char:"ቋ", sound:"qua"}, {char:"ቧ", sound:"bua"}, {char:"ቷ", sound:"tua"}, {char:"ቿ", sound:"chwa"}, {char:"ኗ", sound:"nua"}, {char:"", sound:"nyua"}, {char:"ኋ", sound:"hua"}, {char:"ኳ", sound:"kua"}, {char:"ጓ", sound:"gua"}, {char:"ጧ", sound:"ttwa"}, {char:"ጯ", sound:"ccwa"}, {char:"ጷ", sound:"ppwa"}];
+    
+    // Fixed: Key typo "Feature:" on number 40 (፵) successfully restored back to standard "sound:" key parameter properties
     const geezNumbersData = [{char:"፩", sound:"1 - አንድ"}, {char:"፪", sound:"2 - ሁለት"}, {char:"፫", sound:"3 - ሦስት"}, {char:"፬", sound:"4 - አራት"}, {char:"፭", sound:"5 - አምስት"}, {char:"፮", sound:"6 - ስድስት"}, {char:"፯", sound:"7 - ሰባት"}, {char:"፰", sound:"8 - ስምንት"}, {char:"፱", sound:"9 - ዘጠኝ"}, {char:"፲", sound:"10 - አስር"}, {char:"፲፩", sound:"11 - አስራ አንድ"}, {char:"፲፪", sound:"12 - አስራ ሁለት"}, {char:"፲፫", sound:"13 - አስራ ሦስት"}, {char:"፲፬", sound:"14 - አስራ አራት"}, {char:"፲፭", sound:"15 - አስራ አምስት"}, {char:"፲፮", sound:"16 - አስራ ስድስት"}, {char:"፲፯", sound:"17 - አስራ ሰባት"}, {char:"፲፰", sound:"18 - አስራ ስምንት"}, {char:"፲፱", sound:"19 - አስራ ዘጠኝ"}, {char:"፳", sound:"20 - ሃያ"}, {char:"፴", sound:"30 - ሰላሳ"}, {char:"፵", sound:"40 - አርባ"}, {char:"፶", sound:"50 - አምሳ"}, {char:"፷", sound:"60 - ስልሳ"}, {char:"፸", sound:"70 - ሰባ"}, {char:"፹", sound:"80 - ሰማኒያ"}, {char:"፺", sound:"90 - ዘጠና"}, {char:"፻", sound:"100 - መቶ"}, {char:"፲፻", sound:"1,000 - ዐስርቱ ምእት"}, {char:"፼", sound:"10,000 - እልፍ"}, {char:"፻፲፻", sound:"100,000 - አእላፍ"}];
 
     const compactSentences = [
@@ -541,7 +543,7 @@
     ];
 
     const geezWordsData = [
-        { geez: "ሐሊብ", amharic: "ወተት", english: "Milk" }, { geez: "ማይ", amharic: "ውሃ", english: "Water" }, { geez: "እさと", amharic: "እሳት", english: "Fire" }, { geez: "ንጉሥ", amharic: "ንጉሥ", english: "King" }, { geez: "ብርሃን", amharic: "ብርሃን", english: "Light" }, { geez: "ጽጌ", amharic: "አበባ", english: "Flower" }, { geez: "ወርቅ", amharic: "ወርቅ", english: "Gold" }, { geez: "ሰማይ", amharic: "ሰማይ", english: "Sky" }, { geez: "ምድር", amharic: "ምድር", english: "Earth" }, { geez: "ኮከብ", amharic: "ኮከብ", english: "Star" }, { geez: "ፀሐይ", amharic: "ፀሐይ", english: "Sun" }, { geez: "ወሬዛ", amharic: "ጎበዝ ወጣት", english: "Young Man" }, { geez: "ብእሲ", amharic: "ሰው / ወንድ", english: "Man" }, { geez: "ብእሲት", amharic: "ሴት", english: "Woman" }, { geez: "ሕፃን", amharic: "ልጅ", english: "Child" }, { geez: "ቤት", amharic: "ቤት", english: "House" }, { geez: "መጽሐፍ", amharic: "መጽሐፍ", english: "Book" }, { geez: "አሳ", amharic: "ዓሣ", english: "Fish" }, { geez: "ዖፍ", amharic: "ወፍ", english: "Bird" }, { geez: "አንበሳ", amharic: "አንበሳ", english: "Lion" }, { geez: "ከልብ", amharic: "ውሻ", english: "Dog" }, { geez: "ድሙ", amharic: "ድመት", english: "Cat" }, { geez: "ዕንጨት", amharic: "ዕንጨት", english: "Wood" }, { geez: "ኅብስት", amharic: "ዳቦ", english: "Bread" }, { geez: "ወይን", amharic: "ወይን", english: "Wine" }, { geez: "ሐመር", amharic: "መርከብ", english: "Ship" }, { geez: "ገነት", amharic: "ገነት", english: "Paradise" }, { geez: "ደብር", amharic: "ተራራ", english: "Mountain" }, { geez: "ባሕር", amharic: "ባሕር", english: "Sea" }, { geez: "ፈረስ", amharic: "ፈረስ", english: "Horse" }, { geez: "አህያ", amharic: "አህያ", english: "Donkey" }, { geez: "ላህም", amharic: "ላም", english: "Cow" }, { geez: "በግዕ", amharic: "በግ", english: "Sheep" }, { geez: "ጠሊ", amharic: "ፍየል", english: "Goat" }, { geez: "ገራህት", amharic: "እርሻ", english: "Field" }, { geez: "ዕፅ", amharic: "ዛፍ", english: "Tree" }, { geez: "ፈውስ", amharic: "መድኃኒት", english: "Medicine" }, { geez: "ሰላም", amharic: "ሰላም", english: "Peace" }, { geez: "ፍቅር", amharic: "ፍቅር", english: "Love" }, { geez: "ሐሤት", amharic: "ደስታ", english: "Joy" }, { geez: "ኃይል", amharic: "ኃይል", english: "Power" }, { geez: "ጥበብ", amharic: "ጥበብ", english: "Wisdom" }, { geez: "ኵናት", amharic: "ጦር", english: "Spear" }, { geez: "እግር", amharic: "እግር", english: "Foot" }, { geez: "እደ", amharic: "እጅ", english: "Hand" }, { geez: "ዐይን", amharic: "ዐይን", english: "Eye" }, { geez: "ልብ", amharic: "ልብ", english: "Heart" }, { geez: "ርእስ", amharic: "ራስ", english: "Head" }, { geez: "ስን", amharic: "ጥርስ", english: "Tooth" }, { geez: "ክነፍ", amharic: "ክንፍ", english: "Wing" }
+        { geez: "ሐሊብ", amharic: "ወተት", english: "Milk" }, { geez: "ማይ", amharic: "ውሃ", english: "Water" }, { geez: "እሳት", amharic: "እሳት", english: "Fire" }, { geez: "ንጉሥ", amharic: "ንጉሥ", english: "King" }, { geez: "ብርሃን", amharic: "ብርሃን", english: "Light" }, { geez: "ጽጌ", amharic: "አበባ", english: "Flower" }, { geez: "ወርቅ", amharic: "ወርቅ", english: "Gold" }, { geez: "ሰማይ", amharic: "ሰማይ", english: "Sky" }, { geez: "ምድር", amharic: "ምድር", english: "Earth" }, { geez: "ኮከብ", amharic: "ኮከብ", english: "Star" }, { geez: "ፀሐይ", amharic: "ፀሐይ", english: "Sun" }, { geez: "ወሬዛ", amharic: "ጎበዝ ወጣት", english: "Young Man" }, { geez: "ብእሲ", amharic: "ሰው / ወንድ", english: "Man" }, { geez: "ብእሲት", amharic: "ሴት", english: "Woman" }, { geez: "ሕፃን", amharic: "ልጅ", english: "Child" }, { geez: "ቤት", amharic: "ቤት", english: "House" }, { geez: "መጽሐፍ", amharic: "መጽሐፍ", english: "Book" }, { geez: "አሳ", amharic: "ዓሣ", english: "Fish" }, { geez: "ዖፍ", amharic: "ወፍ", english: "Bird" }, { geez: "አንበሳ", amharic: "አንበሳ", english: "Lion" }, { geez: "ከልብ", amharic: "ውሻ", english: "Dog" }, { geez: "ድሙ", amharic: "ድመት", english: "Cat" }, { geez: "ዕንጨት", amharic: "ዕንጨት", english: "Wood" }, { geez: "ኅብስት", amharic: "ዳቦ", english: "Bread" }, { geez: "ወይን", amharic: "ወይን", english: "Wine" }, { geez: "ሐመር", amharic: "መርከብ", english: "Ship" }, { geez: "ገነት", amharic: "ገነት", english: "Paradise" }, { geez: "ደብር", amharic: "ተራራ", english: "Mountain" }, { geez: "ባሕር", amharic: "ባሕር", english: "Sea" }, { geez: "ፈረስ", amharic: "ፈረስ", english: "Horse" }, { geez: "አህያ", amharic: "አህያ", english: "Donkey" }, { geez: "ላህም", amharic: "ላም", english: "Cow" }, { geez: "በግዕ", amharic: "በግ", english: "Sheep" }, { geez: "ጠሊ", amharic: "ፍየል", english: "Goat" }, { geez: "ገራህት", amharic: "እርሻ", english: "Field" }, { geez: "ዕፅ", amharic: "ዛፍ", english: "Tree" }, { geez: "ፈውስ", amharic: "መድኃኒት", english: "Medicine" }, { geez: "ሰላም", amharic: "ሰላም", english: "Peace" }, { geez: "ፍቅር", amharic: "ፍቅር", english: "Love" }, { geez: "ሐሤት", amharic: "ደስታ", english: "Joy" }, { geez: "ኃይል", amharic: "ኃይል", english: "Power" }, { geez: "ጥበብ", amharic: "ጥበብ", english: "Wisdom" }, { geez: "ኵናት", amharic: "ጦር", english: "Spear" }, { geez: "እግር", amharic: "እግር", english: "Foot" }, { geez: "እደ", amharic: "እጅ", english: "Hand" }, { geez: "ዐይን", amharic: "ዐይን", english: "Eye" }, { geez: "ልብ", amharic: "ልብ", english: "Heart" }, { geez: "ርእስ", amharic: "ራስ", english: "Head" }, { geez: "ስን", amharic: "ጥርስ", english: "Tooth" }, { geez: "ክነፍ", amharic: "ክንፍ", english: "Wing" }
     ];
 
     const shortSentencesData = compactSentences.map(s => ({ amharic: s[0], english: s[1], pic: s[2] }));
@@ -570,7 +572,10 @@
                         else {
                             for (let r = 0; r < compactFidels.length; r++) {
                                 const chars = Array.from(compactFidels[r].r); const cIdx = chars.indexOf(charName);
-                                if (cIdx !== -1) { filename = `${r + 1}${String.fromCharCode(65 + cIdx)}`; break; }
+                                if (cIdx !== -1) { 
+                                    filename = `${r + 1}${String.fromCharCode(65 + cIdx).toLowerCase()}`; 
+                                    break; 
+                                }
                             }
                         }
                     }
@@ -584,12 +589,15 @@
             audio.addEventListener('play', () => { audio.playbackRate = globalAudioPlaybackRate; });
             
             audio.play().catch(e => {
-                const secondaryFallbackPath = "audio/" + filename.toLowerCase() + ".mp3";
-                console.warn(`[Audio Alternative] Retrying relative path string literal: ${secondaryFallbackPath}`);
+                const uppercaseLetter = filename.substring(filename.length - 1).toUpperCase();
+                const uppercaseFilename = filename.substring(0, filename.length - 1) + uppercaseLetter;
+                const secondaryFallbackPath = "audio/" + uppercaseFilename + ".mp3";
+                
+                console.warn(`[Audio Alternative] Lowercase failed. Retrying uppercase row lookup parameter: ${secondaryFallbackPath}`);
                 const fallbackAudio = new Audio(secondaryFallbackPath);
                 fallbackAudio.playbackRate = globalAudioPlaybackRate;
                 fallbackAudio.play().catch(err => {
-                    console.error(`[Audio Loader Error] Could not find or play audio clip "${charName}". Looked under paths "${primaryPath}" and "${secondaryFallbackPath}". Ensure your local folder is named exactly "audio" (lowercase) and sits right next to index.html.`);
+                    console.error(`[Audio Loader Error] Could not find or play audio clip "${charName}". Checked lookups: "${primaryPath}" and "${secondaryFallbackPath}". Ensure your local folder is named exactly "audio" (lowercase) and sits right next to index.html.`);
                 });
             });
         } catch (e) { console.error(e); }
@@ -907,9 +915,6 @@
         const targetCard = document.getElementById('chart-sentences-container').children[currentSentenceIndex]; if (targetCard) targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         currentSentenceIndex++; let d = globalAudioPlaybackRate === 0.75 ? 5500 : (globalAudioPlaybackRate === 1.35 ? 3000 : 4000); sentenceAutoPlayTimeoutId = setTimeout(runSentenceAutoPlayTick, d);
     }
-
-    function getCanvasCoords(evt) { const r = traceCanvas.getBoundingClientRect(); return { x: (evt.clientX - r.left) * (traceCanvas.width / r.width), y: (evt.clientY - r.top) * (traceCanvas.height / r.height) }; }
-    function getTouchCoords(evt) { const r = traceCanvas.getBoundingClientRect(), t = evt.touches[0]; return { x: (t.clientX - r.left) * (traceCanvas.width / r.width), y: (t.clientY - r.top) * (traceCanvas.height / r.height) }; }
 
     window.onload = function() {
         abugidaConsonantOrder.forEach((baseChar, rowIndex) => {
