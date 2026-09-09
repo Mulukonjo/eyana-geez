@@ -434,9 +434,9 @@
     <button onclick="closeMessageBox()">Next</button>
 </div>
 
-<footer style="font-size: 0.75rem; text-align: center; color: #800080; margin-top: 20px; padding: 10px 0; width: 100%;">
+<div style="font-size: 0.75rem; text-align: center; color: #800080; margin-top: 20px; padding: 10px 0; width: 100%;">
     Made with love for Kids Learning Ge'ez Alphabet. ኤያና ግዕዝ ፊደል! &copy; <script>document.write(new Date().getFullYear());</script> Mulukonjo.
-</footer>
+</div>
 
 <script>
     let deferredPrompt;
@@ -453,6 +453,7 @@
         }
     }
 
+    /* Aggressive programmatic cache eviction workflow to force network refreshes instantly */
     function triggerAppInstallation() {
         if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
             if ('caches' in window) { caches.keys().then((names) => { for (let n of names) caches.delete(name); }); }
@@ -478,7 +479,7 @@
         });
     }
 
-    const ASSET_BASE_PATH = 'audio/';
+    const ASSET_BASE_PATH = './audio/';
     
     const shortStoriesList = [
         { title: "አጠቃቀም", filename: "How to", icon: "" },
@@ -516,9 +517,9 @@
 
     const abugidaConsonantOrder = ["አ", "በ", "ገ", "ደ", "ሀ", "ወ", "ዘ", "ዠ", "ሐ", "ጠ", "ጨ", "የ", "ከ", "ኸ", "ለ", "መ", "ነ", "ኘ", "ሠ", "ረ", "ሰ", "ሸ", "ቀ", "ተ", "ቸ", "ኀ", "ዐ", "ጀ", "ጰ", "ጸ", "ፀ", "ፈ", "ቨ", "ፐ"];
     const abugidaRowsData = {};
-    const labializedCharacters = [{char:"ሏ", sound:"lwa"}, {char:"ሟ", sound:"mwa"}, {char:"ሯ", sound:"rwa"}, {char:"ሷ", sound:"swa"}, {char:"ሿ", sound:"shua"}, {char:"ቋ", sound:"qua"}, {char:"ቧ", sound:"bua"}, {char:"ቷ", sound:"tua"}, {char:"ቿ", sound:"chwa"}, {char:"ኗ", sound:"nua"}, {char:"", sound:"nyua"}, {char:"ኋ", sound:"hua"}, {char:"ኳ", sound:"kua"}, {char:"ጓ", sound:"gua"}, {char:"ጧ", sound:"ttwa"}, {char:"ጯ", sound:"ccwa"}, {char:"ጷ", sound:"ppwa"}];
+    const labializedCharacters = [{char:"ሏ", sound:"lwa"}, {char:"ሟ", sound:"mwa"}, {char:"ሯ", sound:"rwa"}, {char:"ሷ", sound:"swa"}, {char:"ሿ", sound:"shua"}, {char:"ቋ", sound:"qua"}, {char:"ቧ", sound:"bua"}, {char:"ቷ", sound:"tua"}, {char:"ቿ", sound:"chwa"}, {char:"ኗ", sound:"nua"}, {char:"", sound:"nyua"}, {char:"ኋ", sound:"hua"}, {char:"ኳ", sound:"kua"}, {char:"ጓ", sound:"gua"}, {char:"ጧ", sound:"ttwa"}, {char:"ጯ", sound:"ccwa"}, {char:"ጷ", sound:"ppwa"}, {char:"ፏ", sound:"Fwa"}];
     
-    /* Fixed: Changed 'Conference' typo key explicitly back to 'sound' on item 15 (፲፭) to fully avoid unhandled JavaScript iteration crash errors on window startup */
+    /* Fixed: Corrected 'Conference' typo key explicitly back to 'sound' on item 15 (፲፭) to fully avoid unhandled JavaScript iteration crash errors on window startup */
     const geezNumbersData = [{char:"፩", sound:"1 - አንድ"}, {char:"፪", sound:"2 - ሁለት"}, {char:"፫", sound:"3 - ሦስት"}, {char:"፬", sound:"4 - አራት"}, {char:"፭", sound:"5 - አምስት"}, {char:"፮", sound:"6 - ስድስት"}, {char:"፯", sound:"7 - ሰባት"}, {char:"፰", sound:"8 - ስምንት"}, {char:"፱", sound:"9 - ዘጠኝ"}, {char:"፲", sound:"10 - አስር"}, {char:"፲፩", sound:"11 - አስራ አንድ"}, {char:"፲፪", sound:"12 - አስራ ሁለት"}, {char:"፲፫", sound:"13 - አስራ ሦስት"}, {char:"፲፬", sound:"14 - አስራ አራት"}, {char:"፲፭", sound:"15 - አስራ አምስት"}, {char:"፲፮", sound:"16 - አስራ ስድስት"}, {char:"፲፯", sound:"17 - አስራ ሰባት"}, {char:"፲፰", sound:"18 - አስራ ስምንት"}, {char:"፲፱", sound:"19 - አስራ ዘጠኝ"}, {char:"፳", sound:"20 - ሃያ"}, {char:"፴", sound:"30 - ሰላሳ"}, {char:"፵", sound:"40 - አርባ"}, {char:"፶", sound:"50 - አምሳ"}, {char:"፷", sound:"60 - ስልሳ"}, {char:"፸", sound:"70 - ሰባ"}, {char:"፹", sound:"80 - ሰማኒያ"}, {char:"፺", sound:"90 - ዘጠና"}, {char:"፻", sound:"100 - መቶ"}, {char:"፲፻", sound:"1,000 - ዐስርቱ ምእት"}, {char:"፼", sound:"10,000 - እልፍ"}, {char:"፻፲፻", sound:"100,000 - አእላፍ"}];
 
     const compactSentences = [
@@ -916,7 +917,7 @@
 
     window.onload = function() {
         abugidaConsonantOrder.forEach((baseChar, rowIndex) => {
-            const rowItems = []; for (let colIndex = 0; colIndex < 7; colIndex++) { const targetIdx = (rowIndex + colIndex) % abugidaConsonantOrder.length; const fidelForm = standardFidelChart[abugidaConsonantOrder[targetIdx]][colIndex]; rowItems.push(fidelForm); }
+            const rowItems = []; for (let colIndex = 0; colIndex < 7; colIndex++) { const targetIdx = (rowIndex + colIndex) % abugidaConsonantOrder.length; const fidelForm = standardFidelChart[baseChar][colIndex]; rowItems.push(fidelForm); }
             abugidaRowsData["Row " + (rowIndex + 1)] = rowItems;
         });
 
