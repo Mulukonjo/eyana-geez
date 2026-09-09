@@ -479,7 +479,6 @@
         });
     }
 
-    // Unlocked Hardware Audio Engine Primer: Wakes up Safari/Mobile WebKit device audio channels on initial screen interaction
     let isBrowserAudioEnginePrimed = false;
     function primeDeviceHardwareAudioMixer() {
         if (isBrowserAudioEnginePrimed) return;
@@ -542,7 +541,7 @@
     ];
 
     const geezWordsData = [
-        { geez: "ሐሊብ", amharic: "ወተት", english: "Milk" }, { geez: "ማይ", amharic: "ውሃ", english: "Water" }, { geez: "እሳት", amharic: "እሳት", english: "Fire" }, { geez: "ንጉሥ", amharic: "ንጉሥ", english: "King" }, { geez: "ብርሃን", amharic: "ብርሃን", english: "Light" }, { geez: "ጽጌ", amharic: "አበባ", english: "Flower" }, { geez: "ወርቅ", amharic: "ወርቅ", english: "Gold" }, { geez: "ሰማይ", amharic: "ሰማይ", english: "Sky" }, { geez: "ምድር", amharic: "ምድር", english: "Earth" }, { geez: "ኮከብ", amharic: "ኮከብ", english: "Star" }, { geez: "ፀሐይ", amharic: "ፀሐይ", english: "Sun" }, { geez: "ወሬዛ", amharic: "ጎበዝ ወጣት", english: "Young Man" }, { geez: "ብእሲ", amharic: "ሰው / ወንድ", english: "Man" }, { geez: "ብእሲት", amharic: "ሴት", english: "Woman" }, { geez: "ሕፃን", amharic: "ልጅ", english: "Child" }, { geez: "ቤት", amharic: "ቤት", english: "House" }, { geez: "መጽሐፍ", amharic: "መጽሐፍ", english: "Book" }, { geez: "አሳ", amharic: "ዓሣ", english: "Fish" }, { geez: "ዖፍ", amharic: "ወፍ", english: "Bird" }, { geez: "አንበሳ", amharic: "አንበሳ", english: "Lion" }, { geez: "ከልብ", amharic: "ውሻ", english: "Dog" }, { geez: "ድሙ", amharic: "ድመት", english: "Cat" }, { geez: "ዕንጨት", amharic: "ዕንጨት", english: "Wood" }, { geez: "ኅብስት", amharic: "ዳቦ", english: "Bread" }, { geez: "ወይን", amharic: "ወይን", english: "Wine" }, { geez: "ሐመር", amharic: "መርከብ", english: "Ship" }, { geez: "ገነት", amharic: "ገነት", english: "Paradise" }, { geez: "ደብር", amharic: "ተራራ", english: "Mountain" }, { geez: "ባሕር", amharic: "ባሕር", english: "Sea" }, { geez: "ፈረስ", amharic: "ፈረስ", english: "Horse" }, { geez: "አህያ", amharic: "አህያ", english: "Donkey" }, { geez: "ላህም", amharic: "ላም", english: "Cow" }, { geez: "በግዕ", amharic: "በግ", english: "Sheep" }, { geez: "ጠሊ", amharic: "ፍየል", english: "Goat" }, { geez: "ገራህት", amharic: "እርሻ", english: "Field" }, { geez: "ዕፅ", amharic: "ዛፍ", english: "Tree" }, { geez: "ፈውስ", amharic: "መድኃኒት", english: "Medicine" }, { geez: "ሰላም", amharic: "ሰላም", english: "Peace" }, { geez: "ፍቅር", amharic: "ፍቅር", english: "Love" }, { geez: "ሐሤት", amharic: "ደስታ", english: "Joy" }, { geez: "ኃይል", amharic: "ኃይል", english: "Power" }, { geez: "ጥበብ", amharic: "ጥበብ", english: "Wisdom" }, { geez: "ኵናት", amharic: "ጦር", english: "Spear" }, { geez: "እግር", amharic: "እግር", english: "Foot" }, { geez: "እደ", amharic: "እጅ", english: "Hand" }, { geez: "ዐይን", amharic: "ዐይን", english: "Eye" }, { geez: "ልብ", amharic: "ልብ", english: "Heart" }, { geez: "ርእስ", amharic: "ራስ", english: "Head" }, { geez: "ስን", amharic: "ጥርስ", english: "Tooth" }, { geez: "ክነፍ", amharic: "ክንፍ", english: "Wing" }
+        { geez: "ሐሊብ", amharic: "ወተት", english: "Milk" }, { geez: "ማይ", amharic: "ውሃ", english: "Water" }, { geez: "እさと", amharic: "እሳት", english: "Fire" }, { geez: "ንጉሥ", amharic: "ንጉሥ", english: "King" }, { geez: "ብርሃን", amharic: "ብርሃን", english: "Light" }, { geez: "ጽጌ", amharic: "አበባ", english: "Flower" }, { geez: "ወርቅ", amharic: "ወርቅ", english: "Gold" }, { geez: "ሰማይ", amharic: "ሰማይ", english: "Sky" }, { geez: "ምድር", amharic: "ምድር", english: "Earth" }, { geez: "ኮከብ", amharic: "ኮከብ", english: "Star" }, { geez: "ፀሐይ", amharic: "ፀሐይ", english: "Sun" }, { geez: "ወሬዛ", amharic: "ጎበዝ ወጣት", english: "Young Man" }, { geez: "ብእሲ", amharic: "ሰው / ወንድ", english: "Man" }, { geez: "ብእሲት", amharic: "ሴት", english: "Woman" }, { geez: "ሕፃን", amharic: "ልጅ", english: "Child" }, { geez: "ቤት", amharic: "ቤት", english: "House" }, { geez: "መጽሐፍ", amharic: "መጽሐፍ", english: "Book" }, { geez: "አሳ", amharic: "ዓሣ", english: "Fish" }, { geez: "ዖፍ", amharic: "ወፍ", english: "Bird" }, { geez: "አንበሳ", amharic: "አንበሳ", english: "Lion" }, { geez: "ከልብ", amharic: "ውሻ", english: "Dog" }, { geez: "ድሙ", amharic: "ድመት", english: "Cat" }, { geez: "ዕንጨት", amharic: "ዕንጨት", english: "Wood" }, { geez: "ኅብስት", amharic: "ዳቦ", english: "Bread" }, { geez: "ወይን", amharic: "ወይን", english: "Wine" }, { geez: "ሐመር", amharic: "መርከብ", english: "Ship" }, { geez: "ገነት", amharic: "ገነት", english: "Paradise" }, { geez: "ደብር", amharic: "ተራራ", english: "Mountain" }, { geez: "ባሕር", amharic: "ባሕር", english: "Sea" }, { geez: "ፈረስ", amharic: "ፈረስ", english: "Horse" }, { geez: "አህያ", amharic: "አህያ", english: "Donkey" }, { geez: "ላህም", amharic: "ላም", english: "Cow" }, { geez: "በግዕ", amharic: "በግ", english: "Sheep" }, { geez: "ጠሊ", amharic: "ፍየል", english: "Goat" }, { geez: "ገራህት", amharic: "እርሻ", english: "Field" }, { geez: "ዕፅ", amharic: "ዛፍ", english: "Tree" }, { geez: "ፈውስ", amharic: "መድኃኒት", english: "Medicine" }, { geez: "ሰላም", amharic: "ሰላም", english: "Peace" }, { geez: "ፍቅር", amharic: "ፍቅር", english: "Love" }, { geez: "ሐሤት", amharic: "ደስታ", english: "Joy" }, { geez: "ኃይል", amharic: "ኃይል", english: "Power" }, { geez: "ጥበብ", amharic: "ጥበብ", english: "Wisdom" }, { geez: "ኵናት", amharic: "ጦር", english: "Spear" }, { geez: "እግር", amharic: "እግር", english: "Foot" }, { geez: "እደ", amharic: "እጅ", english: "Hand" }, { geez: "ዐይን", amharic: "ዐይን", english: "Eye" }, { geez: "ልብ", amharic: "ልብ", english: "Heart" }, { geez: "ርእስ", amharic: "ራስ", english: "Head" }, { geez: "ስን", amharic: "ጥርስ", english: "Tooth" }, { geez: "ክነፍ", amharic: "ክንፍ", english: "Wing" }
     ];
 
     const shortSentencesData = compactSentences.map(s => ({ amharic: s[0], english: s[1], pic: s[2] }));
@@ -554,38 +553,6 @@
     let globalAudioPlaybackRate = 1.0, isSentenceAutoPlaying = false, sentenceAutoPlayTimeoutId = null, currentSentenceIndex = 0;
     const alphabetOptionLetterLabels = ["A", "B", "C", "D"];
 
-    function playRewardSoundEffect(type) {
-        try {
-            const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return;
-            const ctx = new AudioCtx(); const osc = ctx.createOscillator(), gain = ctx.createGain(); osc.connect(gain); gain.connect(ctx.destination); const now = ctx.currentTime;
-            if (type === 'correct' || type === 'match') {
-                osc.type = 'triangle'; osc.frequency.setValueAtTime(523.25, now); osc.frequency.setValueAtTime(659.25, now + 0.08); osc.frequency.setValueAtTime(783.99, now + 0.16);
-                gain.gain.setValueAtTime(0.15, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3); osc.start(now); osc.stop(now + 0.3);
-            } else if (type === 'victory') {
-                osc.type = 'sine'; osc.frequency.setValueAtTime(523.25, now); osc.frequency.setValueAtTime(783.99, now + 0.15); osc.frequency.setValueAtTime(1046.50, now + 0.3);
-                gain.gain.setValueAtTime(0.15, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5); osc.start(now); osc.stop(now + 0.5);
-            }
-        } catch (e) { console.log(e); }
-    }
-
-    function switchAppTheme(themeKey) {
-        const root = document.documentElement; document.querySelectorAll('.theme-selector-container .theme-btn').forEach(b => b.classList.remove('active')); document.getElementById('theme-' + themeKey)?.classList.add('active');
-        const themes = {
-            sunny: ['#800080', '#4ECDC4', 'linear-gradient(135deg, #FEF3C7 0%, #D1FAE5 50%, #ECFDF5 100%)', '#2F3E46'],
-            forest: ['#2E7D32', '#81C784', 'linear-gradient(135deg, #F1F8E9 0%, #DCEDC8 100%)', '#1B5E20'],
-            space: ['#3F51B5', '#00BCD4', 'linear-gradient(135deg, #E8EAF6 0%, #C5CAE9 100%)', '#1A237E'],
-            ocean: ['#0077BE', '#F48FB1', 'linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 100%)', '#006064']
-        };
-        const t = themes[themeKey]; root.style.setProperty('--primary', t[0]); root.style.setProperty('--secondary', t[1]); root.style.setProperty('--background', t[2]); root.style.setProperty('--text', t[3]);
-    }
-
-    function setMemoryGameMatrixSize(pairsCount, columnsCount) {
-        memoryTargetPairsCount = pairsCount; memoryTargetColumnsCount = columnsCount;
-        document.querySelectorAll('[id^="btn-size-"]').forEach(b => b.classList.remove('active')); document.getElementById('btn-size-' + (pairsCount * 2))?.classList.add('active');
-        initMemoryGame();
-    }
-
-    // Direct String-Literal Dynamic Fallback Audio Routing Logic completely removing ASSET_BASE_PATH dependencies
     function playFidelAudio(charName) {
         if (!charName) return;
         try {
@@ -610,22 +577,19 @@
                 }
             }
             
-            // Computes an absolute path string using exact absolute slash literal declarations
-            const primaryPath = "/audio/" + filename + ".mp3";
-            console.log(`[Audio Pipeline] Initial request firing straight to root path: ${primaryPath}`);
-            
+            const primaryPath = "audio/" + filename + ".mp3";
+            console.log(`[Audio Request] Loading relative path: ${primaryPath}`);
             const audio = new Audio(primaryPath);
             audio.playbackRate = globalAudioPlaybackRate;
             audio.addEventListener('play', () => { audio.playbackRate = globalAudioPlaybackRate; });
             
             audio.play().catch(e => {
-                const secondaryFallbackPath = "/audio/" + filename.toLowerCase() + ".mp3";
-                console.warn(`[Audio Pipeline] Uppercase root path failed. Re-routing straight to case-insensitive alternative: ${secondaryFallbackPath}`);
-                
+                const secondaryFallbackPath = "audio/" + filename.toLowerCase() + ".mp3";
+                console.warn(`[Audio Alternative] Retrying relative path string literal: ${secondaryFallbackPath}`);
                 const fallbackAudio = new Audio(secondaryFallbackPath);
                 fallbackAudio.playbackRate = globalAudioPlaybackRate;
                 fallbackAudio.play().catch(err => {
-                    console.error(`[Audio Pipeline Critical Failure] File not found under absolute root. Checked literals "${primaryPath}" and "${secondaryFallbackPath}" directly. Please verify that your folder is named exactly "audio" and sits at the top level of your production hosting space next to index.html.`);
+                    console.error(`[Audio Loader Error] Could not find or play audio clip "${charName}". Looked under paths "${primaryPath}" and "${secondaryFallbackPath}". Ensure your local folder is named exactly "audio" (lowercase) and sits right next to index.html.`);
                 });
             });
         } catch (e) { console.error(e); }
@@ -810,7 +774,7 @@
         document.querySelectorAll('#story-video-picker-tray .story-select-item').forEach(i => i.classList.remove('active')); document.getElementById('story-btn-' + index)?.classList.add('active');
         document.getElementById('story-btn-' + index)?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); const story = shortStoriesList[index];
         document.getElementById('lbl-active-story-title').innerText = "Playing Story: " + story.title;
-        const player = document.getElementById('storyVideoPlayerFrame'); if (player) { player.src = "/audio/" + encodeURIComponent(story.filename) + '.mp4'; player.load(); }
+        const player = document.getElementById('storyVideoPlayerFrame'); if (player) { player.src = "audio/" + encodeURIComponent(story.filename) + '.mp4'; player.load(); }
     }
 
     function startTrace(e) { isDrawing = true; const c = getCanvasCoords(e); traceCtx.beginPath(); traceCtx.moveTo(c.x, c.y); traceCtx.strokeStyle = activeMarkerColor; traceCtx.lineWidth = 10; traceCtx.lineCap = 'round'; }
@@ -953,24 +917,23 @@
             abugidaRowsData["Row " + (rowIndex + 1)] = rowItems;
         });
 
-        // Direct literal assignment patterns completely independent of tracking path variables
         const leftImg = document.getElementById('img-cover-left');
         const rightImg = document.getElementById('img-cover-right');
-        if (leftImg) leftImg.src = '/audio/cover_left.png';
-        if (rightImg) rightImg.src = '/audio/cover_right.png';
+        if (leftImg) leftImg.src = 'audio/cover_left.png';
+        if (rightImg) rightImg.src = 'audio/cover_right.png';
 
         const leftLandImg = document.getElementById('img-cover-left-landscape');
         const rightLandImg = document.getElementById('img-cover-right-landscape');
-        if (leftLandImg) leftLandImg.src = '/audio/cover_left_landscape.png';
-        if (rightLandImg) rightLandImg.src = '/audio/cover_right_landscape.png';
+        if (leftLandImg) leftLandImg.src = 'audio/cover_left_landscape.png';
+        if (rightLandImg) rightLandImg.src = 'audio/cover_right_landscape.png';
 
         const exploreVidLeft = document.getElementById('img-explore-video-left');
         const exploreVidRight = document.getElementById('img-explore-video-right');
-        if (exploreVidLeft) exploreVidLeft.src = '/audio/advertise_here.mp4';
-        if (exploreVidRight) exploreVidRight.src = '/audio/advertise_here.mp4';
+        if (exploreVidLeft) exploreVidLeft.src = 'audio/advertise_here.mp4';
+        if (exploreVidRight) exploreVidRight.src = 'audio/advertise_here.mp4';
 
         renderStandardChart(); renderAbugidaChart(); renderLabializedChart(); renderNumbersChart(); renderGeezWordsChart(); renderShortSentences(); initTracingSystem(); initVideoSystem(); generateCompetitionNameInputs(); updatePWAButtonState();
     };
-   </script>
+</script>
 </body>
 </html>
