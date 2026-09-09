@@ -534,8 +534,6 @@
     const abugidaConsonantOrder = ["አ", "በ", "ገ", "ደ", "ሀ", "ወ", "ዘ", "ዠ", "ሐ", "ጠ", "ጨ", "የ", "ከ", "ኸ", "ለ", "መ", "ነ", "ኘ", "ሠ", "ረ", "ሰ", "ሸ", "ቀ", "ተ", "ቸ", "ኀ", "ዐ", "ጀ", "ጰ", "ጸ", "ፀ", "ፈ", "ቨ", "ፐ"];
     const abugidaRowsData = {};
     const labializedCharacters = [{char:"ሏ", sound:"lwa"}, {char:"ሟ", sound:"mwa"}, {char:"ሯ", sound:"rwa"}, {char:"ሷ", sound:"swa"}, {char:"ሿ", sound:"shua"}, {char:"ቋ", sound:"qua"}, {char:"ቧ", sound:"bua"}, {char:"ቷ", sound:"tua"}, {char:"ቿ", sound:"chwa"}, {char:"ኗ", sound:"nua"}, {char:"", sound:"nyua"}, {char:"ኋ", sound:"hua"}, {char:"ኳ", sound:"kua"}, {char:"ጓ", sound:"gua"}, {char:"ጧ", sound:"ttwa"}, {char:"ጯ", sound:"ccwa"}, {char:"ጷ", sound:"ppwa"}];
-    
-    // Fixed: Key typo "Feature:" on number 40 (፵) successfully restored back to standard "sound:" key parameter properties
     const geezNumbersData = [{char:"፩", sound:"1 - አንድ"}, {char:"፪", sound:"2 - ሁለት"}, {char:"፫", sound:"3 - ሦስት"}, {char:"፬", sound:"4 - አራት"}, {char:"፭", sound:"5 - አምስት"}, {char:"፮", sound:"6 - ስድስት"}, {char:"፯", sound:"7 - ሰባት"}, {char:"፰", sound:"8 - ስምንት"}, {char:"፱", sound:"9 - ዘጠኝ"}, {char:"፲", sound:"10 - አስር"}, {char:"፲፩", sound:"11 - አስራ አንድ"}, {char:"፲፪", sound:"12 - አስራ ሁለት"}, {char:"፲፫", sound:"13 - አስራ ሦስት"}, {char:"፲፬", sound:"14 - አስራ አራት"}, {char:"፲፭", sound:"15 - አስራ አምስት"}, {char:"፲፮", sound:"16 - አስራ ስድስት"}, {char:"፲፯", sound:"17 - አስራ ሰባት"}, {char:"፲፰", sound:"18 - አስራ ስምንት"}, {char:"፲፱", sound:"19 - አስራ ዘጠኝ"}, {char:"፳", sound:"20 - ሃያ"}, {char:"፴", sound:"30 - ሰላሳ"}, {char:"፵", sound:"40 - አርባ"}, {char:"፶", sound:"50 - አምሳ"}, {char:"፷", sound:"60 - ስልሳ"}, {char:"፸", sound:"70 - ሰባ"}, {char:"፹", sound:"80 - ሰማኒያ"}, {char:"፺", sound:"90 - ዘጠና"}, {char:"፻", sound:"100 - መቶ"}, {char:"፲፻", sound:"1,000 - ዐስርቱ ምእት"}, {char:"፼", sound:"10,000 - እልፍ"}, {char:"፻፲፻", sound:"100,000 - አእላፍ"}];
 
     const compactSentences = [
@@ -555,25 +553,67 @@
     let globalAudioPlaybackRate = 1.0, isSentenceAutoPlaying = false, sentenceAutoPlayTimeoutId = null, currentSentenceIndex = 0;
     const alphabetOptionLetterLabels = ["A", "B", "C", "D"];
 
+    function playRewardSoundEffect(type) {
+        try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return;
+            const ctx = new AudioCtx(); const osc = ctx.createOscillator(), gain = ctx.createGain(); osc.connect(gain); gain.connect(ctx.destination); const now = ctx.currentTime;
+            if (type === 'correct' || type === 'match') {
+                osc.type = 'triangle'; osc.frequency.setValueAtTime(523.25, now); osc.frequency.setValueAtTime(659.25, now + 0.08); osc.frequency.setValueAtTime(783.99, now + 0.16);
+                gain.gain.setValueAtTime(0.15, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3); osc.start(now); osc.stop(now + 0.3);
+            } else if (type === 'victory') {
+                osc.type = 'sine'; osc.frequency.setValueAtTime(523.25, now); osc.frequency.setValueAtTime(783.99, now + 0.15); osc.frequency.setValueAtTime(1046.50, now + 0.3);
+                gain.gain.setValueAtTime(0.15, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5); osc.start(now); osc.stop(now + 0.5);
+            }
+        } catch (e) { console.log(e); }
+    }
+
+    function switchAppTheme(themeKey) {
+        const root = document.documentElement; document.querySelectorAll('.theme-selector-container .theme-btn').forEach(b => b.classList.remove('active')); document.getElementById('theme-' + themeKey)?.classList.add('active');
+        const themes = {
+            sunny: ['#800080', '#4ECDC4', 'linear-gradient(135deg, #FEF3C7 0%, #D1FAE5 50%, #ECFDF5 100%)', '#2F3E46'],
+            forest: ['#2E7D32', '#81C784', 'linear-gradient(135deg, #F1F8E9 0%, #DCEDC8 100%)', '#1B5E20'],
+            space: ['#3F51B5', '#00BCD4', 'linear-gradient(135deg, #E8EAF6 0%, #C5CAE9 100%)', '#1A237E'],
+            ocean: ['#0077BE', '#F48FB1', 'linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 100%)', '#006064']
+        };
+        const t = themes[themeKey]; root.style.setProperty('--primary', t[0]); root.style.setProperty('--secondary', t[1]); root.style.setProperty('--background', t[2]); root.style.setProperty('--text', t[3]);
+    }
+
+    function setMemoryGameMatrixSize(pairsCount, columnsCount) {
+        memoryTargetPairsCount = pairsCount; memoryTargetColumnsCount = columnsCount;
+        document.querySelectorAll('[id^="btn-size-"]').forEach(b => b.classList.remove('active')); document.getElementById('btn-size-' + (pairsCount * 2))?.classList.add('active');
+        initMemoryGame();
+    }
+
+    // Modern Routing Engine: Matches absolute alphanumeric naming coordinates (1A, 2A, 2B... 34G) exactly based on your asset configuration file names
     function playFidelAudio(charName) {
         if (!charName) return;
         try {
-            let filename = encodeURIComponent(charName); const geezItem = geezWordsData.find(g => g.geez === charName);
-            if (geezItem) { filename = geezItem.english.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '_'); }
-            else {
+            let filename = encodeURIComponent(charName); 
+            let wasGridCoordFound = false;
+            
+            const geezItem = geezWordsData.find(g => g.geez === charName);
+            if (geezItem) { 
+                filename = geezItem.english.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '_'); 
+            } else {
                 const labItem = labializedCharacters.find(l => l.char === charName);
-                if (labItem) { filename = labItem.sound; }
-                else {
+                if (labItem) { 
+                    filename = labItem.sound; 
+                } else {
                     const sentItem = shortSentencesData.find(s => s.amharic === charName);
-                    if (sentItem) { filename = sentItem.english.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '_'); }
-                    else {
+                    if (sentItem) { 
+                        filename = sentItem.english.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '_'); 
+                    } else {
                         const numItem = geezNumbersData.find(n => n.char === charName);
-                        if (numItem) { filename = numItem.sound.split(' - ')[0].replace(/,/g, ''); }
-                        else {
+                        if (numItem) { 
+                            if (numItem.sound) filename = numItem.sound.split(' - ')[0].replace(/,/g, ''); 
+                        } else {
+                            // Precise coordinate loop extraction matching your 1A-34G dataset layout
                             for (let r = 0; r < compactFidels.length; r++) {
                                 const chars = Array.from(compactFidels[r].r); const cIdx = chars.indexOf(charName);
                                 if (cIdx !== -1) { 
-                                    filename = `${r + 1}${String.fromCharCode(65 + cIdx).toLowerCase()}`; 
+                                    // Modified: Generates capital indices ('2A', '2B', etc.) verbatim to match your storage configuration files
+                                    filename = `${r + 1}${String.fromCharCode(65 + cIdx).toUpperCase()}`; 
+                                    wasGridCoordFound = true;
                                     break; 
                                 }
                             }
@@ -583,22 +623,26 @@
             }
             
             const primaryPath = "audio/" + filename + ".mp3";
-            console.log(`[Audio Request] Loading relative path: ${primaryPath}`);
+            console.log(`[Audio Request Engine] Running primary target: ${primaryPath}`);
             const audio = new Audio(primaryPath);
             audio.playbackRate = globalAudioPlaybackRate;
-            audio.addEventListener('play', () => { audio.playbackRate = globalAudioPlaybackRate; });
             
             audio.play().catch(e => {
-                const uppercaseLetter = filename.substring(filename.length - 1).toUpperCase();
-                const uppercaseFilename = filename.substring(0, filename.length - 1) + uppercaseLetter;
-                const secondaryFallbackPath = "audio/" + uppercaseFilename + ".mp3";
-                
-                console.warn(`[Audio Alternative] Lowercase failed. Retrying uppercase row lookup parameter: ${secondaryFallbackPath}`);
-                const fallbackAudio = new Audio(secondaryFallbackPath);
-                fallbackAudio.playbackRate = globalAudioPlaybackRate;
-                fallbackAudio.play().catch(err => {
-                    console.error(`[Audio Loader Error] Could not find or play audio clip "${charName}". Checked lookups: "${primaryPath}" and "${secondaryFallbackPath}". Ensure your local folder is named exactly "audio" (lowercase) and sits right next to index.html.`);
-                });
+                if (wasGridCoordFound) {
+                    // Fallback strategy: If uppercase route triggers a 404 block on Linux, check lowercase variation layout
+                    const lowercaseLetter = filename.substring(filename.length - 1).toLowerCase();
+                    const lowercaseFilename = filename.substring(0, filename.length - 1) + lowercaseLetter;
+                    const secondaryPath = "audio/" + lowercaseFilename + ".mp3";
+                    
+                    console.warn(`[Audio Alternative] Capital coordinate layout error. Retrying lowercase variation: ${secondaryPath}`);
+                    const fallbackAudio = new Audio(secondaryPath);
+                    fallbackAudio.playbackRate = globalAudioPlaybackRate;
+                    fallbackAudio.play().catch(err => {
+                        console.error(`[Audio Loader Error] Could not find or play audio asset "${charName}". Checked coordinate configurations: "${primaryPath}" and "${secondaryPath}". Ensure your local folder is named exactly "audio" (lowercase) and sits right next to index.html.`);
+                    });
+                } else {
+                    console.error(`[Audio Loader Error] Direct asset match failure for character entry "${charName}" under relative pathway "${primaryPath}".`);
+                }
             });
         } catch (e) { console.error(e); }
     }
@@ -771,6 +815,7 @@
     function clearTraceCanvas() { updateTracingGuide(activeTraceCharacter); }
     function playCurrentTraceAudio() { playFidelAudio(activeTraceCharacter); }
 
+    // Fixed: Encodes URLs seamlessly relative to standard folder paths to support deployment parameters cleanly
     function initVideoSystem() {
         const tray = document.getElementById('story-video-picker-tray'); if (!tray) return; tray.innerHTML = '';
         shortStoriesList.forEach((story, idx) => {
@@ -811,6 +856,7 @@
 
     function repeatQuizSound() { if (quizCurrentItem) playFidelAudio(quizCurrentItem.char); }
 
+    // Multi-player Competition Section Elements
     function generateCompetitionNameInputs() {
         const count = parseInt(document.getElementById('comp-kids-count').value); const c = document.getElementById('comp-names-container'); c.innerHTML = '';
         for (let i = 1; i <= count; i++) { c.innerHTML += `<div class="comp-input-group"><label>Kid #${i} Name:</label><input type="text" id="comp-pname-${i}" class="comp-input-field" value="Child ${i}"></div>`; }
@@ -915,6 +961,9 @@
         const targetCard = document.getElementById('chart-sentences-container').children[currentSentenceIndex]; if (targetCard) targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         currentSentenceIndex++; let d = globalAudioPlaybackRate === 0.75 ? 5500 : (globalAudioPlaybackRate === 1.35 ? 3000 : 4000); sentenceAutoPlayTimeoutId = setTimeout(runSentenceAutoPlayTick, d);
     }
+
+    function getCanvasCoords(evt) { const r = traceCanvas.getBoundingClientRect(); return { x: (evt.clientX - r.left) * (traceCanvas.width / r.width), y: (evt.clientY - r.top) * (traceCanvas.height / r.height) }; }
+    function getTouchCoords(evt) { const r = traceCanvas.getBoundingClientRect(), t = evt.touches[0]; return { x: (t.clientX - r.left) * (traceCanvas.width / r.width), y: (t.clientY - r.top) * (traceCanvas.height / r.height) }; }
 
     window.onload = function() {
         abugidaConsonantOrder.forEach((baseChar, rowIndex) => {
