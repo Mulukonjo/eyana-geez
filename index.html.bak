@@ -534,8 +534,6 @@
     const abugidaConsonantOrder = ["አ", "በ", "ገ", "ደ", "ሀ", "ወ", "ዘ", "ዠ", "ሐ", "ጠ", "ጨ", "የ", "ከ", "ኸ", "ለ", "መ", "ነ", "ኘ", "ሠ", "ረ", "ሰ", "ሸ", "ቀ", "ተ", "ቸ", "ኀ", "ዐ", "ጀ", "ጰ", "ጸ", "ፀ", "ፈ", "ቨ", "ፐ"];
     const abugidaRowsData = {};
     const labializedCharacters = [{char:"ሏ", sound:"lwa"}, {char:"ሟ", sound:"mwa"}, {char:"ሯ", sound:"rwa"}, {char:"ሷ", sound:"swa"}, {char:"ሿ", sound:"shua"}, {char:"ቋ", sound:"qua"}, {char:"ቧ", sound:"bua"}, {char:"ቷ", sound:"tua"}, {char:"ቿ", sound:"chwa"}, {char:"ኗ", sound:"nua"}, {char:"", sound:"nyua"}, {char:"ኋ", sound:"hua"}, {char:"ኳ", sound:"kua"}, {char:"ጓ", sound:"gua"}, {char:"ጧ", sound:"ttwa"}, {char:"ጯ", sound:"ccwa"}, {char:"ጷ", sound:"ppwa"}];
-    
-    // Fixed: The 'manual' configuration string typo on item index 17 (፲፰) has been completely restored back to 'sound:'
     const geezNumbersData = [{char:"፩", sound:"1 - አንድ"}, {char:"፪", sound:"2 - ሁለት"}, {char:"፫", sound:"3 - ሦስት"}, {char:"፬", sound:"4 - አራት"}, {char:"፭", sound:"5 - አምስት"}, {char:"፮", sound:"6 - ስድስት"}, {char:"፯", sound:"7 - ሰባት"}, {char:"፰", sound:"8 - ስምንት"}, {char:"፱", sound:"9 - ዘጠኝ"}, {char:"፲", sound:"10 - አስር"}, {char:"፲፩", sound:"11 - አስራ አንድ"}, {char:"፲፪", sound:"12 - አስራ ሁለት"}, {char:"፲፫", sound:"13 - አስራ ሦስት"}, {char:"፲፬", sound:"14 - አስራ አራት"}, {char:"፲፭", sound:"15 - አስራ አምስት"}, {char:"፲፮", sound:"16 - አስራ ስድስት"}, {char:"፲፯", sound:"17 - አስራ ሰባት"}, {char:"፲፰", sound:"18 - አስራ ስምንት"}, {char:"፲፱", sound:"19 - አስራ ዘጠኝ"}, {char:"፳", sound:"20 - ሃያ"}, {char:"፴", sound:"30 - ሰላሳ"}, {char:"፵", sound:"40 - አርባ"}, {char:"፶", sound:"50 - amsa"}, {char:"፷", sound:"60 - ስልሳ"}, {char:"፸", sound:"70 - ሰባ"}, {char:"፹", sound:"80 - ሰማኒያ"}, {char:"፺", sound:"90 - ዘጠና"}, {char:"፻", sound:"100 - መቶ"}, {char:"፲፻", sound:"1,000 - ዐስርቱ ምእት"}, {char:"፼", sound:"10,000 - እልፍ"}, {char:"፻፲፻", sound:"100,000 - አእላፍ"}];
 
     const compactSentences = [
@@ -554,6 +552,40 @@
     let isAutoReading = false, autoReadTimeoutId = null, autoReadSpeedMs = 2000;
     let globalAudioPlaybackRate = 1.0, isSentenceAutoPlaying = false, sentenceAutoPlayTimeoutId = null, currentSentenceIndex = 0;
     const alphabetOptionLetterLabels = ["A", "B", "C", "D"];
+
+    // iOS WebKit Architecture Preloaded Audio Channel Map Pool
+    const preloadediOSAudioElementsMap = {};
+
+    function preinstantiateiOSAudioMatrixDOMNodes() {
+        console.log("[iOS Engine] Booting synchronous pipeline. Pre-instantiating lowercase grid map elements...");
+        for (let r = 0; r < compactFidels.length; r++) {
+            const chars = Array.from(compactFidels[r].r);
+            for (let c = 0; r < compactFidels.length && c < chars.length; c++) {
+                const codeKey = `${r + 1}${String.fromCharCode(65 + c).toLowerCase()}`;
+                const audioNode = new Audio(`audio/${codeKey}.mp3`);
+                audioNode.preload = "auto";
+                preloadediOSAudioElementsMap[codeKey] = audioNode;
+            }
+        }
+        // Build standalone non-coordinate definitions (vocabulary, sentences, numbers) dynamically
+        geezWordsData.forEach(item => {
+            const pathName = item.english.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '_');
+            preloadediOSAudioElementsMap[pathName] = new Audio(`audio/${pathName}.mp3`);
+        });
+        labializedCharacters.forEach(item => {
+            if (item.sound) preloadediOSAudioElementsMap[item.sound] = new Audio(`audio/${item.sound}.mp3`);
+        });
+        shortSentencesData.forEach(item => {
+            const pathName = item.english.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '_');
+            preloadediOSAudioElementsMap[pathName] = new Audio(`audio/${pathName}.mp3`);
+        });
+        geezNumbersData.forEach(item => {
+            if (item.sound) {
+                const pathName = item.sound.split(' - ')[0].replace(/,/g, '');
+                preloadediOSAudioElementsMap[pathName] = new Audio(`audio/${pathName}.mp3`);
+            }
+        });
+    }
 
     function playRewardSoundEffect(type) {
         try {
@@ -586,12 +618,11 @@
         initMemoryGame();
     }
 
-    // Fixed Synchronous Core: Generates lowercase file extensions ('audio/1a.mp3') first to completely prevent asynchronous browser autoplay restriction blocks!
+    // iOS Unified Native Playback Controller: Calls pre-allocated elements directly inside user gesture thread 
     function playFidelAudio(charName) {
         if (!charName) return;
         try {
             let filename = encodeURIComponent(charName); 
-            let wasGridCoordFound = false;
             
             const geezItem = geezWordsData.find(g => g.geez === charName);
             if (geezItem) { 
@@ -612,9 +643,7 @@
                             for (let r = 0; r < compactFidels.length; r++) {
                                 const chars = Array.from(compactFidels[r].r); const cIdx = chars.indexOf(charName);
                                 if (cIdx !== -1) { 
-                                    // Modified: Constructs the string literal natively in lowercase first to map your production files exactly
                                     filename = `${r + 1}${String.fromCharCode(65 + cIdx).toLowerCase()}`; 
-                                    wasGridCoordFound = true;
                                     break; 
                                 }
                             }
@@ -623,27 +652,26 @@
                 }
             }
             
-            const primaryPath = "audio/" + filename + ".mp3";
-            console.log(`[Audio Request Engine] Running primary target: ${primaryPath}`);
-            const audio = new Audio(primaryPath);
-            audio.playbackRate = globalAudioPlaybackRate;
+            console.log(`[iOS Playback Dispatcher] Triggering sound channel identifier: ${filename}`);
             
-            audio.play().catch(e => {
-                if (wasGridCoordFound) {
-                    // Fallback strategy: If your server uses capital extensions, perform the fallback pipeline
-                    const uppercaseLetter = filename.substring(filename.length - 1).toUpperCase();
-                    const uppercaseFilename = filename.substring(0, filename.length - 1) + uppercaseLetter;
-                    const secondaryPath = "audio/" + uppercaseFilename + ".mp3";
-                    
-                    console.warn(`[Audio Alternative] Lowercase coordinate layout error. Retrying uppercase variation: ${secondaryPath}`);
-                    const fallbackAudio = new Audio(secondaryPath);
-                    fallbackAudio.playbackRate = globalAudioPlaybackRate;
-                    fallbackAudio.play().catch(err => {
-                        console.error(`[Audio Loader Error] Could not find or play audio asset "${charName}". Checked coordinate configurations: "${primaryPath}" and "${secondaryPath}". Ensure your local folder is named exactly "audio" (lowercase) and sits right next to index.html.`);
-                    });
-                } else {
-                    console.error(`[Audio Loader Error] Direct asset match failure for character entry "${charName}" under relative pathway "${primaryPath}".`);
-                }
+            // Check if element exists in the pre-instantiated synchronous DOM registry map
+            let activeAudioInstance = preloadediOSAudioElementsMap[filename];
+            if (!activeAudioInstance) {
+                // Inline generation catch loop for any newly added standalone items
+                activeAudioInstance = new Audio(`audio/${filename}.mp3`);
+                preloadediOSAudioElementsMap[filename] = activeAudioInstance;
+            }
+            
+            activeAudioInstance.currentTime = 0;
+            activeAudioInstance.playbackRate = globalAudioPlaybackRate;
+            
+            activeAudioInstance.play().catch(err => {
+                console.warn(`[iOS WebKit Warning] Primary inline channel play failed, executing direct node instantiation fallback...`);
+                const directNodeFallback = new Audio(`audio/${filename}.mp3`);
+                directNodeFallback.playbackRate = globalAudioPlaybackRate;
+                directNodeFallback.play().catch(e => {
+                    console.error(`[iOS Audio Hardware Critical Error] WebKit blocked audio channel thread invocation entirely. Confirm your physical iPhone side switch ringer is flipped away from Silent/Vibrate Mode into Ring Mode.`);
+                });
             });
         } catch (e) { console.error(e); }
     }
@@ -922,7 +950,6 @@
         window.open('https://amazon.com', '_blank');
     }
 
-    // Fixed Canvas Tracker Interferences: Auto Reader state switches off tracing triggers cleanly to ensure tracing boards remain intact
     var isAutoReadingActiveFrameState = false;
     function toggleAutoRead() {
         isAutoReading = !isAutoReading; const btn = document.getElementById('btn-toggle-autoread');
@@ -967,6 +994,8 @@
     function getTouchCoords(evt) { const r = traceCanvas.getBoundingClientRect(), t = evt.touches[0]; return { x: (t.clientX - r.left) * (traceCanvas.width / r.width), y: (t.clientY - r.top) * (traceCanvas.height / r.height) }; }
 
     window.onload = function() {
+        preinstantiateiOSAudioMatrixDOMNodes();
+        
         abugidaConsonantOrder.forEach((baseChar, rowIndex) => {
             const rowItems = []; for (let colIndex = 0; colIndex < 7; colIndex++) { const fidelForm = standardFidelChart[baseChar][colIndex]; rowItems.push(fidelForm); }
             abugidaRowsData["Row " + (rowIndex + 1)] = rowItems;
