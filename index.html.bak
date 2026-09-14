@@ -743,9 +743,9 @@
 
         function redirectToAmazonStorefront() {
             showMessage("Amazon Workbook Link", "Your Traceable Books are Coming Soon!!!");
-            setTimeout(() => {
-                window.open("https://amazon.com", "_blank");
-            }, 1000);
+            //setTimeout(() => {
+             //   window.open("https://amazon.com", "_blank");
+            //}, 1000);
         }
 
         function switchTab(tab) {
