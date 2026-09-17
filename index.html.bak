@@ -124,9 +124,13 @@
         .ticker-scrolling-content-track { display: flex; align-items: center; gap: 40px; white-space: nowrap; animation: runInfiniteTickerTrack 60s linear infinite; width: max-content; padding-left: 100%; }
         .ticker-scrolling-content-track:hover,
         .ticker-scrolling-content-track.touched-paused { animation-play-state: paused; }
-        .ticker-item-text-node { font-size: 0.95rem; font-weight: bold; color: var(--primary); display: flex; align-items: center; gap: 8px; }
-        .ticker-item-image-asset { height: 32px; width: auto; object-fit: contain; border-radius: 6px; border: 1px solid #E2E8F0; background: white; }
-        .ticker-item-video-clip-asset { height: 34px; width: 60px; object-fit: cover; border-radius: 6px; border: 1px solid #CBD5E1; background: #000; }
+        
+        .ticker-item-text-node { font-size: 0.95rem; font-weight: bold; color: var(--primary); display: flex; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease; }
+        .ticker-item-text-node:hover { transform: scale(1.02); color: var(--secondary); }
+        .ticker-item-image-asset { height: 32px; width: auto; object-fit: contain; border-radius: 6px; border: 1px solid #E2E8F0; background: white; cursor: pointer; transition: transform 0.2s ease; }
+        .ticker-item-image-asset:hover { transform: scale(1.08); }
+        .ticker-item-video-clip-asset { height: 34px; width: 60px; object-fit: cover; border-radius: 6px; border: 1px solid #CBD5E1; background: #000; cursor: pointer; }
+        
         .ticker-decorative-divider-bullet { color: var(--secondary); font-size: 1.2rem; font-weight: bold; }
         @keyframes runInfiniteTickerTrack { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
         
@@ -135,8 +139,21 @@
         .theme-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
         
         .nav-tabs { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; flex: 1; }
-        .tab-btn { background: var(--card-bg); border: 3px solid transparent; padding: 10px 18px; font-size: 0.95rem; font-weight: bold; border-radius: 50px; cursor: pointer; color: var(--text); box-shadow: var(--shadow); backdrop-filter: blur(8px); transition: all 0.3s ease; }
-        .tab-btn.active { background: var(--primary); color: white; }
+        
+        .tab-btn, .story-select-item { 
+            background: var(--card-bg); 
+            border: 3px solid transparent; 
+            padding: 2.5px 18px; 
+            font-size: 0.95rem; 
+            font-weight: bold; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            color: var(--text); 
+            box-shadow: var(--shadow); 
+            backdrop-filter: blur(8px); 
+            transition: all 0.3s ease; 
+        }
+        .tab-btn.active, .story-select-item.active { background: var(--primary); color: white; }
         
         .view-panel { display: none; background: var(--card-bg); border-radius: var(--border-radius); padding: 20px; box-shadow: var(--shadow); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.6); width: 100%; }
         .view-panel.active { display: block; }
@@ -169,30 +186,26 @@
         .fidel-card .sound { font-size: 0.8rem; color: #627D98; margin-top: 2px; font-weight: bold; }
         
         .detail-display { background: linear-gradient(135deg, #E0F7FA, #B2EBF2); padding: 15px; border-radius: 15px; display: flex; align-items: center; justify-content: center; gap: 20px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); width: 100%; max-width: 500px; margin: 0 auto; }
-        .detail-main { font-size: 4rem; font-weight: bold; color: #006064; }
-        .detail-info h3 { font-size: 1.4rem; color: #006064; }
         
+        #lbl-fidel { font-size: 48px; font-weight: bold; color: #006064; }
+
         .trace-workspace { display: flex; flex-direction: column; align-items: center; gap: 15px; width: 100%; }
         .trace-picker-container { width: 100%; background: white; padding: 12px; border-radius: 15px; border: 1px solid #E2E8F0; }
         .trace-picker-label { font-weight: bold; font-size: 0.9rem; margin-bottom: 8px; text-align: center; color: var(--text); }
         .trace-grid-select { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; width: 100%; -webkit-overflow-scrolling: touch; }
-        .trace-select-item { background: #F8FAFC; border: 2px solid #E2E8F0; padding: 6px 12px; font-size: 36px; font-weight: bold; border-radius: 12px; cursor: pointer; min-width: 65px; text-align: center; line-height: 1.1; }
-        .story-select-item { background: #F8FAFC; border: 2px solid #E2E8F0; padding: 8px 14px; font-size: 1rem; font-weight: bold; border-radius: 12px; cursor: pointer; white-space: nowrap; text-align: center; }
-        .story-select-item.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .trace-select-item { background: #F8FAFC; border: 2px solid #E2E8F0; padding: 6px 12px; font-size: 36px; font-weight: bold; border-radius: 12px; cursor: pointer; min-width: 65px; text-align: center; line-height: 1.1; transition: var(--transition); }
         .trace-select-item.active { background: var(--primary); color: white; border-color: var(--primary); }
-        
         .canvas-area-block { display: flex; flex-direction: column; align-items: center; gap: 12px; background: #FFF; padding: 15px; border-radius: 20px; border: 1px solid #E2E8F0; width: 100%; max-width: 340px; box-shadow: var(--shadow); }
         #traceCanvas { background: #FFFFFF; border: 4px dashed var(--secondary); border-radius: 15px; touch-action: none; max-width: 100%; height: auto; }
         .color-palette-tray { display: flex; gap: 8px; align-items: center; justify-content: center; background: #F1F5F9; padding: 6px 14px; border-radius: 50px; flex-wrap: wrap; }
         .color-swatch-circle { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.15); }
         .color-swatch-circle.active { transform: scale(1.18); border-color: #2F3E46; }
-        
         .trace-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; width: 100%; }
         .clear-btn, .audio-trace-btn, .next-trace-btn { color: white; border: none; padding: 8px 16px; font-size: 0.9rem; font-weight: bold; border-radius: 50px; cursor: pointer; flex: 1; min-width: 90px; text-align: center; transition: var(--transition); }
         .clear-btn { background: var(--primary); }
         .audio-trace-btn { background: var(--secondary); }
         .next-trace-btn { background: var(--primary); }
-        
+
         .quiz-container { text-align: center; display: flex; flex-direction: column; gap: 15px; }
         .score-board { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: bold; background: #F0F4F8; padding: 10px 18px; border-radius: 50px; }
         .target-fidel { font-size: 1.8rem; font-weight: bold; color: var(--primary); margin: 15px 0; cursor: pointer; background: #EBF8FF; border: 2px solid #BEE3F8; padding: 10px 20px; border-radius: 50px; display: inline-block; }
@@ -216,6 +229,8 @@
         .msg-box p { font-size: 1rem; color: #627D98; margin-bottom: 15px; }
         .msg-box button { background: var(--primary); color: white; border: none; padding: 8px 20px; font-size: 1rem; font-weight: bold; border-radius: 50px; cursor: pointer; }
         
+        #lbl-sound { font-size: 48px !important; line-height: 1.2; }
+
         @media (min-width: 768px) {
             body { padding: 25px; }
             header { padding: 25px 20px; }
@@ -270,26 +285,37 @@
 
         <div class="ticker-news-marquee-belt">
             <div class="ticker-scrolling-content-track">
-                <span class="ticker-item-text-node">🔥 Advertise Here! Promoted Workbooks coming soon Online!</span>
+                <img class="ticker-item-image-asset" src="audio/cover_left_landscape.png" alt="Promo Thumbnail Left" onerror="this.src='https://placehold.co/60x34/800080/ffffff?text=Book'" onclick="redirectToAmazonStorefront()">
+				<span class="ticker-item-text-node" onclick="redirectToAmazonStorefront()">Master handwriting with Mulukonjo tracing books</span>
                 <span class="ticker-decorative-divider-bullet">✦</span>
-                <img class="ticker-item-image-asset" src="audio/cover_left_landscape.png" alt="Promo Thumbnail Left" onerror="this.src='https://placehold.co/60x34/800080/ffffff?text=Book'">
-                <span class="ticker-item-text-node">📚 Master handwriting with Mulukonjo tracing books</span>
+                
+                <img class="ticker-item-image-asset" src="audio/ad_Barr-Cleaners.png" alt="Promo Thumbnail Right" onerror="this.src='https://placehold.co/60x34/800080/ffffff?text=Fidel'" onclick="redirectToSecondStorefront()">
+                <span class="ticker-item-text-node" onclick="redirectToSecondStorefront()">Barr Cleaners. Address: 910 17th St NW #104 Washington, DC 20006. Phone: (202) 785-1155. Email: contact@barrcleaners.com</span>
                 <span class="ticker-decorative-divider-bullet">✦</span>
-                <video class="ticker-item-video-clip-asset" autoplay loop muted playsinline src="audio/advertise_here.mp4"></video>
-                <span class="ticker-item-text-node">✨ Learn Ge'ez Alphabet easily with fun offline traditional activities!</span>
+				
+				<span class="ticker-item-text-node" onclick="">📚 Yilma General Maintenance Technician. Phone: 240-478-4322</span>
                 <span class="ticker-decorative-divider-bullet">✦</span>
-                <img class="ticker-item-image-asset" src="audio/cover_right_landscape.png" alt="Promo Thumbnail Right" onerror="this.src='https://placehold.co/60x34/800080/ffffff?text=Fidel'">
+                
+				<img class="ticker-item-image-asset" src="audio/cover_left_landscape.png" alt="Promo Thumbnail Left" onerror="this.src='https://placehold.co/60x34/800080/ffffff?text=Book'" onclick="redirectToAmazonStorefront()">
+				<span class="ticker-item-text-node" onclick="redirectToAmazonStorefront()">Master handwriting with Mulukonjo tracing books</span>
                 <span class="ticker-decorative-divider-bullet">✦</span>
-				<span class="ticker-item-text-node">🔥 Advertise Here! Promoted Workbooks coming soon Online!</span>
+                
+                <img class="ticker-item-image-asset" src="audio/ad_Barr-Cleaners.png" alt="Promo Thumbnail Right" onerror="this.src='https://placehold.co/60x34/800080/ffffff?text=Fidel'" onclick="redirectToSecondStorefront()">
+                <span class="ticker-item-text-node" onclick="redirectToSecondStorefront()">Barr Cleaners. Address: 910 17th St NW #104 Washington, DC 20006. Phone: (202) 785-1155. Email: contact@barrcleaners.com</span>
                 <span class="ticker-decorative-divider-bullet">✦</span>
-                <img class="ticker-item-image-asset" src="audio/cover_left_landscape.png" alt="Promo Thumbnail Left" onerror="this.src='https://placehold.co/60x34/800080/ffffff?text=Book'">
-                <span class="ticker-item-text-node">📚 Master handwriting with Mulukonjo tracing books</span>
+				
+				<span class="ticker-item-text-node" onclick="">📚 Yilma General Maintenance Technician. Phone: 240-478-4322</span>
                 <span class="ticker-decorative-divider-bullet">✦</span>
-                <video class="ticker-item-video-clip-asset" autoplay loop muted playsinline src="audio/advertise_here.mp4"></video>
-                <span class="ticker-item-text-node">✨ Learn Ge'ez Alphabet easily with fun offline traditional activities!</span>
-                <span class="ticker-decorative-divider-bullet">✦</span>
-                <img class="ticker-item-image-asset" src="audio/cover_right_landscape.png" alt="Promo Thumbnail Right" onerror="this.src='https://placehold.co/60x34/800080/ffffff?text=Fidel'">
-                <span class="ticker-decorative-divider-bullet">✦</span>
+                
+			<!--	<span class="ticker-item-text-node" onclick="">🎵 Stream traditional listening audio activities offline</span> -->
+            <!--    <span class="ticker-decorative-divider-bullet">✦</span> -->
+			<!--	<span class="ticker-item-text-node" onclick="redirectToThirdStorefront()">🚀 Ad 3: New Animated Ethiopic Short Stories streaming live!</span> -->
+             <!--   <span class="ticker-item-text-node" onclick="">🚀 Ad 3: New Animated Ethiopic Short Stories streaming live!</span> -->
+             <!--   <span class="ticker-decorative-divider-bullet">✦</span> -->
+                <video class="ticker-item-video-clip-asset" autoplay loop muted playsinline src="audio/advertise_here.mp4" onclick="redirectToThirdStorefront()"></video>
+             <!--   <span class="ticker-item-text-node" onclick="redirectToThirdStorefront()">🦉 Unlock child-safe storytelling gameplay metrics online</span> -->
+			<!--	<span class="ticker-item-text-node" onclick="">🦉 Unlock child-safe storytelling gameplay metrics online</span>
+             <!--   <span class="ticker-decorative-divider-bullet">✦</span> -->
             </div>
         </div>
 
@@ -477,7 +503,7 @@
                 </div>
                 
                 <div id="comp-play-view" style="display: none;">
-                    <div class="score-board" style="background: #FFF5F5; border: 2px solid var(--primary); margin-bottom: 12px;">
+                    <div class="score-board" style="background: #FFF5F5; border: 2px solid var(--primary) !important; margin-bottom: 12px;">
                         <span id="lbl-comp-current-turn-announcement" style="color: var(--primary); font-size: 1.15rem;">Turn: Child</span>
                         <span id="lbl-comp-progress-counter" style="color: #627D98; font-size: 0.9rem;">Question 1 of 10</span>
                     </div>
@@ -617,6 +643,7 @@
             { title: "ቀበሮውና ወይኑ", filename: "The_Fox_Grape", icon: "" }
         ];
 
+        /* Fixed ፐ row configuration mapping parameters across character sequence lists */
         const compactFidels = [
             { b: "h", r: "ሀሁሂሃሄህሆ", v: ["ha","hu","hi","ha","he","he","ho"] },
             { b: "l", r: "ለሉሊላሌልሎ", v: ["le","lu","li","la","le","l","lo"] },
@@ -672,14 +699,13 @@
         const labializedCharacters = [{char:"ሏ", sound:"lwa"}, {char:"ሟ", sound:"mwa"}, {char:"ሯ", sound:"rwa"}, {char:"ሷ", sound:"swa"}, {char:"ሿ", sound:"shua"}, {char:"ቋ", sound:"qua"}, {char:"ቧ", sound:"bua"}, {char:"ቷ", sound:"tua"}, {char:"ቿ", sound:"chwa"}, {char:"ኗ", sound:"nua"}, {char:"ኋ", sound:"hua"}, {char:"ኳ", sound:"kua"}, {char:"ጓ", sound:"gua"}, {char:"ጧ", sound:"ttwa"}, {char:"ጯ", sound:"ccwa"}, {char:"ጷ", sound:"ppwa"}];
         
         const geezNumbersData = [
-            {char:"፩", sound:"1 - አንድ"}, {char:"፪", sound:"2 - ሁለት"}, {char:"፫", sound:"3 - ሦስት"}, {char:"፬", sound:"4 - አራት"}, {char:"፭", sound:"5 - amsስት"}, {char:"፮", sound:"6 - ስድስት"}, {char:"፯", sound:"7 - ሰባት"}, {char:"፰", sound:"8 - ስምንት"}, {char:"፱", sound:"9 - ዘጠኝ"}, {char:"፲", sound:"10 - አስር"},
-            {char:"፲፩", sound:"11 - አስራ አንድ"}, {char:"፲፪", sound:"12 - አስራ ሁለት"}, {char:"፲፫", sound:"13 - አስራ ሦስት"}, {char:"፲፬", sound:"14 - አስራ አራት"}, {char:"፲፭", sound:"15 - አስራ amsስት"}, {char:"፲፮", sound:"16 - አስራ ስድስት"}, {char:"፲፯", sound:"17 - አስራ ሰባት"}, {char:"፲፰", sound:"18 - አስራ ስምንት"}, {char:"፲፱", sound:"19 - አስራ ዘጠኝ"}, {char:"፳", sound:"20 - ሃያ"},
-            {char:"፴", sound:"30 - ሰላሳ"}, {char:"፵", sound:"40 - አርባ"}, {char:"፶", sound:"50 - amsa"}, {char:"፷", sound:"60 - ስልሳ"}, {char:"፸", sound:"70 - ሰባ"}, {char:"፹", sound:"80 - ሰማኒያ"}, {char:"፺", sound:"90 - ዘጠና"}, {char:"፻", sound:"100 - መቶ"}, {char:"፲፻", sound:"1,000 - ዐስርቱ ምእት"}, {char:"፼", sound:"10,000 - እልፍ"}, {char:"፻፲፻", sound:"100,000 - አእላፍ"}
+            {char:"፩", sound:"1 - አንድ"}, {char:"፪", sound:"2 - ሁለት"}, {char:"፫", sound:"3 - ሦስት"}, {char:"፬", sound:"4 - አራት"}, {char:"፭", sound:"5 - አምስት"}, {char:"፮", sound:"6 - ስድስት"}, {char:"፯", sound:"7 - ሰባት"}, {char:"፰", sound:"8 - ስምንት"}, {char:"፱", sound:"9 - ዘጠኝ"}, {char:"፲", sound:"10 - አስር"},
+            {char:"፲፩", sound:"11 - አስራ አንድ"}, {char:"፲፪", sound:"12 - አስራ ሁለት"}, {char:"፲፫", sound:"13 - አስራ ሦስት"}, {char:"፲፬", sound:"14 - አስራ አራት"}, {char:"፲፭", sound:"15 - አስራ አምስት"}, {char:"፲፮", sound:"16 - አስራ ስድስት"}, {char:"፲፯", sound:"17 - አስራ ሰባት"}, {char:"፲፰", sound:"18 - አስራ ስምንት"}, {char:"፲፱", sound:"19 - አስራ ዘጠኝ"}, {char:"፳", sound:"20 - ሃያ"},
+            {char:"፴", sound:"30 - ሰላሳ"}, {char:"፵", sound:"40 - አርባ"}, {char:"፶", sound:"50 - አምሳ"}, {char:"፷", sound:"60 - ስልሳ"}, {char:"፸", sound:"70 - ሰባ"}, {char:"፹", sound:"80 - ሰማኒያ"}, {char:"፺", sound:"90 - ዘጠና"}, {char:"፻", sound:"100 - መቶ"}, {char:"፲፻", sound:"1,000 - ዐስርቱ ምእት"}, {char:"፼", sound:"10,000 - እልፍ"}, {char:"፻፲፻", sound:"100,000 - አእላፍ"}
         ];
 
-        const compactSentences = [
-            ["ኳስ መጫወት እወዳለሁ።", "I love playing ball.", "⚽"], ["መጽሐፍ ማንበብ እወዳለሁ።", "I love reading books.", "📚"], ["ትምህርት ቤት እሄዳለሁ。", "I go to school.", "🏫"], ["ወተት እጠጣለሁ።", "I drink milk.", "🥛"], ["እንጀራ እወዳለሁ።", "I love Enjera.", "🥞"], ["ውሻዬን እወዳለሁ።", "I love my dog.", "🐶"], ["ድመት አለችኝ።", "I have a cat.", "🐱"], ["አበባው ያምራል።", "The flower is beautiful.", "🌸"], ["ፀሐይ ጠዋት ትወጣለች።", "The sun shines.", "☀️"], ["ውሃ እጠጣለሁ።", "I drink water.", "💧"], ["እጄን እታጠባለሁ።", "I wash my hands.", "🧼"], ["በሩጫ እወዳደራለሁ።", "I love running.", "running"], ["ብስክሌት እነዳለሁ።", "I ride a bicycle.", "🚲"], ["ወፍ ትበራለች።", "A bird flies.", "🐦"], ["ዓሳ በውሃ ውስጥ ይዋኛል።", "A fish swims in water.", "🐟"], ["አባቴን እወዳለሁ።", "I love my father.", "👨"], ["እናቴን እወዳለሁ።", "I love my mother.", "👩"], ["ወንድም አለኝ።", "I have a brother.", "👦"], ["እህት አለችኝ።", "I have a sister.", "👧"], ["ሙዝ እወዳለሁ።", "I love bananas.", "🍌"], ["ፖም እበላለሁ።", "I eat an apple.", "🍎"], ["ብርቱካን ጣፋጭ ነው።", "Orange is sweet.", "🍊"], ["ሀምራዊ ቀለም እወዳለሁ።", "I love the color purple.", "🟣"], ["ሰማዩ ሰማያዊ ነው።", "The sky is blue.", "🌌"], ["ሣሩ አረንጓዴ ነው።", "The grass is green.", "🌱"], ["ጨረቃ በምሽት ታበራለች።", "The moon shines at night.", "🌙"], ["ከዋክብት ያበራሉ።", "Stars shine.", "⭐"], ["ዝናብ እየዘነበ ነው።", "It is raining.", "🌧️"], ["ዛፉ ትልቅ ነው።", "The tree is big.", "🌳"], ["መኪናው ፈጣን ነው።", "The car is fast.", "🚗"], ["አውሮፕላን እያየሁ ነው።", "I am watching an airplane.", "✈️"], ["ባቡር ይሄዳል።", "The train moves.", "🚂"], ["መዝሙር እሰማለሁ።", "I listen to song.", "🎵"], ["ስዕል እቀባለሁ።", "I paint a picture.", "🎨"], ["መጫወቻ አለኝ።", "I have a toy.", "🧸"], ["ፈገግታ እወዳለሁ።", "I love to smile.", "😊"], ["ቶሎ እተኛለሁ።", "I go to sleep early.", "🛏️"], ["ማለዳ እነቃለሁ።", "I wake up early.", "🌅"], ["ጥርሴን እቦርሻለሁ።", "I brush my teeth.", "🪥"], ["ጫማዬን አደርጋለሁ።", "I put on my shoes.", "👟"], ["ልብስን እቀይራለሁ።", "I change my clothes.", "👕"], ["ፊኛ እወዳለሁ።", "I love balloons.", "🎈"], ["አይስክሬም እወዳለሁ።", "I love ice cream.", "🍦"], ["ቸኮሌት እበላለሁ።", "I eat chocolate.", "🍫"], ["ጥንቸል ትዘላለች።", "The rabbit hops.", "🐇"], ["አንበሳ ያገሳል።", "The lion roars.", "🦁"], ["ዝሆን ትልቅ ነው።", "The elephant is big.", "🐘"], ["ቢራቢሮ ውብ ናት።", "The butterfly is beautiful.", "🦋"], ["እኔ ጎበዝ ነኝ!", "I am smart and clever!", "🧠"]
-        ];
+        const compactSentencesText = "ኳስ መጫወት እወዳለሁ።|I love playing ball.|⚽#መጽሐፍ ማንበብ እወዳለሁ።|I love reading books.|📚#ትምህርት ቤት እሄዳለሁ።|I go to school.|🏫#ወተት እጠጣለሁ።|I drink milk.|🥛#እንጀራ እወዳለሁ።|I love Enjera.|🥞#ውሻዬን እወዳለሁ።|I love my dog.|🐶#ድመት አለችኝ።|I have a cat.|🐱#አበባው ያምራል።|The flower is beautiful.|🌸#ፀሐይ ጠዋት ትወጣለች።|The sun shines.|☀️#ውሃ እጠጣለሁ።|I drink water.|💧#እጄን እታጠባለሁ።|I wash my hands.|🧼#በሩጫ እወዳደራለሁ።|I love running.|🏃#ብስክሌት እነዳለሁ።|I ride a bicycle.|🚲#ወፍ ትበራለች።|A bird flies.|🐦#ዓሳ በውሃ ውስጥ ይዋኛል።|A fish swims in water.|🐟#አባቴን እወዳለሁ።|I love my father.|👨#እናቴን እወዳለሁ።|I love my mother.|👩#ወንድም አለኝ።|I have a brother.|👦#እህት አለችኝ።|I have a sister.|👧#ሙዝ እወዳለሁ።|I love bananas.|🍌#ፖም እበላለሁ።|I eat an apple.|🍎#ብርቱካን ጣፋጭ ነው።|Orange is sweet.|🍊#ሀምራዊ ቀለም እወዳለሁ።|I love the color purple.|🟣#ሰማዩ ሰማያዊ ነው።|The sky is blue.|🌌#ሣሩ አረንጓዴ ነው።|The grass is green.|🌱#ጨረቃ በምሽት ታበራለች።|The moon shines at night.|🌙#ከዋክብት ያበራሉ።|Stars shine.|⭐#ዝናብ እየዘነበ ነው።|It is raining.|🌧️#ዛፉ ትልቅ ነው።|The tree is big.|🌳#መኪናው ፈጣን ነው።|The car is fast.|🚗#አውሮፕላን እያየሁ ነው።|I am watching an airplane.|✈️#ባቡር ይሄዳል።|The train moves.|🚂#መዝሙር እሰማለሁ።|I listen to song.|🎵#ስዕል እቀባለሁ።|I paint a picture.|🎨#መጫወቻ አለኝ።|I have a toy.|🧸#ፈገግታ እወዳለሁ።|I love to smile.|😊#ቶሎ እተኛለሁ።|I go to sleep early.|🛏️#ማለዳ እነቃለሁ።|I wake up early.|🌅#ጥርሴን እቦርሻለሁ።|I brush my teeth.|🪥#ጫማዬን አደርጋለሁ።|I put on my shoes.|👟#ልብስን እቀይራለሁ።|I change my clothes.|👕#ፊኛ እወዳለሁ።|I love balloons.|🎈#አይስክሬም እወዳለሁ።|I love ice cream.|🍦#ቸኮሌት እበላለሁ።|I eat chocolate.|🍫#ጥንቸል ትዘላለች።|The rabbit hops.|🐇#አንበሳ ያገሳል።|The lion roars.|🦁#ዝሆን ትልቅ ነው።|The elephant is big.|🐘#ቢራቢሮ ውብ ናት።|The butterfly is beautiful.|🦋#እኔ ጎበዝ ነኝ!|I am smart and clever!|🧠";
+        const compactSentences = compactSentencesText.split('#').map(row => row.split('|'));
 
         const geezWordsData = [
             { geez: "ሐሊብ", amharic: "ወተት", english: "Milk" }, { geez: "ማይ", amharic: "ውሃ", english: "Water" }, { geez: "እሳት", amharic: "እሳት", english: "Fire" }, { geez: "ንጉሥ", amharic: "ንጉሥ", english: "King" }, { geez: "ብርሃን", amharic: "ብርሃን", english: "Light" }, { geez: "ጽጌ", amharic: "አበባ", english: "Flower" }, { geez: "ወርቅ", amharic: "ወርቅ", english: "Gold" }, { geez: "ሰማይ", amharic: "ሰማይ", english: "Sky" }, { geez: "ምድር", amharic: "ምድር", english: "Earth" }, { geez: "ኮከብ", amharic: "ኮከብ", english: "Star" }, { geez: "ፀሐይ", amharic: "ፀሐይ", english: "Sun" }, { geez: "ወሬዛ", amharic: "ጎበዝ ወጣት", english: "Young Man" }, { geez: "ብእሲ", amharic: "ሰው / ወንድ", english: "Man" }, { geez: "ብእሲት", amharic: "ሴት", english: "Woman" }, { geez: "ሕፃን", amharic: "ልጅ", english: "Child" }, { geez: "ቤት", amharic: "ቤት", english: "House" }, { geez: "መጽሐፍ", amharic: "መጽሐፍ", english: "Book" }, { geez: "አሳ", amharic: "ዓሣ", english: "Fish" }, { geez: "ዖፍ", amharic: "ወፍ", english: "Bird" }, { geez: "አንበሳ", amharic: "አንበሳ", english: "Lion" }, { geez: "ከልብ", amharic: "ውሻ", english: "Dog" }, { geez: "ድሙ", amharic: "ድመት", english: "Cat" }, { geez: "ዕንጨት", amharic: "ዕንጨት", english: "Wood" }, { geez: "ኅብስት", amharic: "ዳቦ", english: "Bread" }, { geez: "ወይን", amharic: "ወይን", english: "Wine" }, { geez: "ሐመር", amharic: "መርከብ", english: "Ship" }, { geez: "ገነት", amharic: "ገነት", english: "Paradise" }, { geez: "ደብር", amharic: "ተራራ", english: "Mountain" }, { geez: "ባሕር", amharic: "ባሕር", english: "Sea" }, { geez: "ፈረስ", amharic: "ፈረስ", english: "Horse" }, { geez: "አህያ", amharic: "አህያ", english: "Donkey" }, { geez: "ላህም", amharic: "ላም", english: "Cow" }, { geez: "በግዕ", amharic: "በግ", english: "Sheep" }, { geez: "ጠሊ", amharic: "ፍየል", english: "Goat" }, { geez: "ገራህት", amharic: "እርሻ", english: "Field" }, { geez: "ዕፅ", amharic: "ዛፍ", english: "Tree" }, { geez: "ፈውስ", amharic: "መድኃኒት", english: "Medicine" }, { geez: "ሰላም", amharic: "ሰላም", english: "Peace" }, { geez: "ፍቅር", amharic: "ፍቅር", english: "Love" }, { geez: "ሐሤት", amharic: "ደስታ", english: "Joy" }, { geez: "ኃይል", amharic: "ኃይል", english: "Power" }, { geez: "ጥበብ", amharic: "ጥበብ", english: "Wisdom" }, { geez: "ኵናት", amharic: "ጦር", english: "Spear" }, { geez: "እግር", amharic: "እግር", english: "Foot" }, { geez: "እደ", amharic: "እጅ", english: "Hand" }, { geez: "ዐይን", amharic: "ዐይን", english: "Eye" }, { geez: "ልብ", amharic: "ልብ", english: "Heart" }, { geez: "ርእስ", amharic: "ራስ", english: "Head" }, { geez: "ስን", amharic: "ጥርስ", english: "Tooth" }, { geez: "ክነፍ", amharic: "ክንፍ", english: "Wing" }
@@ -742,10 +768,19 @@
         }
 
         function redirectToAmazonStorefront() {
-            showMessage("Amazon Workbook Link", "Your Traceable Books are Coming Soon!!!");
-            //setTimeout(() => {
-             //   window.open("https://amazon.com", "_blank");
-            //}, 1000);
+            showMessage("Traceable Books", "Your reusable traceable books are coming soon!!!");
+            //setTimeout(() => { window.open("https://amazon.com", "_blank"); }, 1000);
+        }
+
+		function redirectToSecondStorefront() {
+            //showMessage("Amazon Workbook Link", "Opening your external print workbooks product matching matrix directly...");
+            setTimeout(() => { window.open("https://www.barrcleaners.com/", "_blank"); }, 1000);
+
+        }
+
+        function redirectToThirdStorefront() {
+            showMessage("Storytelling Channel", "Redirecting you to the premium animated traditional short stories hub streaming service...");
+            setTimeout(() => { window.open("https://google.com?ad=video_streaming", "_blank"); }, 1000);
         }
 
         function switchTab(tab) {
@@ -772,19 +807,19 @@
         function renderStandardChart() {
             const container = document.getElementById('chart-standard-series');
             container.innerHTML = '';
-            Object.keys(standardFidelChart).forEach(k => {
+            compactFidels.forEach(item => {
                 const row = document.createElement('div');
                 row.className = 'series-row';
-                standardFidelChart[k].forEach(item => {
+                standardFidelChart[Array.from(item.r)[0]].forEach(fidelItem => {
                     const card = document.createElement('div');
                     card.className = 'fidel-card';
-                    card.id = 'fidel-card-' + item.char;
-                    card.innerHTML = `<div class="char">${item.char}</div><div class="sound">${item.sound.toUpperCase()}</div>`;
+                    card.id = 'fidel-card-' + fidelItem.char;
+                    card.innerHTML = `<div class="char">${fidelItem.char}</div><div class="sound">${fidelItem.sound.toUpperCase()}</div>`;
                     card.onclick = () => {
-                        document.getElementById('lbl-fidel').innerText = item.char;
-                        document.getElementById('lbl-sound').innerText = item.sound.toUpperCase();
-                        playFidelAudio(item.char);
-                        activeTraceCharacter = item.char;
+                        document.getElementById('lbl-fidel').innerText = fidelItem.char;
+                        document.getElementById('lbl-sound').innerText = fidelItem.sound.toUpperCase();
+                        playFidelAudio(fidelItem.char);
+                        activeTraceCharacter = fidelItem.char;
                         document.querySelectorAll('.fidel-card').forEach(c => c.classList.remove('reading-active'));
                         card.classList.add('reading-active');
                     };
@@ -890,7 +925,7 @@
             });
         }
 
-        var isAutoReadingActiveFrameState = false;
+        let isAutoReadingActiveFrameState = false;
         function toggleAutoRead() {
             isAutoReading = !isAutoReading;
             const btn = document.getElementById('btn-toggle-autoread');
@@ -910,10 +945,19 @@
 
         function runAutoReadTick() {
             if (!isAutoReading) return;
+            if (!comprehensiveFidelList || comprehensiveFidelList.length === 0) {
+                comprehensiveFidelList = [];
+                compactFidels.forEach(rowItem => {
+                    if (rowItem && rowItem.r) {
+                        Array.from(rowItem.r).forEach(fidelChar => comprehensiveFidelList.push(fidelChar));
+                    }
+                });
+            }
             let letter = document.getElementById('lbl-fidel').innerText;
             let idx = comprehensiveFidelList.indexOf(letter);
-            let nextIdx = (idx + 1) % comprehensiveFidelList.length;
+            let nextIdx = (idx !== -1) ? (idx + 1) % comprehensiveFidelList.length : 0;
             const nextLetter = comprehensiveFidelList[nextIdx];
+            
             Object.keys(standardFidelChart).forEach(k => {
                 standardFidelChart[k].forEach(item => {
                     if (item.char === nextLetter) {
@@ -953,7 +997,7 @@
             memoryMovesCounter = 0;
             document.getElementById('lbl-memory-moves').innerText = memoryMovesCounter;
             const pool = getAllItems();
-            if (pool.length < memoryTargetPairsCount) return;
+            if (!pool || pool.length < memoryTargetPairsCount) return;
             const shuf = [...pool].sort(() => Math.random() - 0.5).slice(0, memoryTargetPairsCount);
             let board = [];
             shuf.forEach(i => {
@@ -1022,14 +1066,23 @@
             traceCanvas.addEventListener('touchstart', handleTouchStart, { passive: false });
             traceCanvas.addEventListener('touchmove', handleTouchMove, { passive: false });
             traceCanvas.addEventListener('touchend', stopTrace);
+            
             const picker = document.getElementById('trace-character-picker');
             picker.innerHTML = '';
             comprehensiveFidelList = [];
-            Object.keys(standardFidelChart).forEach(k => standardFidelChart[k].forEach(f => comprehensiveFidelList.push(f.char)));
-            labializedCharacters.forEach(i => {
-                if(i.char) comprehensiveFidelList.push(i.char);
+            
+            compactFidels.forEach(rowItem => {
+                if (rowItem && rowItem.r) {
+                    Array.from(rowItem.r).forEach(fidelChar => comprehensiveFidelList.push(fidelChar));
+                }
             });
-            geezNumbersData.forEach(i => comprehensiveFidelList.push(i.char));
+            labializedCharacters.forEach(i => {
+                if(i && i.char) comprehensiveFidelList.push(i.char);
+            });
+            geezNumbersData.forEach(i => {
+                if(i && i.char) comprehensiveFidelList.push(i.char);
+            });
+            
             comprehensiveFidelList.forEach(letter => {
                 const btn = document.createElement('div');
                 btn.className = 'trace-select-item';
@@ -1053,12 +1106,12 @@
 
         function goToNextTracingFidel() {
             let idx = comprehensiveFidelList.indexOf(activeTraceCharacter);
-            let nextIdx = (idx + 1) % comprehensiveFidelList.length;
+            let nextIdx = (idx !== -1) ? (idx + 1) % comprehensiveFidelList.length : 0;
             selectTracingCharacter(comprehensiveFidelList[nextIdx]);
         }
 
         function updateTracingGuide(c) {
-            if (!traceCtx) return;
+            if (!traceCtx || !traceCanvas) return;
             traceCtx.clearRect(0, 0, traceCanvas.width, traceCanvas.height);
             traceCtx.fillStyle = '#CBD5E1';
             traceCtx.font = 'bold 160px "Nyala", "Abyssinica SIL", "Kefa", "Segoe UI", sans-serif';
@@ -1080,7 +1133,7 @@
             if (!tray) return;
             tray.innerHTML = '';
             shortStoriesList.forEach((story, idx) => {
-                const btn = document.createElement('div');
+                const btn = document.createElement('button');
                 btn.className = 'story-select-item';
                 btn.id = 'story-btn-' + idx;
                 btn.innerHTML = story.title;
@@ -1102,7 +1155,6 @@
             }
         }
 
-        // Event coordination buffers
         function startTrace(e) {
             isDrawing = true;
             const c = getCanvasCoords(e);
@@ -1145,13 +1197,15 @@
 
         function getAllItems() {
             let arr = [];
-            Object.keys(standardFidelChart).forEach(k => arr = arr.concat(standardFidelChart[k]));
+            Object.keys(standardFidelChart).forEach(k => {
+                if (standardFidelChart[k]) arr = arr.concat(standardFidelChart[k]);
+            });
             return arr.concat(labializedCharacters.filter(i => i && i.char));
         }
 
         function setupNewQuestion() {
             const list = getAllItems();
-            if (!list.length) return;
+            if (!list || !list.length) return;
             quizCurrentItem = list[Math.floor(Math.random() * list.length)];
             quizAnsweredCorrectly = false;
             document.getElementById('quiz-target').innerText = "Click to Listen";
@@ -1163,6 +1217,7 @@
             }
             choices.sort(() => Math.random() - 0.5);
             const grid = document.getElementById('quiz-options');
+            if (!grid) return;
             grid.innerHTML = '';
             choices.forEach((c, idx) => {
                 const btn = document.createElement('button');
@@ -1194,6 +1249,7 @@
         function generateCompetitionNameInputs() {
             const count = parseInt(document.getElementById('comp-kids-count').value);
             const c = document.getElementById('comp-names-container');
+            if (!c) return;
             c.innerHTML = '';
             for (let i = 1; i <= count; i++) {
                 c.innerHTML += `<div class="comp-input-group"><label>Kid #${i} Name:</label><input type="text" id="comp-pname-${i}" class="comp-input-field" value="Child ${i}"></div>`;
@@ -1203,7 +1259,8 @@
 
         function calculateBalancedTotalQuestions() {
             compTotalConfiguredQuestions = parseInt(document.getElementById('comp-kids-count').value) * parseInt(document.getElementById('comp-turns-per-kid').value);
-            document.getElementById('lbl-comp-total-calc').innerText = compTotalConfiguredQuestions;
+            const lbl = document.getElementById('lbl-comp-total-calc');
+            if (lbl) lbl.innerText = compTotalConfiguredQuestions;
         }
 
         function startCompetitionMatch() {
@@ -1223,6 +1280,7 @@
 
         function renderCompetitionScoreboardPills() {
             const tray = document.getElementById('comp-active-scoreboard-tray');
+            if (!tray) return;
             tray.innerHTML = '';
             compPlayersList.forEach((p, idx) => {
                 tray.innerHTML += `<div class="comp-player-score-pill ${idx === compCurrentActivePlayerIndex ? 'active-turn' : ''}">User <span>${p.name}:</span> <strong>${p.score}</strong></div>`;
@@ -1243,6 +1301,7 @@
             }
             choices.sort(() => Math.random() - 0.5);
             const grid = document.getElementById('comp-quiz-options');
+            if (!grid) return;
             grid.innerHTML = '';
             choices.forEach((c, idx) => {
                 const btn = document.createElement('button');
@@ -1378,7 +1437,7 @@
         function switchAppTheme(themeKey) {
             const rootColors = {
                 sunny: { p: '#800080', s: '#4ECDC4', bg: 'linear-gradient(135deg, #FEF3C7 0%, #D1FAE5 50%, #ECFDF5 100%)' },
-                forest: { p: '#1E3A8A', s: '#10B981', bg: 'linear-gradient(135deg, #E0F2FE 0%, #DCFCE7 100%)' },
+                forest: { p: '#15803D', s: '#10B981', bg: 'linear-gradient(135deg, #DCFCE7 0%, #DCFCE7 50%, #F0FDF4 100%)' },
                 space: { p: '#4C1D95', s: '#FB7185', bg: 'linear-gradient(135deg, #ECEFfe 0%, #FFE4E6 100%)' },
                 ocean: { p: '#0369A1', s: '#38BDF8', bg: 'linear-gradient(135deg, #E0F2FE 0%, #E0F2FE 100%)' }
             };
@@ -1391,7 +1450,6 @@
         }
 
         window.onload = function() {
-            // Updated Abugida generation to properly form traditional shifting cross-vowel combinations
             abugidaConsonantOrder.forEach((baseChar, rowIndex) => {
                 const rowItems = [];
                 for (let colIndex = 0; colIndex < 7; colIndex++) {
@@ -1436,6 +1494,7 @@
             initVideoSystem();
             generateCompetitionNameInputs();
             updatePWAButtonState();
+            setupNewQuestion();
         };
     </script>
 </body>
