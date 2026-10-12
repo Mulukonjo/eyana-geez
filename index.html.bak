@@ -324,8 +324,14 @@
 
                 <span class="ticker-decorative-divider-bullet">✦</span>
                 <img class="ticker-item-image-asset" id="ticker-ad-img-2" src="audio/ad_Barr-Cleaners.png" alt="Promo" onerror="this.src='https://placehold.co/60x34/800080/ffffff?text=Fidel'" onclick="redirectToSecondStorefront()">
-                <span class="ticker-item-text-node" onclick="redirectToSecondStorefront()">Barr Cleaners. Address: 910 17th St NW #104 Washington, DC 20006. Phone: (202) 785-1155.</span>
-                <span class="ticker-decorative-divider-bullet">✦</span>
+				<span class="ticker-item-text-node" onclick="redirectToSecondStorefront()">Barr Cleaners. Address: 910 17th St NW #104 Washington, DC 20006. Phone: (202) 785-1155.</span>
+                
+				  <span class="ticker-decorative-divider-bullet">✦</span>
+                <img class="ticker-item-image-asset" id="ticker-ad-img-2" src="audio/zedCreative.png" alt="Promo" onerror="this.src='https://placehold.co/60x34/800080/ffffff?text=Fidel'" onclick="redirectToThirdStorefront()">
+				<span class="ticker-item-text-node" onclick="redirectToThirdStorefront()">Creative Works. www.zcreativeworks.com * zcreativeworks@outlook.com * 240-315-4096</span>
+                				
+				
+				<span class="ticker-decorative-divider-bullet">✦</span>
 				<span class="ticker-item-text-node">📚 Yilma General Maintenance Technician. Phone: 240-478-4322</span>
                 <span class="ticker-decorative-divider-bullet">✦</span>
             </div>
@@ -865,6 +871,10 @@
 
         function redirectToSecondStorefront() {
             setTimeout(() => { window.open("https://barrcleaners.com", "_blank"); }, 1000);
+        }
+		
+		function redirectToThirdStorefront() {
+            setTimeout(() => { window.open("https://www.zcreativeworks.com", "_blank"); }, 1000);
         }
 
         function switchTab(tab) {
